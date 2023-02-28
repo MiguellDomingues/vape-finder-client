@@ -11,7 +11,7 @@ import { GET_PRODUCTS } from './queries/queries.js'
 import './app.css'
 
 const starting_filters = { category: "", brands: [], stores: [] }
-const SHOW_DMY_OVERLAY = true
+const SHOW_DMY_OVERLAY = false
 
 function App() {
 
