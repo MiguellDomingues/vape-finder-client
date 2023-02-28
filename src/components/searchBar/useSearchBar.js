@@ -35,9 +35,9 @@ export const useSearchBar = ( selected_filters_handlers  ) =>{
     //console.log("////", data, loading, error)
 
     const filter_tags = {
-        category_tags : !loading ? orderTagsByProductCount( filterTagsByMinProductCount (data["getSearchTypes"][0].tags)) : [],
-        brands_tags : !loading ? orderTagsByProductCount( filterTagsByMinProductCount (data["getSearchTypes"][1].tags, 5)) : [],
-        stores_tags : !loading ? orderTagsByProductCount( filterTagsByMinProductCount (data["getSearchTypes"][2].tags)) : []
+        category_tags : !loading && !error ? orderTagsByProductCount( filterTagsByMinProductCount (data["getSearchTypes"][0].tags)) : [],
+        brands_tags : !loading && !error ? orderTagsByProductCount( filterTagsByMinProductCount (data["getSearchTypes"][1].tags, 5)) : [],
+        stores_tags : !loading && !error ? orderTagsByProductCount( filterTagsByMinProductCount (data["getSearchTypes"][2].tags)) : []
     }
 
     const echo = () => console.log("////SEARCH BAR: ", selected_filters)

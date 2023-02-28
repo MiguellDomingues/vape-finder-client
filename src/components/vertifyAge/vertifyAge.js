@@ -31,7 +31,7 @@ function VertifyAge( { enabled } ){
             <h1>This website has material not intended for anyone under the age of 19</h1>
               <input {...input_props} name="day" placeholder="DD" value={birth_date.day}/>         
               <input {...input_props} name="month" placeholder="MM" value={birth_date.month}/>            
-              <input {...input_props} name="year" placeholder="YYYY" minlength="4" maxlength="4" value={birth_date.year}/>            
+              <input {...input_props} name="year" placeholder="YYYY" minLength="4" maxLength="4" value={birth_date.year}/>            
               <input type="submit" name="enter" placeholder="Year" onClick={ validateInput }/>
               <br/>
               {error}
