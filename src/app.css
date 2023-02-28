@@ -1,0 +1,18 @@
+.app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5px;
+    padding-right: 5px;
+    max-width: 1100px;
+  }
+
+.page{
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+}
+
+
+  
+  
