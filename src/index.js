@@ -5,8 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
+//https://vape-finder-backend.herokuapp.com/graphql
+//http://localhost:4000/graphql
+
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+  uri: 'https://vape-finder-backend.herokuapp.com/graphql',
 
   cache: new InMemoryCache({
     typePolicies: {
