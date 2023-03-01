@@ -6,8 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
 const env_configs = {
-  BACKEND_URL: process.env.BACKEND_URL || "http://localhost:4000/graphql",
-  SHOW_DOB_POPUP: process.env.SHOW_DOB_POPUP || false,
+  BACKEND_URL: process.env.REACT_APP_BACKEND_URL || "http://localhost:4000/graphql",
+  SHOW_DOB_POPUP: process.env.REACT_APP_SHOW_DOB_POPUP || false,
 }
 
 console.log("env configs: ", env_configs)
