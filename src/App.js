@@ -11,10 +11,10 @@ import { GET_PRODUCTS } from './queries/queries.js'
 import './app.css'
 
 const starting_filters = { category: "", brands: [], stores: [] }
-const SHOW_DMY_OVERLAY = true
 
-function App() {
+function App( {SHOW_DOB_POPUP} ) {
 
+  //const { SHOW_DOB_POPUP } = env_configs
   console.log("/////// APP RERENDER ///////")
 
   //const cardScroll = useRef(null); REFS ONLY WORK WITH CLASSES (BECAUSE THEY HAVE INSTANCES?) https://reactjs.org/docs/refs-and-the-dom.html
@@ -83,7 +83,7 @@ const selected_filters_handlers = {
 //ref={cardScroll}
   return (
       <div className="page">
-          <VertifyAge enabled={SHOW_DMY_OVERLAY}/>
+          <VertifyAge enabled={SHOW_DOB_POPUP}/>
           <div className="app">     
             <Header refetch={selected_filters_handlers}/>
             <Body query={query}/> 

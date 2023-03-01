@@ -5,12 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
-//https://vape-finder-backend.herokuapp.com/graphql
-//http://localhost:4000/graphql
+const env_configs = {
+  BACKEND_URL: process.env.BACKEND_URL || "http://localhost:4000/graphql",
+  SHOW_DOB_POPUP: process.env.SHOW_DOB_POPUP || false,
+}
 
 const client = new ApolloClient({
-  uri: 'https://vape-finder-backend.herokuapp.com/graphql',
-
+  uri: env_configs.BACKEND_URL,
   cache: new InMemoryCache({
     typePolicies: {
       SearchType: {
@@ -63,7 +64,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <App {...env_configs} />
     </ApolloProvider>
   </React.StrictMode>
 );
