@@ -8,12 +8,11 @@ function Body( {query} ) {
   console.log("data: ", data)
   console.log("loading: ", loading)
 
-  if (error) return `Error! ${error.message}`;
-
   const { fetchMore } = query
 
   return(
     <main className="body">
+      {error && <>Error! {error.message}</>}
       <CardList products={data ? data["getProducts"] : []} fetchMore={fetchMore} loading={loading}/>
     </main>
   );
