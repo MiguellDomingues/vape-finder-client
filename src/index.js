@@ -7,7 +7,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
 const env_configs = {
   BACKEND_URL: process.env.REACT_APP_BACKEND_URL || "http://localhost:4000/graphql",
-  SHOW_DOB_POPUP: process.env.REACT_APP_SHOW_DOB_POPUP || false,
+  SHOW_DOB_POPUP: (process.env.REACT_APP_SHOW_DOB_POPUP === 'true') || false,
 }
 
 
