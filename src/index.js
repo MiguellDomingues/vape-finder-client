@@ -10,6 +10,7 @@ const env_configs = {
   SHOW_DOB_POPUP: process.env.REACT_APP_SHOW_DOB_POPUP || false,
 }
 
+
 console.log("env configs: ", env_configs)
 
 const client = new ApolloClient({
