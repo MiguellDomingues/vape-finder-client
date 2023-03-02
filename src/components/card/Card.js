@@ -9,7 +9,7 @@ function Card( {product} ) {
   //const {id, name, brand, category, img, price, last_updated, source} = product
 
   const {id, last_updated, source_id, source_url, info } = product
-  const{ brand, category, name, price, info_url,  } = info
+  const{ brand, category, name, price, info_url, } = info
 
   const vendor = source_url.split("//")[1].split(".")[0]
   const format_price = price.toFixed(2);
