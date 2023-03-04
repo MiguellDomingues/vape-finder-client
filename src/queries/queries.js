@@ -4,9 +4,8 @@ export const GET_PRODUCTS = gql`
     query FindProduct($query: ProductQueryInput!, $limit: Int,$sortBy: ProductSortByInput) {
         products(query: $query, limit: $limit,sortBy: $sortBy)  {
             _id, source_id,  source_url, last_updated, 
-            product_info{
-                brand, category_str, name, img_src, price, info_url
-            }   
+            brand, category_str, name, img_src, price, info_url
+             
         }   
     }
 `;
