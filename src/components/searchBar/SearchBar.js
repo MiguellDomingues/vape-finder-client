@@ -10,7 +10,6 @@ function SearchBar( {refetch} ){
         loading,
         error,
         {
-            selectedFilterBGC,
             onCategorySelected,
             onStoreSelected,
             onBrandSelected 
@@ -26,30 +25,19 @@ function SearchBar( {refetch} ){
     return (<>
 
         <div className="search_bar_categories">
-            {category_tags.map( (c, idx) =>
-            <div>
-                <span className={"search_bar_category cursor_hand" + selectedFilterBGC(category, [c.tag_name])} 
-                      key={idx} 
-                      onClick={ () => onCategorySelected(c.tag_name)}>
-                    {c.tag_name}              
-                </span>
-                <span className="search_bar_product_count">{c.product_count}</span>
-            </div>)}
-        </div>
-
-        <div className="search_bar_shops_about">
-
-        <DropDownMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onBrandSelected} selectedTagsBGC={selectedFilterBGC}/>
-        <DropDownMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onStoreSelected} selectedTagsBGC={selectedFilterBGC}/>
-          
-           <span className="about cursor_hand">About</span> 
-        </div>
+            <DropDownMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onCategorySelected} />
+            <DropDownMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onBrandSelected} />
+            <DropDownMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onStoreSelected} />
+            <span className="about cursor_hand">About</span>      
+        </div> 
     </>)
 }
 
 export default SearchBar
 
-function DropDownMenu( {title, tags, selected_tags, selectedHandler, selectedTagsBGC} ){
+function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
+
+    const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected" : ""
 
     return(<div className="brands cursor_hand">
     {title}

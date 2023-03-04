@@ -13,8 +13,6 @@ export const useSearchBar = ( selected_filters_handlers  ) =>{
 
     const filter_tags = !loading && !error ? { ...parseFilterTags(data.tagmetadata) } : { category_tags: [], brands_tags: [], stores_tags:[] } 
 
-    const selectedFilterBGC = (str, arr) => arr.includes(str) ? " filter_selected" : ""
-
     function parseFilterTags(tagmetadata){
 
         const orderTagsByProductCount = (tags) => tags.sort( (lhs, rhs)=> rhs.product_count-lhs.product_count)
@@ -52,10 +50,43 @@ export const useSearchBar = ( selected_filters_handlers  ) =>{
         loading,
         error,
       {
-        selectedFilterBGC,
         onCategorySelected,
         onStoreSelected,
         onBrandSelected 
       }
     ]
 }
+
+/*
+
+this jfiddle demonstrates how to use a single handler for updating category/brands/stores
+wrap var containing the key name in object to extract key name
+
+const b = {
+	z: [],
+	b: ["b", "c"],
+	c: ["d", "e"]
+}
+
+const exclusive = (input, key) => b[key].includes(input) ? [] : [input]
+const inclusive = (input, key) => b[key].includes(input) ? b[key].filter( str => str !== input) : [...b[key], input]
+
+const a = (varName,input, multi_select = false)=>{
+
+  const key = Object.keys(varName).pop()
+  
+  const c = {
+  ...b,
+  }
+  
+  c[key] = !multi_select ? exclusive(input, key) : inclusive(input, key) 
+  console.log(c)
+  
+	
+}
+
+let z = "c"
+
+a({z}, z, false)
+
+*/
