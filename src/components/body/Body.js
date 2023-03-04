@@ -1,7 +1,7 @@
 import './body.css'
 import CardList from '.././cardList/CardList.js'
 
-function Body( {query} ) {
+function Body( {query, selected_filters_handlers} ) {
 
   let { loading, error, data } = query
 
@@ -13,7 +13,11 @@ function Body( {query} ) {
   return(
     <main className="body">
       {error && <>Error! {error.message}</>}
-      <CardList products={data ? data["getProducts"] : []} fetchMore={fetchMore} loading={loading}/>
+      <CardList 
+        products={data ? data.products : []} 
+        fetchMore={fetchMore} 
+        loading={loading} 
+        selected_filters_handlers={selected_filters_handlers}/>
     </main>
   );
 }
