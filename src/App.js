@@ -11,7 +11,7 @@ import { GET_PRODUCTS } from './queries/queries.js'
 import './app.css'
 
 const starting_filters = { category: "", brands: [], stores: [] }
-const PAGE_LIMIT = 11
+export const PAGE_LIMIT = 20
 
 function App( {SHOW_DOB_POPUP} ) {
 

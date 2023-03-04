@@ -13,7 +13,7 @@ function Footer( {refetch} ) {
       {!areFiltersSelected ?
           <> No Filters Selected !</> 
         :
-          <> <button onClick={ (e)=>setAndRefetch() }>Clear</button> <button onClick={ (e)=>setAndRefetch(selected_filters) }>Test</button> <br/>
+          <> <button onClick={ (e)=>setAndRefetch() }>Clear</button> <br/>
              Category: {category?.length > 0 ? `${category}` : " all categories selected"} <br/>
              Brands: {insertWhitespace(2)} {brands?.length > 0 ? brands.join(', ') : " All Brands"} <br/>
              Stores: {insertWhitespace(3)} {stores?.length > 0 ? stores.join(', ') : " All Stores"} <br/></>}
