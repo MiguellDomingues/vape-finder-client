@@ -20,3 +20,13 @@ export const GET_SEARCH_TYPES = gql`
         }       
     }
 `;
+
+export const GET_SORTED_PRODUCTS = gql`
+    query FindGetSortedProducts($input: GetSortedProductsInput) {
+        getSortedProducts(input: $input)  {
+            _id, source_id,  source_url, last_updated, 
+            brand, category_str, name, img_src, price, info_url
+             
+        }   
+    }
+`;

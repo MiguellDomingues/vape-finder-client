@@ -6,11 +6,17 @@ import VertifyAge from './components/vertifyAge/vertifyAge'
 import { useQuery, useApolloClient, } from '@apollo/client' 
 import {useState} from 'react'
 
-import { GET_PRODUCTS } from './queries/queries.js'
+import { GET_PRODUCTS, GET_SORTED_PRODUCTS } from './queries/queries.js'
 
 import './app.css'
 
-const starting_filters = { category: "", brands: [], stores: [] }
+export const SORT_TYPE = {
+  NONE: "_ID_ASC",
+  ASC: "PRICE_ASC",
+  DESC: "PRICE_DESC"
+}
+
+const starting_filters = { category: "", brands: [], stores: [], sort_by : "NONE" }
 export const PAGE_LIMIT = 20
 
 function App( {SHOW_DOB_POPUP} ) {
@@ -18,21 +24,34 @@ function App( {SHOW_DOB_POPUP} ) {
   //const { SHOW_DOB_POPUP } = env_configs
   console.log("/////// APP RERENDER ///////")
 
-  function buildAtlasGQLQuery(filters = {}, last_product_id = null, sort_by = "_ID_ASC"){
+  function buildAtlasGQLQuery(filters = {}, last_product_id = null){
 
     const query = {}
     if(last_product_id) query["_id_gt"] = last_product_id
     if(filters.category?.length > 0) query["categories_in"] = [filters.category]
     if(filters.stores?.length > 0)   query["source_in"] = [...filters.stores]
-    if(filters.brands?.length > 0){
-      const brand_in = { brand_in: [...filters.brands]}
-      query["product_info"] = brand_in
-    }   
+    if(filters.brands?.length > 0)   query["brand_in"] = [...filters.brands]
 
-    return { query, limit: PAGE_LIMIT, sortBy: sort_by }
+    // if the filters object contains the sort_by key, and the key is not an empty string, and the key is a valid string
+    //  set sort_by to filter.sort_by
+    //  otherwise, set sort_by to "NONE" (default value)
+    const sort_by = filters.sort_by?.length > 0 && Object.keys(SORT_TYPE).includes(filters.sort_by) ? filters.sort_by : "NONE"
+ 
+    return { 
+      query: query, 
+      limit: PAGE_LIMIT, 
+      sortBy: SORT_TYPE[sort_by], 
+    }
   }
 
   //const cardScroll = useRef(null); REFS ONLY WORK WITH CLASSES (BECAUSE THEY HAVE INSTANCES?) https://reactjs.org/docs/refs-and-the-dom.html
+
+  
+  //const query_2 = useQuery(GET_SORTED_PRODUCTS, { variables: { input: {} } } ) 
+
+  //const { data, loading, error } = query_2
+
+  //console.log("q2: ", data, loading, error)
 
   const [selected_filters, setFilters] = useState(starting_filters);
   
@@ -81,7 +100,7 @@ function App( {SHOW_DOB_POPUP} ) {
       },
     })
     */
-    query.refetch( {...selected_filters, ...buildAtlasGQLQuery(selected_filters) } ) 
+    query.refetch( {...selected_filters, ...buildAtlasGQLQuery(selected_filters, null) } ) 
 }
 
 const selected_filters_handlers = {
@@ -89,6 +108,8 @@ const selected_filters_handlers = {
     setAndRefetch,
     buildAtlasGQLQuery
 }
+
+console.log("///selected filters: ", selected_filters)
 
 //const g = component => {cardScroll = component }
 //ref={cardScroll}

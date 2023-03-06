@@ -11,10 +11,10 @@ function Card( {product} ) {
   const {id, last_updated, source_id, source_url, brand, category, name, price, info_url, } = product
   //const{  } = product_info
 
-  const vendor = source_url.split("//")[1].split(".")[0]
-  const format_price = price.toFixed(2);
+  const vendor = source_url.split("//")[1].split(".")[0] //remove the domain name from the product source
+  const format_price = price.toFixed(2); //limit the cents in the price to 2 decimal places (dollar).(cents)
 
-  let format_name = name.toLowerCase().replace( brand ? brand.toLowerCase() : '', '').trim()
+  let format_name = name.toLowerCase().replace( brand ? brand.toLowerCase() : '', '').trim() //if the brand is in the product name, remove it
   format_name = format_name.replace(/^[^A-Z0-9]+|[^A-Z0-9]+$/ig, '') //remove all start/end nonalphanumeric chars
 
   //if(format_name.includes(' - ')) format_name = format_name.replace(' - ', ' ').trim()
