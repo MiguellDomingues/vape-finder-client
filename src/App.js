@@ -24,29 +24,30 @@ function App( {SHOW_DOB_POPUP} ) {
   //const { SHOW_DOB_POPUP } = env_configs
   console.log("/////// APP RERENDER ///////")
 
-  function buildAtlasGQLQuery(filters = {}, last_product_id = null){
+  function buildAtlasGQLQuery(filters = {}, last_product_ids = null, last_sorted_price = null ){
 
-    const query = {}
-    if(last_product_id) query["_id_gt"] = last_product_id
-    if(filters.category?.length > 0) query["categories_in"] = [filters.category]
-    if(filters.stores?.length > 0)   query["source_in"] = [...filters.stores]
-    if(filters.brands?.length > 0)   query["brand_in"] = [...filters.brands]
+    console.log("SELECTED_FILTERS in BUILD_QUERY: ", filters)
 
-    // if the filters object contains the sort_by key, and the key is not an empty string, and the key is a valid string
-    //  set sort_by to filter.sort_by
-    //  otherwise, set sort_by to "NONE" (default value)
-    const sort_by = filters.sort_by?.length > 0 && Object.keys(SORT_TYPE).includes(filters.sort_by) ? filters.sort_by : "NONE"
- 
-    return { 
-      query: query, 
-      limit: PAGE_LIMIT, 
-      sortBy: SORT_TYPE[sort_by], 
-    }
+    const input = {}
+
+    if(filters.category?.length > 0) input["categories"] = [filters.category]
+    if(filters.brands?.length > 0)   input["brands"] = [...filters.brands]
+    if(filters.stores?.length > 0)   input["stores"] = [...filters.stores]
+
+    if(last_product_ids?.length > 0) input["last_product_ids"] = last_product_ids
+    if(filters.sort_by)             input["sort_by"] = filters.sort_by
+    if(last_sorted_price)           input["last_product_price"] = last_sorted_price
+
+    input["limit"] = PAGE_LIMIT
+
+    console.log("QUERY: ", {input: input})
+
+    return {input: input}
   }
 
   //const cardScroll = useRef(null); REFS ONLY WORK WITH CLASSES (BECAUSE THEY HAVE INSTANCES?) https://reactjs.org/docs/refs-and-the-dom.html
 
-  
+
   //const query_2 = useQuery(GET_SORTED_PRODUCTS, { variables: { input: {} } } ) 
 
   //const { data, loading, error } = query_2
@@ -55,7 +56,7 @@ function App( {SHOW_DOB_POPUP} ) {
 
   const [selected_filters, setFilters] = useState(starting_filters);
   
-  const query = useQuery(GET_PRODUCTS, { variables: { ...starting_filters, ...buildAtlasGQLQuery()}, 
+  const query = useQuery(GET_SORTED_PRODUCTS, { variables: { ...starting_filters, ...buildAtlasGQLQuery()}, 
     notifyOnNetworkStatusChange: true, }, 
   {
     fetchPolicy: 'cache-first', 
@@ -100,7 +101,7 @@ function App( {SHOW_DOB_POPUP} ) {
       },
     })
     */
-    query.refetch( {...selected_filters, ...buildAtlasGQLQuery(selected_filters, null) } ) 
+    query.refetch( {...selected_filters, ...buildAtlasGQLQuery(selected_filters, null, null) } ) 
 }
 
 const selected_filters_handlers = {

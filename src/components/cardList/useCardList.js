@@ -18,6 +18,7 @@ function useCardList(products, selected_filters, fetchMore, buildAtlasGQLQuery, 
     //document.getElementById("selectSort").value = "ASC"
     console.log(e.target.value)
     selected_filters.sort_by = e.target.value
+    setLPID("")
     setAndRefetch({...selected_filters})
   }
   
@@ -27,10 +28,17 @@ function useCardList(products, selected_filters, fetchMore, buildAtlasGQLQuery, 
     console.log("last_product_id calc: ", last_product_id, " lpid: ", lpid)
 
     if(products.length%PAGE_LIMIT === 0 && last_product_id !== lpid){
-      setLPID(lpid)     
-      const query = buildAtlasGQLQuery(selected_filters,lpid)
-      console.log("FETCHMORE QUERY: ", query, " LPID: ", lpid)
-      fetchMore({ variables: { ...selected_filters, ...buildAtlasGQLQuery(selected_filters, lpid)},})
+      setLPID(lpid)
+
+      if(selected_filters.sort_by === "NONE"){
+        fetchMore({ variables: { ...selected_filters, ...buildAtlasGQLQuery(selected_filters, [lpid])},})
+      }else if(selected_filters.sort_by === "ASC" || selected_filters.sort_by === "DESC"){
+        const lsp = products[products.length-1].price //get the highest or lowest price in the sorted products
+
+        const ignore_ids = []
+        products.forEach( p => p.price === lsp && ignore_ids.push(p._id)) //add the lsp id, including duplicates, to a new list 
+        fetchMore({ variables: { ...selected_filters, ...buildAtlasGQLQuery(selected_filters, ignore_ids, lsp)},})
+      }    
     }
   }
 

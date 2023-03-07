@@ -73,13 +73,13 @@ const client = new ApolloClient({
       Query: {
         fields: {
 
-          products: {
+          getSortedProducts: {
            read(existing, { args, toReference }) {
             console.log("CACHE READ: existing: ", existing)
             return existing;
           },
 
-            keyArgs: [],             
+            keyArgs: ["category", "brands", "stores", "sort_by"],             
             merge(existing = [], incoming) {
               console.log("CACHE MERGE: existing: ", existing.length, " incoming: ", incoming)
               return [...existing, ...incoming];

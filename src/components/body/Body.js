@@ -14,7 +14,7 @@ function Body( {query, selected_filters_handlers} ) {
     <main className="body">
       {error && <>Error! {error.message}</>}
       <CardList 
-        products={data ? data.products : []} 
+        products={data ? data.getSortedProducts : []} 
         fetchMore={fetchMore} 
         loading={loading} 
         selected_filters_handlers={selected_filters_handlers}/>
