@@ -2,6 +2,33 @@
     height: 15vh;
     background-color: lightblue;
     border-radius: 10px;
-    font-size: 15px;
-    
+    font-size: 15px;  
+}
+
+.pill_close_container{
+    cursor: pointer;
+    display: block;
+    float: right;
+    background-color:#fff;
+    border:1px;  
+    position: relative;
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    text-align: center;
+}
+
+.pill_close{ 
+   
+}
+
+.pill{
+    display: inline-block;
+    margin: 1px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 10px;
+    background-color: rgb(164, 177, 182);
 }
