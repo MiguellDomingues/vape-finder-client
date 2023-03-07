@@ -19,74 +19,30 @@ export const useSearchBar = ( selected_filters_handlers  ) =>{
         const filterTagsByMinProductCount = (tags, min_product_count = 0) => tags.filter((tag) => tag.product_count >= min_product_count)
         const findTagsByTagType = (tagmetadata, type_name) => tagmetadata.find( t => t.type_name === type_name).tags
 
-        return {
+        return { //unpack each search type by respective tag_name, filter for tags over a certain #, and sort the results from most linked products to least
             category_tags: orderTagsByProductCount( filterTagsByMinProductCount ( findTagsByTagType(tagmetadata, "CATEGORIES"))),
             brands_tags:   orderTagsByProductCount( filterTagsByMinProductCount ( findTagsByTagType(tagmetadata, "BRANDS"), MIN_ITEM_COUNT)),
             stores_tags:   orderTagsByProductCount( filterTagsByMinProductCount ( findTagsByTagType(tagmetadata, "STORES"))) 
         }
     }
-  
-    const onCategorySelected = category => 
-        setAndRefetch({ 
-            ...selected_filters,
-            category: category === selected_filters.category ? "" : category 
+
+    //closure which references the selected_filters key (catories/stores/brands) and updates the selected_filters by a filter_tag
+        const onFilterTagSelected = filter_key => 
+            filter_tag => setAndRefetch({ 
+                ...selected_filters,
+                //[filter_key]: category === selected_filters[filter_key] ? [] : [filter_tag] // use this to limit a filter to a single search tag
+                [filter_key]: selected_filters[filter_key].includes(filter_tag) ? 
+                    selected_filters[filter_key].filter( str => str !== filter_tag) : 
+                    [...selected_filters[filter_key], filter_tag] 
         })
-    
-    const onStoreSelected = store => 
-        setAndRefetch({ 
-            ...selected_filters,
-            stores: selected_filters.stores.includes(store) ? selected_filters.stores.filter( str => str !== store) : [...selected_filters.stores, store]
-        })     
-    
-    const onBrandSelected = brand => 
-        setAndRefetch({ 
-            ...selected_filters,
-            brands: selected_filters.brands.includes(brand) ? selected_filters.brands.filter( str => str !== brand) : [...selected_filters.brands, brand]
-        })   
-    
+        
     return [
         filter_tags,
         selected_filters,
         loading,
         error,
       {
-        onCategorySelected,
-        onStoreSelected,
-        onBrandSelected 
+        onFilterTagSelected
       }
     ]
 }
-
-/*
-
-this jfiddle demonstrates how to use a single handler for updating category/brands/stores
-wrap var containing the key name in object to extract key name
-
-const b = {
-	z: [],
-	b: ["b", "c"],
-	c: ["d", "e"]
-}
-
-const exclusive = (input, key) => b[key].includes(input) ? [] : [input]
-const inclusive = (input, key) => b[key].includes(input) ? b[key].filter( str => str !== input) : [...b[key], input]
-
-const a = (varName,input, multi_select = false)=>{
-
-  const key = Object.keys(varName).pop()
-  
-  const c = {
-  ...b,
-  }
-  
-  c[key] = !multi_select ? exclusive(input, key) : inclusive(input, key) 
-  console.log(c)
-  
-	
-}
-
-let z = "c"
-
-a({z}, z, false)
-
-*/

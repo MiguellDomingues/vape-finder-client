@@ -2,6 +2,8 @@ import './search_bar.css'
 
 import { useSearchBar } from './useSearchBar.js'
 
+import { FILTER_KEYS } from '../../App.js'
+
 function SearchBar( {refetch} ){
 
     const [
@@ -9,11 +11,7 @@ function SearchBar( {refetch} ){
        selected_filters,
         loading,
         error,
-        {
-            onCategorySelected,
-            onStoreSelected,
-            onBrandSelected 
-        }
+        { onFilterTagSelected }
      ] = useSearchBar(refetch)
 
     const { category_tags, brands_tags, stores_tags } = filter_tags
@@ -25,9 +23,9 @@ function SearchBar( {refetch} ){
     return (<>
 
         <div className="search_bar_categories">
-            <DropDownMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onCategorySelected} />
-            <DropDownMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onBrandSelected} />
-            <DropDownMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onStoreSelected} />
+            <DropDownMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)} />
+            <DropDownMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} />
+            <DropDownMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} />
             <span className="about cursor_hand">About</span>      
         </div> 
     </>)
