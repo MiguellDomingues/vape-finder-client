@@ -106,7 +106,7 @@ const client = new ApolloClient({
           observable,
         }
       ) {
-        console.log("////INSIDE NEXTFETCHPOLICY////")
+       // console.log("////INSIDE NEXTFETCHPOLICY////")
         return currentFetchPolicy ;
       },
     },

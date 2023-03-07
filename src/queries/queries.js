@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+/*
 export const GET_PRODUCTS = gql`
     query FindProduct($query: ProductQueryInput!, $limit: Int,$sortBy: ProductSortByInput) {
         products(query: $query, limit: $limit,sortBy: $sortBy)  {
@@ -9,6 +10,7 @@ export const GET_PRODUCTS = gql`
         }   
     }
 `;
+*/
 
 export const GET_SEARCH_TYPES = gql`
     query FindTagmetadatum($query: TagmetadatumQueryInput!) {  
