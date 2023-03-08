@@ -43,8 +43,10 @@ export function buildAtlasGQLQuery(filters = {}, sorting = {} ){
   }
 
 export const PAGE_LIMIT = 5
+export const TIMEOUT = 3000
+
 ///////////////////////////////////////////////////////////////
-const starting_filters = { category: [], brands: [], stores: [], sort_by : "NONE" }
+export const starting_filters = { category: [], brands: [], stores: [], sort_by : "NONE" }
 const starting_query = { input: {limit: PAGE_LIMIT } }
 
 
@@ -56,7 +58,8 @@ function App( {SHOW_DOB_POPUP} ) {
   //const cardScroll = useRef(null); REFS ONLY WORK WITH CLASSES (BECAUSE THEY HAVE INSTANCES?) https://reactjs.org/docs/refs-and-the-dom.html
 
   const [selected_filters, setFilters] = useState(starting_filters);
-  
+  const [timer, setTimer] = useState(null);
+
   const query = useQuery(GET_SORTED_PRODUCTS, { variables: { ...starting_filters, ...starting_query}, 
     notifyOnNetworkStatusChange: true, }, 
   {
@@ -64,15 +67,22 @@ function App( {SHOW_DOB_POPUP} ) {
     nextFetchPolicy: 'cache-first', 
   });
 
-  const setAndRefetch = (selected_filters = starting_filters) => {
+  const setAndRefetch = (selected_filters = starting_filters, timeout = TIMEOUT) => {
 
     console.log("SELECTED_FILTERS: ", selected_filters)
-    setFilters(selected_filters) 
+    setFilters(selected_filters)
     
+    if(timer && (Date.now() - timer.time <= TIMEOUT)) 
+      clearTimeout(timer.time_out)
+
+    setTimer({time: Date.now(), time_out: setTimeout(() =>{
+      console.log("EXECUTING TIMEOUT SELECTED_FILTERS: ", selected_filters)  
     //https://reactpatterns.js.org/docs/accessing-a-child-component
     //call a method on child to invoke this method
-    document.getElementById('cardContainer').scroll({top:0});
-    query.refetch( {...selected_filters, ...buildAtlasGQLQuery(selected_filters) } ) 
+      document.getElementById('cardContainer').scroll({top:0});
+      query.refetch( {...selected_filters, ...buildAtlasGQLQuery(selected_filters) } ) 
+      setTimer(null)
+    }, timeout)})
 }
 
 const selected_filters_handlers = {

@@ -1,6 +1,6 @@
 import './footer.css'
 
-import { FILTER_KEYS } from '../../App.js'
+import { FILTER_KEYS, starting_filters } from '../../App.js'
 
 function Footer( {refetch} ) {
 
@@ -19,7 +19,7 @@ function Footer( {refetch} ) {
       {!areFiltersSelected ?
           <> No Filters Selected !</> 
         :
-          <> <button onClick={ (e)=>setAndRefetch() }>Clear</button> <br/>
+          <> <button onClick={ (e)=>setAndRefetch({...starting_filters}, 0) }>Clear</button> <br/>
              <PillContainer pills={category} handleRemove={handleRemove(FILTER_KEYS.CATEGORIES)} dec_str={"Categories"} />
              <PillContainer pills={brands} handleRemove={handleRemove(FILTER_KEYS.BRANDS)} dec_str={"Brands"} />
              <PillContainer pills={stores} handleRemove={handleRemove(FILTER_KEYS.STORES)} dec_str={"Stores"} />
