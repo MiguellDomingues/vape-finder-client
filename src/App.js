@@ -3,8 +3,8 @@ import Footer from './components/footer/Footer'
 import Header from './components/header/Header'
 import Body from './components/body/Body'
 import VertifyAge from './components/vertifyAge/vertifyAge'
-import { useQuery, useApolloClient, useLazyQuery } from '@apollo/client' 
-import {useState, useRef} from 'react'
+import { useApolloClient, useLazyQuery } from '@apollo/client' 
+import {useState, useRef, useEffect } from 'react'
 import { GET_SORTED_PRODUCTS } from './queries/queries.js'
 
 import './app.css'
@@ -42,7 +42,7 @@ export function buildAtlasGQLQuery(filters = {}, sorting = {} ){
     return {input}
   }
 
-export const PAGE_LIMIT = 5
+export const PAGE_LIMIT = 10
 export const TIMEOUT = 3000
 
 ///////////////////////////////////////////////////////////////
@@ -52,18 +52,17 @@ const starting_query = { input: {limit: PAGE_LIMIT, sort_by:"NONE" } }
 
 function App( {SHOW_DOB_POPUP} ) {
 
-  /*
-  useApolloClient().writeQuery({
-    query: GET_SORTED_PRODUCTS,
-    variables:  { category: ["A"], brands: ["B"], stores: ["C"], sort_by : "D" } ,
-    data: {getSortedProducts: [{_id:"1"}, {_id:"2"}]},
-  });
-  */
  const client = useApolloClient()
 
- //const [getProducts, { loading, error, data }] = useLazyQuery(GET_SORTED_PRODUCTS);
+ const [getProducts, { loading, error, data,fetchMore }] = useLazyQuery(GET_SORTED_PRODUCTS);
 
- //console.log("-----------TESTING LAZY QUERY: ---------------------", loading, error, data)
+ //run once upon app load
+ useEffect(() => {
+  getProducts({ 
+    variables: {  ...starting_query  } , 
+    notifyOnNetworkStatusChange: true, }, 
+    {fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first', })
+  },[] );
 
   //const { SHOW_DOB_POPUP } = env_configs
   console.log("/////// APP RERENDER ///////")
@@ -73,13 +72,6 @@ function App( {SHOW_DOB_POPUP} ) {
   const [selected_filters, setFilters] = useState(starting_filters);
 
   const timer = useRef(null)
-
-  const query = useQuery(GET_SORTED_PRODUCTS, { variables: { ...starting_query},
-    notifyOnNetworkStatusChange: true, }, 
-  {
-    fetchPolicy: 'cache-first', 
-    nextFetchPolicy: 'cache-first', 
-  });
 
   const setAndRefetch = (selected_filters = starting_filters, timeout = TIMEOUT) => {
 
@@ -95,24 +87,11 @@ function App( {SHOW_DOB_POPUP} ) {
     //call a method on child to invoke this method
       document.getElementById('cardContainer').scroll({top:0});
 
-      //getProducts({ variables: {  input: {categories: ["Mods"],sort_by: "NONE",limit: 5}} }, 
-     // {
-      //  fetchPolicy: 'cache-first', 
-      //  nextFetchPolicy: 'cache-first', 
-     // })
-//{
-  
+      getProducts({ 
+        variables: {  ...buildAtlasGQLQuery(selected_filters) } , 
+        notifyOnNetworkStatusChange: true, }, 
+        {fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first', })
 
-      //const cache = client.readQuery({
-       // query: GET_SORTED_PRODUCTS ,
-       // variables: {...buildAtlasGQLQuery(selected_filters)},
-       //  });
-  
-     // console.log("CACHE QUERY RESULT: ", cache)
-
-      //SWITCH THIS TO USE A LAZY QUERY?
-      query.refetch( {  ...buildAtlasGQLQuery(selected_filters) } ) //api docs specify that the fetchpolicy for this is NETWORK-ONLY
-    
       timer.current = null
     }, timeout)}
 }
@@ -122,7 +101,12 @@ const selected_filters_handlers = {
     setAndRefetch,
 }
 
-//console.log("///selected filters: ", selected_filters)
+const query ={
+  fetchMore,
+  loading, 
+  error, 
+  data
+}
 
 //const g = component => {cardScroll = component }
 //ref={cardScroll}

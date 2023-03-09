@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, } from '@apollo/client'
 import * as Realm from "realm-web";
 
 const env_configs = {
@@ -37,11 +37,8 @@ async function getValidAccessToken() {
   if (!app.currentUser) {
     // If no user is logged in, log in an anonymous user. The logged in user will have a valid
     // access token.
-    //console.log("aaaaa", app)
     await app.logIn(Realm.Credentials.anonymous());
-    //console.log(b) 
   } else {
-   // console.log("bbbbb")
     // An already logged in user's access token might be stale. To guarantee that the token is
     // valid, we refresh the user's custom data which also refreshes their access token.
     await app.currentUser.refreshCustomData();
@@ -61,7 +58,6 @@ const client = new ApolloClient({
     fetch: async (uri, options) => {
       const accessToken = await getValidAccessToken();
       options.headers.Authorization = `Bearer ${accessToken}`;
-      //console.log("ACCESS TOKEN: ", accessToken)
       return fetch(uri, options);
     },
   }),
@@ -72,14 +68,14 @@ const client = new ApolloClient({
       },
       Query: {
         fields: {
-
           getSortedProducts: {
-           read(existing, { args, toReference }) {
-            console.log("CACHE READ: existing: ", existing)
-            return existing;
+           read(existing, { args, toReference }) { //read() is always executed before the callout, and then again after callout, and then merge() is called
+            //console.log("CACHE READ: args: ", args, " existing: ", existing)
+            //debugger;
+            return existing;      
           },
-
-            keyArgs: ["category", "brands", "stores", "sort_by"],             
+          //keyArgs: ["input", ["categories","brands","last_product_ids","stores","last_product_price","limit","sort_by"]] //the values of these args in input{} determine the cache retreival key
+            keyArgs: ["input", ["categories","brands","stores","sort_by"]], //this pattern is how to define keys nested within an object:(input:{categories, brands, stores, sort_by,})          
             merge(existing = [], incoming) {
               console.log("CACHE MERGE: existing: ", existing.length, " incoming: ", incoming)
               return [...existing, ...incoming];
@@ -90,25 +86,10 @@ const client = new ApolloClient({
     }
   }),
   defaultOptions: {
-    watchQuery: {
-      nextFetchPolicy(
-        currentFetchPolicy,
-        {
-          // Either "after-fetch" or "variables-changed", indicating why the
-          // nextFetchPolicy function was invoked.
-          reason,
-          // The rest of the options (currentFetchPolicy === options.fetchPolicy).
-          options,
-          // The original value of options.fetchPolicy, before nextFetchPolicy was
-          // applied for the first time.
-          initialPolicy,
-          // The ObservableQuery associated with this client.watchQuery call.
-          observable,
-        }
-      ) {
-       // console.log("////INSIDE NEXTFETCHPOLICY////")
-        return currentFetchPolicy ;
-      },
+      watchQuery: {
+        nextFetchPolicy(currentFetchPolicy) {
+          return currentFetchPolicy;
+        },
     },
   },
 });
@@ -126,3 +107,28 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+/*
+nextFetchPolicy(
+        currentFetchPolicy,
+        {
+          // Either "after-fetch" or "variables-changed", indicating why the
+          // nextFetchPolicy function was invoked.
+          reason,
+          // The rest of the options (currentFetchPolicy === options.fetchPolicy).
+          options,
+          // The original value of options.fetchPolicy, before nextFetchPolicy was
+          // applied for the first time.
+          initialPolicy,
+          // The ObservableQuery associated with this client.watchQuery call.
+          observable,
+        }
+      ) {
+       // console.log("////INSIDE NEXTFETCHPOLICY////")
+       // console.log("initialPolicy", initialPolicy)
+       // console.log("reason: ", reason)
+       // console.log("options:", options)
+        //currentFetchPolicy.options.fetchPolicy = "cache-first"
+        return currentFetchPolicy ;
+      }
+*/

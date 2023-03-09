@@ -3,12 +3,10 @@ import CardList from '.././cardList/CardList.js'
 
 function Body( {query, selected_filters_handlers} ) {
 
-  let { loading, error, data } = query
+  let { loading, error, data,fetchMore } = query
 
   console.log("data: ", data)
   console.log("loading: ", loading)
-
-  const { fetchMore } = query
 
   return(
     <main className="body">
