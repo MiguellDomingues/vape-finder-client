@@ -3,8 +3,8 @@ import Footer from './components/footer/Footer'
 import Header from './components/header/Header'
 import Body from './components/body/Body'
 import VertifyAge from './components/vertifyAge/vertifyAge'
-import { useQuery, useApolloClient, } from '@apollo/client' 
-import {useState} from 'react'
+import { useQuery, useApolloClient, useLazyQuery } from '@apollo/client' 
+import {useState, useRef} from 'react'
 import { GET_SORTED_PRODUCTS } from './queries/queries.js'
 
 import './app.css'
@@ -23,7 +23,7 @@ export const FILTER_KEYS = {
 }
 
 export function buildAtlasGQLQuery(filters = {}, sorting = {} ){
-    console.log("SELECTED_FILTERS in BUILD_QUERY: ", filters)
+    //console.log("SELECTED_FILTERS in BUILD_QUERY: ", filters)
 
     const input = {}
 
@@ -47,10 +47,23 @@ export const TIMEOUT = 3000
 
 ///////////////////////////////////////////////////////////////
 export const starting_filters = { category: [], brands: [], stores: [], sort_by : "NONE" }
-const starting_query = { input: {limit: PAGE_LIMIT } }
+const starting_query = { input: {limit: PAGE_LIMIT, sort_by:"NONE" } }
 
 
 function App( {SHOW_DOB_POPUP} ) {
+
+  /*
+  useApolloClient().writeQuery({
+    query: GET_SORTED_PRODUCTS,
+    variables:  { category: ["A"], brands: ["B"], stores: ["C"], sort_by : "D" } ,
+    data: {getSortedProducts: [{_id:"1"}, {_id:"2"}]},
+  });
+  */
+ const client = useApolloClient()
+
+ //const [getProducts, { loading, error, data }] = useLazyQuery(GET_SORTED_PRODUCTS);
+
+ //console.log("-----------TESTING LAZY QUERY: ---------------------", loading, error, data)
 
   //const { SHOW_DOB_POPUP } = env_configs
   console.log("/////// APP RERENDER ///////")
@@ -58,9 +71,10 @@ function App( {SHOW_DOB_POPUP} ) {
   //const cardScroll = useRef(null); REFS ONLY WORK WITH CLASSES (BECAUSE THEY HAVE INSTANCES?) https://reactjs.org/docs/refs-and-the-dom.html
 
   const [selected_filters, setFilters] = useState(starting_filters);
-  const [timer, setTimer] = useState(null);
 
-  const query = useQuery(GET_SORTED_PRODUCTS, { variables: { ...starting_filters, ...starting_query}, 
+  const timer = useRef(null)
+
+  const query = useQuery(GET_SORTED_PRODUCTS, { variables: { ...starting_query},
     notifyOnNetworkStatusChange: true, }, 
   {
     fetchPolicy: 'cache-first', 
@@ -72,17 +86,35 @@ function App( {SHOW_DOB_POPUP} ) {
     console.log("SELECTED_FILTERS: ", selected_filters)
     setFilters(selected_filters)
     
-    if(timer && (Date.now() - timer.time <= TIMEOUT)) 
-      clearTimeout(timer.time_out)
+    if(timer.current && (Date.now() - timer.current.time <= TIMEOUT)) 
+      clearTimeout(timer.current.time_out)
 
-    setTimer({time: Date.now(), time_out: setTimeout(() =>{
+      timer.current = {time: Date.now(), time_out: setTimeout(() =>{
       console.log("EXECUTING TIMEOUT SELECTED_FILTERS: ", selected_filters)  
     //https://reactpatterns.js.org/docs/accessing-a-child-component
     //call a method on child to invoke this method
       document.getElementById('cardContainer').scroll({top:0});
-      query.refetch( {...selected_filters, ...buildAtlasGQLQuery(selected_filters) } ) 
-      setTimer(null)
-    }, timeout)})
+
+      //getProducts({ variables: {  input: {categories: ["Mods"],sort_by: "NONE",limit: 5}} }, 
+     // {
+      //  fetchPolicy: 'cache-first', 
+      //  nextFetchPolicy: 'cache-first', 
+     // })
+//{
+  
+
+      //const cache = client.readQuery({
+       // query: GET_SORTED_PRODUCTS ,
+       // variables: {...buildAtlasGQLQuery(selected_filters)},
+       //  });
+  
+     // console.log("CACHE QUERY RESULT: ", cache)
+
+      //SWITCH THIS TO USE A LAZY QUERY?
+      query.refetch( {  ...buildAtlasGQLQuery(selected_filters) } ) //api docs specify that the fetchpolicy for this is NETWORK-ONLY
+    
+      timer.current = null
+    }, timeout)}
 }
 
 const selected_filters_handlers = {
@@ -90,7 +122,7 @@ const selected_filters_handlers = {
     setAndRefetch,
 }
 
-console.log("///selected filters: ", selected_filters)
+//console.log("///selected filters: ", selected_filters)
 
 //const g = component => {cardScroll = component }
 //ref={cardScroll}
@@ -107,6 +139,13 @@ console.log("///selected filters: ", selected_filters)
 }
 
 export default App;
+
+  /*
+  const cachedData = useApolloClient().readQuery({
+    query: GET_SORTED_PRODUCTS,
+    variables: { ...starting_filters, ...starting_query},
+  });
+  */
 
 /*
     result = client.refetchQueries({

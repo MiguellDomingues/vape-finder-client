@@ -1,5 +1,5 @@
 
-import {useState, useEffect, useRef} from 'react'
+import { useEffect, useRef } from 'react'
 import { PAGE_LIMIT, SORT_TYPE, buildAtlasGQLQuery } from '../../App.js'
 
 function useCardList(products, selected_filters, fetchMore, setAndRefetch, loading ) {
@@ -7,15 +7,14 @@ function useCardList(products, selected_filters, fetchMore, setAndRefetch, loadi
   console.log("////usecardlist: ", selected_filters)
 
   const sortSelect = useRef(null);
-
-  const [last_product_id, setLPID] = useState("");
+  const last_product_id = useRef(null)
 
   useEffect(() => { if(!loading) sortSelect.current.value = selected_filters.sort_by }, ); 
   
   const sortSelected = (e) => { 
     console.log(e.target.value)
     selected_filters.sort_by = e.target.value
-    setLPID("")
+    last_product_id.current = ""
     setAndRefetch({...selected_filters})
   }
   
@@ -33,12 +32,12 @@ function useCardList(products, selected_filters, fetchMore, setAndRefetch, loadi
         return { last_product_price,last_product_ids }
       }
 
-      setLPID(lpid)
+      last_product_id.current = lpid
 
       if(selected_filters.sort_by === SORT_TYPE.NONE){
-        fetchMore({ variables: { ...selected_filters, ...buildAtlasGQLQuery(selected_filters, {last_product_ids: [lpid]})},})
+        fetchMore({ variables: { ...buildAtlasGQLQuery(selected_filters, {last_product_ids: [lpid]})},})
       }else if(selected_filters.sort_by === SORT_TYPE.ASC || selected_filters.sort_by === SORT_TYPE.DESC){ 
-        fetchMore({ variables: { ...selected_filters, ...buildAtlasGQLQuery(selected_filters, getSortParams(products))},})
+        fetchMore({ variables: {  ...buildAtlasGQLQuery(selected_filters, getSortParams(products))},})
       }    
     }
   }
