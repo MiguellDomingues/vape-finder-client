@@ -16,14 +16,14 @@ function Footer( {refetch} ) {
       [filter_key]: selected_filters[filter_key].filter( str => str !== pill_str)})}
   
     return (<footer className="footer">
-      {!areFiltersSelected ?
+      {/*!areFiltersSelected ?
           <> No Filters Selected !</> 
         :
           <> <button onClick={ (e)=>setAndRefetch({...starting_filters}, 0) }>Clear</button> <br/>
              <PillContainer pills={category} handleRemove={handleRemove(FILTER_KEYS.CATEGORIES)} dec_str={"Categories"} />
              <PillContainer pills={brands} handleRemove={handleRemove(FILTER_KEYS.BRANDS)} dec_str={"Brands"} />
              <PillContainer pills={stores} handleRemove={handleRemove(FILTER_KEYS.STORES)} dec_str={"Stores"} />
-          </>}     
+    </>*/}     
     </footer>);
   }
 
