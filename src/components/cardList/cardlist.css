@@ -9,6 +9,8 @@
         border-radius: 10px;
         margin-top: 5px;
         margin-bottom: 5px;
+        min-width: 83%;
+        
 }
 
 @media only screen and (max-width: 481px) {
@@ -39,15 +41,7 @@
       }
       
   }
-
-.dropdown {
-  position: absolute;
-  z-index: 1;
-  transform: translate(420%, -147%);
-  font-size: 10px;
- 
-}
-
+  
 .spinner_middle{
   position: absolute;
   z-index: 1;

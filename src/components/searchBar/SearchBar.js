@@ -1,10 +1,8 @@
 import './search_bar.css'
-
 import { useSearchBar } from './useSearchBar.js'
-
 import { FILTER_KEYS } from '../../App.js'
 
-function SearchBar( {refetch} ){
+function SearchBar( {selected_filters_handlers} ){
 
     const [
        filter_tags,
@@ -12,7 +10,7 @@ function SearchBar( {refetch} ){
         loading,
         error,
         { onFilterTagSelected }
-     ] = useSearchBar(refetch)
+     ] = useSearchBar(selected_filters_handlers)
 
     const { category_tags, brands_tags, stores_tags } = filter_tags
     const { category, stores, brands, } = selected_filters
@@ -22,12 +20,15 @@ function SearchBar( {refetch} ){
 
     return (<>
 
-        <div className="search_bar_categories">
+        {
+            //<div className="search_bar_categories">
+                }
             <DropDownMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)} />
             <DropDownMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} />
-            <DropDownMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} />
-            <span className="about cursor_hand">About</span>      
-        </div> 
+            <DropDownMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} />    
+    {
+    //</div>
+    } 
     </>)
 }
 
@@ -37,7 +38,7 @@ function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
 
     const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected" : ""
 
-    return(<div className="brands cursor_hand">
+    return(<div className="dropdown_container cursor_hand">
     {title}
     <div className="dropdown-arrow"></div>
     <div className="dropdown-content">    

@@ -25,6 +25,16 @@
     font-size: 50px;
 }
 
+.about{
+    display: block;
+    margin-left: 5px;
+    margin-right: 5px;  
+}
+
+.cursor_hand{
+    cursor: pointer;
+}
+
 /*** pull out later ***/
 
 .container_search_bar{

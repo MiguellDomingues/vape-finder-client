@@ -1,5 +1,4 @@
 import './header.css'
-import SearchBar from '../searchBar/SearchBar.js'
 
 const img_src = '../../../health_warning.webp';
 
@@ -15,14 +14,14 @@ function Header( {refetch} ) {
           alt="Health_Warning">
         </img>
      
-        <span className="header_title">BC VAPE FINDER</span>
       </div>
 
       
      <div><hr/></div>
       
       <div className="container_search_bar">
-        <SearchBar refetch={refetch}/>
+      <span className="header_title">BC VAPE FINDER</span>
+        <span className="about cursor_hand">About</span>    
       </div>
 
     </div></>);
