@@ -2,6 +2,7 @@
 import Footer from './components/footer/Footer'
 import Header from './components/header/Header'
 import Body from './components/body/Body'
+import PillContainer from './components/pillContainer/PillContainer'
 import VertifyAge from './components/vertifyAge/vertifyAge'
 import { useApolloClient, useLazyQuery } from '@apollo/client' 
 import {useState, useRef, useEffect } from 'react'
@@ -108,6 +109,10 @@ const query ={
   data
 }
 
+
+
+
+
 //const g = component => {cardScroll = component }
 //ref={cardScroll}
   return (
@@ -115,6 +120,9 @@ const query ={
           <VertifyAge enabled={SHOW_DOB_POPUP}/>
           <div className="app">     
             <Header refetch={selected_filters_handlers}/>
+            <div>
+              <PillContainer selected_filters_handlers={selected_filters_handlers} />
+            </div>      
             <Body query={query} selected_filters_handlers={selected_filters_handlers}/> 
             <Footer refetch={selected_filters_handlers}/>
           </div>
@@ -124,7 +132,37 @@ const query ={
 
 export default App;
 
+
+
+
   /*
+
+  function handleRemove(filter_key){ //this closure returns a function with the selected_category key already set by the parent Footer component
+  return pill_str =>
+  setAndRefetch({ 
+    ...selected_filters,
+    [filter_key]: selected_filters[filter_key].filter( str => str !== pill_str)})}
+
+   <PillList pills={category} handleRemove={handleRemove(FILTER_KEYS.CATEGORIES)} dec_str={""}/>
+            <PillList pills={brands} handleRemove={handleRemove(FILTER_KEYS.BRANDS)} dec_str={""} />
+            <PillList pills={stores} handleRemove={handleRemove(FILTER_KEYS.STORES)} dec_str={""} />
+
+function PillList( {pills, handleRemove, dec_str} ) {
+  const insertWhitespace = num => new Array(num).fill('\u00A0', 0, num).join('')
+  return (<div>
+    {//pills?.length > 0 && <>{dec_str}: {insertWhitespace(2)}</>
+    } 
+        {pills.map( (str, idx)=> <Pill key={idx} str={str} removePill={handleRemove}/>)}
+        </div>);
+}
+
+function Pill( {str, removePill} ) { 
+  return (<div className="pill"> {str}&nbsp;
+      <span className="pill_close_container" onClick={ e => removePill(str) }>
+        &#x00d7;
+      </span>
+  </div>); }
+
   const cachedData = useApolloClient().readQuery({
     query: GET_SORTED_PRODUCTS,
     variables: { ...starting_filters, ...starting_query},

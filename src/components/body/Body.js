@@ -30,17 +30,21 @@ function Body( {query, selected_filters_handlers} ) {
     <main className="body">
       {////to be moved into a seperate component
       }
+      {error && <>Error! {error.message}</>}
+
       <div className="filter_sidebar">
 
-        <SearchBar selected_filters_handlers={selected_filters_handlers}/>
-        <select className='dropdown' onChange={sortSelected} value={selected_filters.sort_by }>
+         <SearchBar selected_filters_handlers={selected_filters_handlers}/>
+
+          <select className='dropdown' onChange={sortSelected} value={selected_filters.sort_by }>
             <option value={SORT_TYPE.NONE}>None</option>
             <option value={SORT_TYPE.DESC}>Price: High to Low</option>
             <option value={SORT_TYPE.ASC}>Price: Low to High</option>
-        </select>
+          </select>
 
       </div>
-      {error && <>Error! {error.message}</>}
+
+
       <CardList
         setLPID={setLPID}
         lpid={last_product_id}
@@ -48,6 +52,7 @@ function Body( {query, selected_filters_handlers} ) {
         fetchMore={fetchMore} 
         loading={loading} 
         selected_filters_handlers={selected_filters_handlers}/>
+
     </main>
   );
 }
