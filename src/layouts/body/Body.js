@@ -1,7 +1,7 @@
 import './body.css'
 import { useRef } from 'react'
-import CardList from '.././cardList/CardList.js'
-import SideBar from '.././sideBar/SideBar.js'
+import CardList from '../../components/cardList/CardList.js'
+import SideBar from '../../components/sideBar/SideBar.js'
 //import { SORT_TYPE } from '../../App.js';
 
 function Body( {query, selected_filters_handlers} ) {
