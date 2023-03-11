@@ -43,7 +43,7 @@ export function buildAtlasGQLQuery(filters = {}, sorting = {} ){
     return {input}
   }
 
-export const PAGE_LIMIT = 10
+export const PAGE_LIMIT = 11
 export const TIMEOUT = 3000
 
 ///////////////////////////////////////////////////////////////

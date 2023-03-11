@@ -3,7 +3,11 @@ import Card from '../card/Card'
 import useCardList from './useCardList'
 import { SpinnerDotted } from 'spinners-react';
 
-function CardList( { setLPID, lpid, products, loading, fetchMore, selected_filters_handlers } ) {
+function CardList( { setLPID, lpid, query, selected_filters_handlers } ) {
+
+  const { loading, error, data, fetchMore } = query
+
+  const products = data ? data.getSortedProducts : []
 
   console.log("CARDLIST PRODUCTS: ", products)
 
@@ -13,6 +17,8 @@ function CardList( { setLPID, lpid, products, loading, fetchMore, selected_filte
     { 
       handleScroll, 
     } ] = useCardList(products, selected_filters, fetchMore, setAndRefetch, loading, lpid, setLPID )
+
+  if(error) return <>Error! {error.message}</>
 
   return (
     <div className="card_container" id="cardContainer" onScroll={handleScroll}>
