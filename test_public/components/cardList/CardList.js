@@ -1,9 +1,41 @@
-import './card.css'
+import './cardlist.css'
+import useCardList from '../../hooks/useCardList'
+import { SpinnerDotted } from 'spinners-react';
+
+const img_src = '../../../demo.webp';
+
+function CardList( { query, selected_filters_handlers } ) {
+
+  const { loading, error, data, fetchMore } = query
+
+  const products = data ? data.getSortedProducts : []
+
+  console.log("CARDLIST PRODUCTS: ", products)
+
+  const { selected_filters } = selected_filters_handlers
+
+  const [
+    { 
+      handleScroll, 
+    } ] = useCardList(products, selected_filters, fetchMore )
+
+  if(error) return <>Error! {error.message}</>
+
+  return (
+    <div className="card_container" id="cardContainer" onScroll={handleScroll}>
+        {loading && <div className={"spinner_middle"}><SpinnerDotted/></div>}   
+        {products.map( (product, idx)=> 
+          <Card key={idx} product={product}/>)}   
+    </div>
+  );
+}
+
+export default CardList
 
 //can also link images using import or require() 
 //import demoImage from './demo.webp'; 
 
-const img_src = '../../../demo.webp';
+
 
 function Card( {product} ) {
   //const {id, name, brand, category, img, price, last_updated, source} = product
@@ -41,6 +73,3 @@ function Card( {product} ) {
     </div>
   );
 }
-
-export default Card;
-

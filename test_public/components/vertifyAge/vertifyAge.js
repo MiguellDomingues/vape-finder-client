@@ -2,13 +2,13 @@ import './vertifyAge.css'
 
 import useVertifyAge from './useVertifyAge'
 
-function VertifyAge(){
+function VertifyAge( { enabled } ){
 
   const 
   [
     birth_date, show, error,
     { onChange, validateInput }
-  ] = useVertifyAge()
+  ] = useVertifyAge(enabled)
 
   //an example of JSX spread attributes
   //move all the common props into an object as keys

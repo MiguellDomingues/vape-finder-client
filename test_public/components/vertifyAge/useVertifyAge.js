@@ -1,12 +1,12 @@
 import {useState} from 'react'
 import moment from 'moment'
 
-function useVertifyAge(){
+function useVertifyAge(enabled){
 
     const min_age = 19
   
     const [birth_date, setBirthDate] = useState({year: "" , month: "", day: ""})
-    const [show, setShow] = useState(true)
+    const [show, setShow] = useState(enabled)
     const [error, setError] = useState("")
   
     const onChange = e => setBirthDate( {...birth_date,[e.target.name]: e.target.value} )

@@ -3,7 +3,7 @@ import { GET_SEARCH_TYPES } from '../../queries/queries.js'
 
 const MIN_ITEM_COUNT = 5
 
-export const useSearchBar = ( selected_filters_handlers  ) =>{
+export const useFilters = ( selected_filters_handlers  ) =>{
 
     const { selected_filters, setAndRefetch } = selected_filters_handlers 
 

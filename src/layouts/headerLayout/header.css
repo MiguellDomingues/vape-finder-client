@@ -1,0 +1,105 @@
+.container_header{
+  display: flex; 
+  height: 20vh;
+  flex-direction: column;
+  align-items: stretch;   
+}
+
+.top{   
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 60%;  
+}
+
+.header_title{
+  font-style: italic; 
+  font-size: 50px;
+}
+
+/*** pull out later ***/
+
+.bottom{
+  height: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.warning_img{
+  width: 100%;
+  height: auto
+}
+
+@media only screen and (max-width: 481px) {  
+  .header_title{ 
+    font-size: 33px;
+  }   
+}
+
+.modal {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 25%;
+  padding-left: 5%;
+  
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.filter_pill{
+  display: flex;
+}
+
+.close {
+  display: flex;
+  align-self: flex-end;
+  font-size: 20px !important;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-content{
+  background-color: lightgray;
+  display: flex;      
+  padding: 10px;   
+  border-radius: 10px;
+  max-width: 86%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: fit-content;
+  height: fit-content;
+  font-size: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

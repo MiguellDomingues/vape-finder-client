@@ -24,15 +24,17 @@ function PillContainer( {selected_filters_handlers} ){
     </div>)
 }
 
+export default PillContainer;
+
 function PillList( {pills, handleRemove} ) {
     return (<>{pills.map( (str, idx)=> <Pill key={idx} str={str} removePill={handleRemove}/>)}</>);
 }
   
-  function Pill( {str, removePill} ) { 
+function Pill( {str, removePill} ) { 
     return (<div className="pill"> <span className="pill_str">{str}</span>&nbsp;
         <span className="pill_close_container" onClick={ e => removePill(str) }>&#x00d7;</span>
-    </div>); }
+</div>); }
 
-export default PillContainer;
+
 
   //const insertWhitespace = num => new Array(num).fill('\u00A0', 0, num).join('') div className="pill_list"

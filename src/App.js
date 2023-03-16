@@ -1,57 +1,21 @@
 
-import Footer from './layouts/footer/Footer'
-import Header from './layouts/header/Header'
-import Body from './layouts/body/Body'
-import PillContainer from './components/pillContainer/PillContainer'
-import VertifyAge from './components/vertifyAge/vertifyAge'
 import { useApolloClient, useLazyQuery } from '@apollo/client' 
 import {useState, useRef, useEffect } from 'react'
+import { useMediaQuery } from 'react-responsive';
 import { GET_SORTED_PRODUCTS } from './queries/queries.js'
+
+import Layout from './layout'
+
+import { starting_query, starting_filters, TIMEOUT, buildAtlasGQLQuery } from './utils'
 
 import './app.css'
 
-//CONSTANTS///////////////////////////////////////////////////////////
-export const SORT_TYPE = {
-  NONE: "NONE",
-  ASC: "ASC",
-  DESC: "DESC"
-}
-
-export const FILTER_KEYS = {
-  CATEGORIES: "category",
-  BRANDS: "brands",
-  STORES: "stores"
-}
-
-export function buildAtlasGQLQuery(filters = {}, sorting = {} ){
-    //console.log("SELECTED_FILTERS in BUILD_QUERY: ", filters)
-
-    const input = {}
-
-    if(filters.category?.length > 0) input["categories"] = [...filters.category]
-    if(filters.brands?.length > 0)   input["brands"] = [...filters.brands]
-    if(filters.stores?.length > 0)   input["stores"] = [...filters.stores]
-    if(filters.sort_by)              input["sort_by"] = filters.sort_by
-
-    if(sorting.last_product_ids?.length > 0) input["last_product_ids"] = sorting.last_product_ids  
-    if(sorting.last_product_price)           input["last_product_price"] = sorting.last_product_price
-
-    input["limit"] = PAGE_LIMIT
-
-    console.log("QUERY: ", {input: input})
-
-    return {input}
-  }
-
-export const PAGE_LIMIT = 11
-export const TIMEOUT = 3000
-
-///////////////////////////////////////////////////////////////
-export const starting_filters = { category: [], brands: [], stores: [], sort_by : "NONE" }
-const starting_query = { input: {limit: PAGE_LIMIT, sort_by:"NONE" } }
-
-
 function App( {SHOW_DOB_POPUP} ) {
+
+const isDesktop = useMediaQuery({ minWidth: 800 });
+const isMobile = useMediaQuery({ maxWidth: 800 });
+
+//const isDesktop = useMediaQuery({ minWidth: 800 });
 
  const client = useApolloClient()
 
@@ -73,10 +37,13 @@ function App( {SHOW_DOB_POPUP} ) {
   const [selected_filters, setFilters] = useState(starting_filters);
 
   const timer = useRef(null)
+  //const last_product_id = useRef(null)
+
+  //const setLPID = (lpid) => last_product_id.current = lpid //update the ref with the id of the last item on the current page
 
   const setAndRefetch = (selected_filters = starting_filters, timeout = TIMEOUT) => {
 
-    console.log("SELECTED_FILTERS: ", selected_filters)
+    //console.log("SELECTED_FILTERS: ", selected_filters)
     setFilters(selected_filters)
     
     if(timer.current && (Date.now() - timer.current.time <= TIMEOUT)) 
@@ -88,18 +55,34 @@ function App( {SHOW_DOB_POPUP} ) {
     //call a method on child to invoke this method
       document.getElementById('cardContainer').scroll({top:0});
 
+      const cache2 = client.readQuery({
+         query: GET_SORTED_PRODUCTS ,
+         variables: { ...buildAtlasGQLQuery(selected_filters) },
+         });
+  
+          console.log("CACHE QUERY: ", cache2)
+
       getProducts({ 
         variables: {  ...buildAtlasGQLQuery(selected_filters) } , 
         notifyOnNetworkStatusChange: true, }, 
         {fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first', })
 
       timer.current = null
+      //BUG. WHENEVER I SWITCH TO ANOTHER SELECTION, paginate stuff AND SWITCH BACK (WITH SORT_TO = NONE), THE LAST_PRODUCT_ID IS NULL AND CAUSES DUPES TO BE FETCHED)
+      // fix: check if the 
+      // if sort_by = none:
+      //   query the cache before the callout: 
+        //if the query returns products, we need to restore the original, set the lpid as the id of the last record in the list
+     
+      //setLPID(null) 
     }, timeout)}
 }
 
 const selected_filters_handlers = {
     selected_filters,
     setAndRefetch,
+    //last_product_id,
+   // setLPID
 }
 
 const query ={
@@ -111,24 +94,22 @@ const query ={
 
 //const g = component => {cardScroll = component }
 //ref={cardScroll}
-  return (
-      <div className="page">
-          <VertifyAge enabled={SHOW_DOB_POPUP}/>
-          <div className="app">
-           
-              <Header refetch={selected_filters_handlers}/>
-                  
-            <div>
-              <PillContainer selected_filters_handlers={selected_filters_handlers} />
-            </div>      
-            <Body query={query} selected_filters_handlers={selected_filters_handlers}/> 
-            <Footer refetch={selected_filters_handlers}/>
-          </div>
-      </div>
-  );
+  return ( <><Layout selected_filters_handlers={selected_filters_handlers} query={query} SHOW_DOB_POPUP={SHOW_DOB_POPUP}/></>);
 }
 
 export default App;
+
+ /*<div className="page">
+          {//isDesktop && console.log("DESKTOP")
+          }
+          <VertifyAge enabled={SHOW_DOB_POPUP}/>
+          <div className="app">        
+            <Header selected_filters_handlers={selected_filters_handlers}/>        
+            <PillContainer selected_filters_handlers={selected_filters_handlers} />         
+            <Body query={query} selected_filters_handlers={selected_filters_handlers}/> 
+            <Footer/>
+          </div>
+        </div>*/
 
 /*
     result = client.refetchQueries({
