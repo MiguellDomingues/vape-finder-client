@@ -1,16 +1,18 @@
-import {useState} from 'react'
+import { useState, useRef } from 'react'
 import moment from 'moment'
+import { MIN_AGE, STORAGE_KEY } from '../../utils'
 
 function useVertifyAge(){
 
-    const min_age = 19
-  
     const [birth_date, setBirthDate] = useState({year: "" , month: "", day: ""})
     const [show, setShow] = useState(true)
     const [error, setError] = useState("")
-  
+    const save_vertification = useRef(false)
+
     const onChange = e => setBirthDate( {...birth_date,[e.target.name]: e.target.value} )
-  
+
+    const saveValidation = _ => save_vertification.current = !save_vertification.current
+    
     const validateInput = e => {
       e.preventDefault()
       
@@ -27,16 +29,17 @@ function useVertifyAge(){
         setError("date must contain only numbers")
       }else if(isNaN(age)){
         setError("please enter valid date")
-      }else if(age < min_age){
+      }else if(age < MIN_AGE){
         setError("you are not old enough to view this content")
       }else{
+        save_vertification.current && localStorage.setItem(STORAGE_KEY, true);
         setShow(false)
       }
     }
   
     return [
         birth_date, show, error,
-        { onChange, validateInput }
+        { onChange, validateInput,saveValidation }
     ]     
   }
 

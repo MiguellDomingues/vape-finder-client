@@ -1,3 +1,5 @@
+/****OVERLAY**********************/
+
 .age_vertification_overlay{
     position: fixed;
     width: 100%;
@@ -8,34 +10,100 @@
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
     z-index: 2;
-    cursor: pointer;
-    
-  }
+    cursor: pointer;   
+}
   
-  .show_overlay{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .date_input{
-    width: 40%;
-    height: 60%;
-  
-    z-index: 3;
-    background-color: white;
-  }
+.show_overlay{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .no_select {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+.no_select {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .no_select:focus {
-    outline: none !important;
+  outline: none !important;
+}
+
+/*-------------------------------------*/
+  
+.date_input_container{
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    background-color: lightblue;
+    border-radius: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding: 15px;
+}
+
+.date_input_container_layout{
+  width: 50%;
+  row-gap: 10px;
+}
+
+.date_input_heading{
+  display: flex;
+  text-align: center;
+  font-weight: bold;
+}
+
+.date_input_heading_txt{
+  font-size: xxx-large;
+}
+
+.date_input_txt{
+  font-size: 20px;
+  display: flex;
+  text-align: center;
+}
+
+.date_input_dmy{
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+}
+
+.date_input_dmy_field{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.date_input_error_style{
+  font-size: medium;
+  font-style: italic;
+  color: red;
+}
+
+.submit_btn{
+  width: 50px;
+}
+
+.date_input_save_choice{
+  font-size: medium;
+}
+
+@media only screen and (max-width: 500px) {
+  
+  .date_input_container_layout{
+    width: 75%;
+    row-gap: 20px;
+  }
+  .date_input_heading_txt{
+    font-size: x-large;
+  }
 }
   

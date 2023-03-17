@@ -3,6 +3,7 @@ import { useApolloClient, useLazyQuery } from '@apollo/client'
 import {useState, useRef, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive';
 import { GET_SORTED_PRODUCTS } from './queries/queries.js'
+import { STORAGE_KEY } from './utils'
 
 import Layout from './layout'
 
@@ -78,11 +79,11 @@ const isMobile = useMediaQuery({ maxWidth: 800 });
     }, timeout)}
 }
 
+const ageVertified = show_dob_popup => !localStorage.getItem(STORAGE_KEY) && show_dob_popup
+
 const selected_filters_handlers = {
     selected_filters,
     setAndRefetch,
-    //last_product_id,
-   // setLPID
 }
 
 const query ={
@@ -92,9 +93,10 @@ const query ={
   data
 }
 
+
 //const g = component => {cardScroll = component }
 //ref={cardScroll}
-  return ( <><Layout selected_filters_handlers={selected_filters_handlers} query={query} SHOW_DOB_POPUP={SHOW_DOB_POPUP}/></>);
+  return ( <><Layout selected_filters_handlers={selected_filters_handlers} query={query} SHOW_DOB_POPUP={ageVertified(true)}/></>);//SHOW_DOB_POPUP
 }
 
 export default App;
