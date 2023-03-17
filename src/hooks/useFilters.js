@@ -1,15 +1,11 @@
-import { useQuery } from '@apollo/client' 
-import { GET_SEARCH_TYPES } from '../queries/queries.js'
 
 const MIN_ITEM_COUNT = 5
 
-export const useFilters = ( selected_filters_handlers  ) =>{
+export const useFilters = ( selected_filters_handlers,filter_tags_query  ) =>{
 
     const { selected_filters, setAndRefetch } = selected_filters_handlers 
 
-    const query = useQuery(GET_SEARCH_TYPES,  { variables: { query: {} } } );
-
-    const { data, loading, error } = query
+    const { data, loading, error } = filter_tags_query
 
     const filter_tags = !loading && !error ? { ...parseFilterTags(data.tagmetadata) } : { category_tags: [], brands_tags: [], stores_tags:[] } 
 

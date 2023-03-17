@@ -1,8 +1,8 @@
 
-import { useApolloClient, useLazyQuery } from '@apollo/client' 
+import { useApolloClient, useLazyQuery, useQuery } from '@apollo/client' 
 import {useState, useRef, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive';
-import { GET_SORTED_PRODUCTS } from '../queries/queries.js'
+import { GET_SORTED_PRODUCTS,GET_SEARCH_TYPES  } from '../queries/queries.js'
 
 import { starting_query, starting_filters, TIMEOUT, buildAtlasGQLQuery, STORAGE_KEY } from '../utils.js'
 
@@ -10,8 +10,11 @@ function useApp() {
 
      //const client = useApolloClient()
     
-     const [getProducts, { loading, error, data,fetchMore }] = useLazyQuery(GET_SORTED_PRODUCTS);
-    
+     const [getProducts, { loading, error, data, fetchMore }] = useLazyQuery(GET_SORTED_PRODUCTS);
+
+     const filter_tags_query = useQuery(GET_SEARCH_TYPES,  { variables: { query: {} } } );
+
+
      //run once upon app load
      useEffect(() => {
       getProducts({ 
@@ -84,7 +87,8 @@ function useApp() {
     }
     
     return [
-        selected_filters_handlers, 
+        selected_filters_handlers,
+        filter_tags_query, 
         query,{
             ageVertified: show_dob_popup => !localStorage.getItem(STORAGE_KEY) && show_dob_popup
     }]//SHOW_DOB_POPUP

@@ -8,10 +8,12 @@ import VertifyAge from './components/vertifyAge/vertifyAge'
 
 import './layout.css'
 
-export default function Layout({selected_filters_handlers, query, SHOW_DOB_POPUP}){
+export default function Layout({selected_filters_handlers, query, SHOW_DOB_POPUP,filter_tags_query,}){
 
     //const isDesktop = useMediaQuery({ minWidth: 800 });
     const isMobile = useMediaQuery({ minWidth: 0, maxWidth: 800 });
+
+
 
     return( 
     <div className="page">
@@ -19,7 +21,10 @@ export default function Layout({selected_filters_handlers, query, SHOW_DOB_POPUP
         <div className="app_flex_parent">
             
             <div className="header_flex_child">
-                <HeaderLayout selected_filters_handlers={selected_filters_handlers} isMobile={isMobile}/>  
+                <HeaderLayout 
+                    selected_filters_handlers={selected_filters_handlers} 
+                    filter_tags_query={filter_tags_query}
+                    isMobile={isMobile}/>  
             </div>
             
  
@@ -32,7 +37,9 @@ export default function Layout({selected_filters_handlers, query, SHOW_DOB_POPUP
                 <div className="body_flex_parent">
 
                     {!isMobile && <div className="sidebar_flex_child">
-                        <SideBarLayout selected_filters_handlers={selected_filters_handlers}/>    
+                        <SideBarLayout 
+                            selected_filters_handlers={selected_filters_handlers}
+                            filter_tags_query={filter_tags_query}/>    
                     </div>}
 
                     <div className="cardlist_flex_child">

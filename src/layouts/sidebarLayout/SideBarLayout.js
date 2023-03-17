@@ -5,9 +5,9 @@ import { FILTER_KEYS } from '../../utils.js'
 
 import './sidebarlayout.css'
 
-function SideBarLayout( {selected_filters_handlers} ){
+function SideBarLayout( {selected_filters_handlers, filter_tags_query} ){
 
-    const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers)
+    const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers, filter_tags_query)
     const [areFiltersSelected,{handleRemove, handleClear, clearAll}] = usePillList(selected_filters_handlers)
 
     const { category_tags, brands_tags, stores_tags } = filter_tags

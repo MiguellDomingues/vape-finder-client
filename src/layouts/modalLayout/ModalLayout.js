@@ -6,9 +6,10 @@ import { RiCloseFill } from 'react-icons/ri';
 
 import './modallayout.css'
 
-function ModalLayout({selected_filters_handlers, toggleModal}){
+function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}){
 
-    const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers)
+  
+    const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers, filter_tags_query)
     const [areFiltersSelected,{handleRemove, handleClear, clearAll}] = usePillList(selected_filters_handlers)
 
     if (loading) return 'Loading...';
@@ -16,9 +17,6 @@ function ModalLayout({selected_filters_handlers, toggleModal}){
 
    const { category_tags, brands_tags, stores_tags } = filter_tags
    const { category, stores, brands, } = selected_filters
-
-   if (loading) return 'Loading...';
-   if (error) return `Error! ${error.message}`;
 
     return(<div class="modal">
     <div class="modal-content">
