@@ -1,12 +1,8 @@
-
-import { useEffect, useRef } from 'react'
 import { PAGE_LIMIT, SORT_TYPE, buildAtlasGQLQuery } from '../utils'
 
 function useCardList(products, selected_filters, fetchMore) {
 
   console.log("////usecardlist: ", selected_filters)
-
- 
 
   const handleBottom = () =>{
     const lpid = products[products.length-1]._id

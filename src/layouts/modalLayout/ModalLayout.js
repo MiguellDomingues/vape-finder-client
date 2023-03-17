@@ -1,38 +1,12 @@
-import ModalLayout from '../modalLayout/ModalLayout'
-import { RxHamburgerMenu } from 'react-icons/rx';
-import {useState} from 'react'
+import { useFilters } from '../../hooks/useFilters.js'
+import  usePillList  from '../../hooks/usePillList'
+import { DropDownMenu, SortByDropDown, PillList } from '../../widgets/widgets.js'
+import { FILTER_KEYS } from '../../utils.js'
+import { RiCloseFill } from 'react-icons/ri';
 
-import './header.css'
+import './modallayout.css'
 
-const img_src = '../../../health_warning.webp';
-
-function HeaderLayout( {selected_filters_handlers, isMobile} ) {
-
-    const [is_open, setOpen] = useState(false)
-
-    const toggleModal = () =>setOpen(!is_open)
-
-    return (<>
-      {is_open && <ModalLayout selected_filters_handlers={selected_filters_handlers} toggleModal={toggleModal}/>}
-      <div className="container_header">
-
-        <div className="top">
-          <img className="warning_img"
-            src={img_src}
-            alt="Health_Warning">
-          </img>   
-        </div>
-    
-        <div className="bottom">
-        {isMobile && <div className="open_modal_btn"><RxHamburgerMenu size={'2em'} onClick={ e=> toggleModal()}/></div>}
-          <span className="header_title">BC VAPE FINDER</span>  
-        </div>
-      </div></>);
-  }
-
-  export default HeaderLayout
-/*
-  function Modal({selected_filters_handlers, toggleModal}){
+function ModalLayout({selected_filters_handlers, toggleModal}){
 
     const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers)
     const [areFiltersSelected,{handleRemove, handleClear, clearAll}] = usePillList(selected_filters_handlers)
@@ -78,4 +52,5 @@ function HeaderLayout( {selected_filters_handlers, isMobile} ) {
 
   </div>)
   }
-  */
+
+  export default ModalLayout
