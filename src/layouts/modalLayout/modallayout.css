@@ -36,11 +36,11 @@
     display: flex;      
     padding: 10px;   
     border-radius: 10px;
-    max-width: 86%;
+    width: 85%;
+    max-width: 85%;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: fit-content;
+    justify-content: center;
+    align-items: center;
     height: fit-content;
     font-size: 30px;
   }

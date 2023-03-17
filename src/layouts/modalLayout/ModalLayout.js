@@ -18,7 +18,7 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
    const { category_tags, brands_tags, stores_tags } = filter_tags
    const { category, stores, brands, } = selected_filters
 
-    return(<div class="modal">
+    return(<div class="modal" id="modal-wrapper" onClick={e=>e.target?.id === "modal-wrapper" && toggleModal()}>
     <div class="modal-content">
       <div className="close" onClick={e=> toggleModal()}><span><RiCloseFill/></span></div>  
       {areFiltersSelected && <button onClick={ (e)=>clearAll() }>Clear All Filters</button>}
