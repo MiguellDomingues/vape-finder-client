@@ -4,7 +4,7 @@ import {useState, useRef, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive';
 import { GET_SORTED_PRODUCTS } from '../queries/queries.js'
 
-import { starting_query, starting_filters, TIMEOUT, buildAtlasGQLQuery, STORAGE_KEY } from '../utils'
+import { starting_query, starting_filters, TIMEOUT, buildAtlasGQLQuery, STORAGE_KEY } from '../utils.js'
 
 function useApp() {
 
