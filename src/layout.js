@@ -4,7 +4,7 @@ import HeaderLayout from './layouts/headerLayout/HeaderLayout'
 import SideBarLayout from './layouts/sidebarLayout/SideBarLayout'
 
 import CardList from './components/cardList/CardList'
-import VertifyAge from './components/vertifyAge/vertifyAge'
+import VertifyAge from './components/vertifyAge/VertifyAge'
 
 import './layout.css'
 
