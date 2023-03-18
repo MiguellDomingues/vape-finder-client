@@ -50,8 +50,7 @@
     font-size: large;
     color: black;
     padding: 5px;
-    text-decoration: none;
-    display: block;
+    text-decoration: none;  
 }
 
 
@@ -104,12 +103,95 @@
     font-weight: 600;
   }
 
-  @media only screen and (max-width: 481px) {
-    
+  @media only screen and (max-width: 481px) {    
       .pill_container_font{
         font-size: medium;
       }
-
 }
+
+
+
+
+
+
+
+
+.collapsible {
+  background-color: lightgrey;
+  color: black;
+  cursor: pointer;
+  
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 20px;
+  border-radius: 10px;
+  /*important can override default values in html control elements*/
+  padding: 0px !important;
+}
+
+.active, .collapsible:hover {
+  background-color: lightblue;
+}
+
+.collapsible:after {
+  content: '\002B';
+  color: black;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+  overflow-y:auto;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.content-row{
+  display: flex;
+  /*use this to place items on start/ends of container*/
+  place-content: end space-between;
+  padding: 5px;
+  border-radius: 10px;
+  margin-right: 3px;
+}
+
+.content-row-left{
+  
+}
+
+.content-row-right{
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

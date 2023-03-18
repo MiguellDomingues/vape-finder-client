@@ -64,3 +64,52 @@ function Pill( {str, removePill} ) {
     return (<div className="pill"> <span className="pill_str">{str}</span>&nbsp;
         <span className="pill_close_container" onClick={ e => removePill(str) }><RiCloseFill/></span>
 </div>); }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+export function CollapsibleMenu( {title, tags, selected_tags, selectedHandler} ){
+
+    const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected content-row" : "content-row"
+
+    const isTagSelected = (tag, arr) => arr.includes(tag) 
+    //!isTagSelected(tag.tag_name,selected_tags) && 
+
+    //move the selected tags to the top of the dropdown list
+    //const sortedtags = [ ...tags.filter( t=> selected_tags.includes(t.tag_name) )]
+                      //  .concat([...tags.filter( t=> !selected_tags.includes(t.tag_name)) ])
+
+    function toggleMenu(e){
+        e.target.classList.toggle("active");
+        let content = e.target.nextElementSibling;
+        content.style.maxHeight = content.style.maxHeight ? null : "33%"
+    }
+
+    return(<><button class="collapsible" onClick={toggleMenu}>{title}</button>
+    <div class="content">
+    {tags.map( (tag, idx)=>
+            <div className={selectedTagsBGC(tag.tag_name, selected_tags)}
+                  key={idx} 
+                  onClick={ ()=> selectedHandler(tag.tag_name)}>
+                 <div className="content-row-left">{tag.tag_name}</div> 
+                 <div className="content-row-right">{tag.product_count}</div>       
+            </div>
+        )}                  
+    </div></>)
+
+    
+
+                      /*
+    return(<div className="dropdown_container cursor_hand">
+    {title}
+    <div className="dropdown-arrow"></div>
+    <div className="dropdown-content">    
+        {tags.map( (tag, idx)=>
+            <span className={selectedTagsBGC(tag.tag_name, selected_tags)}
+                  key={idx} 
+                  onClick={ ()=> selectedHandler(tag.tag_name)}>
+                 {tag.tag_name} {tag.product_count}          
+            </span>)}                  
+        </div>
+    </div>)
+    */
+}
