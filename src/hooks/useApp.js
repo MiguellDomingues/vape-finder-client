@@ -62,13 +62,6 @@ function useApp() {
             {fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first', })
     
           timer.current = null
-          //BUG. WHENEVER I SWITCH TO ANOTHER SELECTION, paginate stuff AND SWITCH BACK (WITH SORT_TO = NONE), THE LAST_PRODUCT_ID IS NULL AND CAUSES DUPES TO BE FETCHED)
-          // fix: check if the 
-          // if sort_by = none:
-          //   query the cache before the callout: 
-            //if the query returns products, we need to restore the original, set the lpid as the id of the last record in the list
-         
-          //setLPID(null) 
         }, timeout)}
     }
     

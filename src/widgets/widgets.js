@@ -67,7 +67,7 @@ function Pill( {str, removePill} ) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-export function CollapsibleMenu( {title, tags, selected_tags, selectedHandler} ){
+export function CollapsibleMenu( {title, tags, selected_tags, selectedHandler, registerMenu} ){
 
     const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected content-row" : "content-row"
 
@@ -81,7 +81,8 @@ export function CollapsibleMenu( {title, tags, selected_tags, selectedHandler} )
     function toggleMenu(e){
         e.target.classList.toggle("active");
         let content = e.target.nextElementSibling;
-        content.style.maxHeight = content.style.maxHeight ? null : "33%"
+        content.style.maxHeight = content.style.maxHeight ? null : "25%"
+        registerMenu(e.target)
     }
 
     return(<><button class="collapsible" onClick={toggleMenu}>{title}</button>
