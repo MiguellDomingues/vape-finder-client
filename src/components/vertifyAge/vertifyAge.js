@@ -1,4 +1,4 @@
-import './vertifyAge.css'
+import './vertifyage.css'
 
 import useVertifyAge from './useVertifyAge'
 
@@ -35,7 +35,7 @@ function VertifyAge(){
               </span>
             </div>
             <div className="date_input_txt">
-              <span classname="date_input_txt_style">
+              <span className="date_input_txt_style">
                 This website has material not intended for anyone under the age of 19
               </span>
             </div>
