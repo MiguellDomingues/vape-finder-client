@@ -55,12 +55,9 @@
     display: block;
 }
 
-
-
 /*.dropdown-content span:hover {background-color: #ddd;}*/
 
 .dropdown_container:hover .dropdown-content {display: block;}
-
 
 .cursor_hand{
     cursor: pointer;
@@ -70,7 +67,6 @@
 
 .pill_close_container{
     cursor: pointer;
-    display: block;
     float: right;
     background-color:#fff;
     border:1px;  
@@ -91,11 +87,6 @@
     background-color: lightblue;
   }
 
-  .pill_container{
-    display: flex;
-    flex-flow: row wrap;
-  }
-
   .pill_container_font{
     font-size: small;
   }
@@ -114,7 +105,7 @@
 
 
 
-
+/*------COLLAPSIBLE MENU-------------------*/
 
 
 

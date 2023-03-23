@@ -53,15 +53,24 @@ export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*
 export function PillList( {pills, filter_key, handleRemove, handleClear} ) {
     return(<div className="pill_container pill_container_font">
         {handleClear && pills?.length > 0 && <button onClick={e=>handleClear(filter_key)}>Clear</button>}
         {pills.map( (str, idx)=> <Pill key={idx} str={str} removePill={handleRemove(filter_key)}/>)}
     </div>);
 }
+*/
+
+export function PillList( {pills, filter_key, handleRemove, handleClear} ) {
+    return(<>
+        {handleClear && pills?.length > 0 && <button onClick={e=>handleClear(filter_key)}>Clear</button>}
+        {pills.map( (str, idx)=> <Pill key={idx} str={str} removePill={handleRemove(filter_key)}/>)}
+    </>);
+}
   
 function Pill( {str, removePill} ) { 
-    return (<div className="pill"> <span className="pill_str">{str}</span>&nbsp;
+    return (<div className="pill pill_container_font"> <span className="pill_str">{str}</span>&nbsp;
         <span className="pill_close_container" onClick={ e => removePill(str) }><RiCloseFill/></span>
 </div>); }
 
