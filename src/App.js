@@ -4,6 +4,7 @@ import useApp from './hooks/useApp'
 import { useMediaQuery } from 'react-responsive';
 import HeaderLayout from './layouts/headerLayout/HeaderLayout'
 import SideBarLayout from './layouts/sidebarLayout/SideBarLayout'
+import BodyLayout from './layouts/bodyLayout/BodyLayout'
 
 import CardList from './components/cardList/CardList'
 import VertifyAge from './components/vertifyAge/VertifyAge'
@@ -44,7 +45,8 @@ function App( {SHOW_DOB_POPUP} ) {
                       </div>}
   
                       <div className="cardlist_flex_child">
-                          <CardList query={query} selected_filters_handlers={selected_filters_handlers}/>
+                      <BodyLayout selected_filters_handlers={selected_filters_handlers} query={query} isMobile={isMobile}/>
+                          {/*<CardList query={query} selected_filters_handlers={selected_filters_handlers}/>*/}
                       </div>
   
                   </div>
