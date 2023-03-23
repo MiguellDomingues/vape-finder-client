@@ -1,6 +1,6 @@
 import { useFilters } from '../../hooks/useFilters.js'
 import  usePillList  from '../../hooks/usePillList'
-import { DropDownMenu, SortByDropDown, PillList } from '../../widgets/widgets.js'
+import { DropDownMenu, SortByDropDown, PillList, HorizontalLine } from '../../widgets/widgets.js'
 import { FILTER_KEYS } from '../../utils.js'
 import { RiCloseFill } from 'react-icons/ri';
 
@@ -32,6 +32,8 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
         <PillList pills={category} filter_key={FILTER_KEYS.CATEGORIES} handleRemove={handleRemove}/>
       </div>
 
+      <HorizontalLine/>
+
       <div className="filter_pill">
         <DropDownMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} />
         {brands?.length > 0 && <div ><button onClick={e=>handleClear(FILTER_KEYS.BRANDS)}>Clear</button></div>}
@@ -40,6 +42,8 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
       <div className="pill_list">
         <PillList pills={brands} filter_key={FILTER_KEYS.BRANDS} handleRemove={handleRemove}/>
       </div>
+
+      <HorizontalLine/>
       
       <div className="filter_pill">
       <DropDownMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} />
@@ -49,7 +53,9 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
       <div className="pill_list">
         <PillList pills={stores} filter_key={FILTER_KEYS.STORES} handleRemove={handleRemove} />
       </div>
-      
+
+      <HorizontalLine/>
+
       <SortByDropDown selected_filters_handlers={selected_filters_handlers}/>  
       
     </div>

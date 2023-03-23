@@ -13,7 +13,6 @@ export function SortByDropDown({selected_filters_handlers })  {
         const sortSelected = (e) => { 
           console.log(e.target.value)
           selected_filters.sort_by = e.target.value
-          //setLPID(null) //BUG. WHENEVER I SWITCH TO ANOTHER SELECTION AND SWITCH BACK (WITH SORT_TO = NONE, THE LAST_PRODUCT_ID IS INCORRECT AND CAUSES DUPES TO BE FETCHED)
           setAndRefetch({...selected_filters})
         }
       
@@ -53,15 +52,6 @@ export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
-export function PillList( {pills, filter_key, handleRemove, handleClear} ) {
-    return(<div className="pill_container pill_container_font">
-        {handleClear && pills?.length > 0 && <button onClick={e=>handleClear(filter_key)}>Clear</button>}
-        {pills.map( (str, idx)=> <Pill key={idx} str={str} removePill={handleRemove(filter_key)}/>)}
-    </div>);
-}
-*/
-
 export function PillList( {pills, filter_key, handleRemove, handleClear} ) {
     return(<>
         {handleClear && pills?.length > 0 && <button onClick={e=>handleClear(filter_key)}>Clear</button>}
@@ -94,7 +84,8 @@ export function CollapsibleMenu( {title, tags, selected_tags, selectedHandler, r
         registerMenu(e.target)
     }
 
-    return(<><button class="collapsible" onClick={toggleMenu}>{title}</button>
+    return(<>
+    <button class="collapsible" onClick={toggleMenu}>{title}</button>
     <div class="content">
     {tags.map( (tag, idx)=>
             <div className={selectedTagsBGC(tag.tag_name, selected_tags)}
@@ -106,20 +97,10 @@ export function CollapsibleMenu( {title, tags, selected_tags, selectedHandler, r
         )}                  
     </div></>)
 
-    
+}
 
-                      /*
-    return(<div className="dropdown_container cursor_hand">
-    {title}
-    <div className="dropdown-arrow"></div>
-    <div className="dropdown-content">    
-        {tags.map( (tag, idx)=>
-            <span className={selectedTagsBGC(tag.tag_name, selected_tags)}
-                  key={idx} 
-                  onClick={ ()=> selectedHandler(tag.tag_name)}>
-                 {tag.tag_name} {tag.product_count}          
-            </span>)}                  
-        </div>
-    </div>)
-    */
+/**************wrapper for <hr/> tag that appears inside flex containers***************** */
+
+export function HorizontalLine(){
+    return (<div className="outer_line"><hr/></div>)
 }
