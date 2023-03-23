@@ -23,6 +23,11 @@
     align-self: flex-end;
     font-size: 20px !important;
   }
+
+  .pill_list{
+    display: flex;
+    flex-flow: row wrap;
+  }
   
   .close:hover,
   .close:focus {

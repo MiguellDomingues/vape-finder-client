@@ -28,22 +28,28 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
         {category?.length > 0 && <div ><button onClick={e=>handleClear(FILTER_KEYS.CATEGORIES)}>Clear</button></div>}
       </div>
 
-      <PillList pills={category} filter_key={FILTER_KEYS.CATEGORIES} handleRemove={handleRemove}/>
+      <div className="pill_list">
+        <PillList pills={category} filter_key={FILTER_KEYS.CATEGORIES} handleRemove={handleRemove}/>
+      </div>
 
       <div className="filter_pill">
         <DropDownMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} />
         {brands?.length > 0 && <div ><button onClick={e=>handleClear(FILTER_KEYS.BRANDS)}>Clear</button></div>}
       </div>
       
-      <PillList pills={brands} filter_key={FILTER_KEYS.BRANDS} handleRemove={handleRemove}/>
+      <div className="pill_list">
+        <PillList pills={brands} filter_key={FILTER_KEYS.BRANDS} handleRemove={handleRemove}/>
+      </div>
       
       <div className="filter_pill">
       <DropDownMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} />
         {stores?.length > 0 && <div ><button onClick={e=>handleClear(FILTER_KEYS.STORES)}>Clear</button></div>}
       </div>
 
-      <PillList pills={stores} filter_key={FILTER_KEYS.STORES} handleRemove={handleRemove} />
-
+      <div className="pill_list">
+        <PillList pills={stores} filter_key={FILTER_KEYS.STORES} handleRemove={handleRemove} />
+      </div>
+      
       <SortByDropDown selected_filters_handlers={selected_filters_handlers}/>  
       
     </div>
