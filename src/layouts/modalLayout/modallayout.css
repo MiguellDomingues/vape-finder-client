@@ -2,7 +2,7 @@
     display: block; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    padding-top: 25%;
+    padding-top: 15%;
     padding-left: 5%;
     
     left: 0;
@@ -24,9 +24,10 @@
     font-size: 20px !important;
   }
 
-  .pill_list{
+  .modal_pill_list{
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
   }
   
   .close:hover,

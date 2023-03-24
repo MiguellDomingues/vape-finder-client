@@ -71,8 +71,6 @@ function SideBarLayout( {selected_filters_handlers, filter_tags_query} ){
        
         <HorizontalLine/>
 
-        {/*areFiltersSelected && <button onClick={ (e)=>clearAll() }>Clear All</button>*/}
-
         <SortByDropDown selected_filters_handlers={selected_filters_handlers}/>
     </div>)
 }
