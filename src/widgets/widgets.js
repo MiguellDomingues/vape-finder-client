@@ -30,22 +30,22 @@ export function SortByDropDown({selected_filters_handlers })  {
 
 export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
 
-    const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected" : ""
+    const selectedTagsBGC = (str, arr) => arr.includes(str) ? "filter_selected dropdown_item" : "dropdown_item"
 
     //move the selected tags to the top of the dropdown list
     //const sortedtags = [ ...tags.filter( t=> selected_tags.includes(t.tag_name) )]
                       //  .concat([...tags.filter( t=> !selected_tags.includes(t.tag_name)) ])
 
     return(<div className="dropdown_container cursor_hand">
-    {title}
-    <div className="dropdown-arrow"></div>
+    <div className="dropdown_title"> {title}<div className="dropdown-arrow"></div> </div>
+    
     <div className="dropdown-content">    
         {tags.map( (tag, idx)=>
-            <span className={selectedTagsBGC(tag.tag_name, selected_tags)}
+            <div className={selectedTagsBGC(tag.tag_name, selected_tags)}
                   key={idx} 
                   onClick={ ()=> selectedHandler(tag.tag_name)}>
-                 {tag.tag_name} {tag.product_count}          
-            </span>)}                  
+                 <div>{tag.tag_name}</div> <div>{tag.product_count}</div>         
+            </div>)}                  
         </div>
     </div>)
 }
@@ -54,7 +54,7 @@ export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
 
 export function PillList( {pills, filter_key, handleRemove, handleClear} ) {
     return(<>
-        {handleClear && pills?.length > 0 && <button onClick={e=>handleClear(filter_key)}>Clear</button>}
+        {handleClear && pills?.length > 0 && <button onClick={e=>handleClear(filter_key)()}>Clear</button>}
         {pills.map( (str, idx)=> <Pill key={idx} str={str} removePill={handleRemove(filter_key)}/>)}
     </>);
 }
@@ -66,7 +66,7 @@ function Pill( {str, removePill} ) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-export function CollapsibleMenu( {title, tags, selected_tags, selectedHandler, registerMenu} ){
+export function CollapsibleMenu( {title, tags, selected_tags, selectedHandler, registerMenu, handleClear} ){
 
     const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected content-row" : "content-row"
 
@@ -77,15 +77,22 @@ export function CollapsibleMenu( {title, tags, selected_tags, selectedHandler, r
     //const sortedtags = [ ...tags.filter( t=> selected_tags.includes(t.tag_name) )]
                       //  .concat([...tags.filter( t=> !selected_tags.includes(t.tag_name)) ])
 
+    function clearFilters(e){
+        e.stopPropagation()
+        handleClear()
+    }
+
     function toggleMenu(e){
         e.target.classList.toggle("active");
         let content = e.target.nextElementSibling;
-        content.style.maxHeight = content.style.maxHeight ? null : "25%"
-        registerMenu(e.target)
+        content.style.maxHeight = content.style.maxHeight ? null : "20%"
+        registerMenu && registerMenu(e.target)
     }
 
     return(<>
-    <button class="collapsible" onClick={toggleMenu}>{title}</button>
+    <button class="collapsible" onClick={toggleMenu}>{title}
+        {handleClear && selected_tags.length > 0 && <button onClick={clearFilters}>Clear</button>}
+    </button>
     <div class="content">
     {tags.map( (tag, idx)=>
             <div className={selectedTagsBGC(tag.tag_name, selected_tags)}

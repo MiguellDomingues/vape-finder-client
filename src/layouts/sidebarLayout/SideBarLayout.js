@@ -59,19 +59,19 @@ function SideBarLayout( {selected_filters_handlers, filter_tags_query} ){
 
     return (<div className="sidebar_container" onMouseEnter={e=>is_enter.current=true} onMouseLeave={e=>is_enter.current=false}>
         
-        <CollapsibleMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)} registerMenu={registerMenu}/>
+        <CollapsibleMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)} registerMenu={registerMenu} handleClear={handleClear(FILTER_KEYS.CATEGORIES)}/>
        
         <HorizontalLine/>
        
-        <CollapsibleMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} registerMenu={registerMenu}/>
+        <CollapsibleMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} registerMenu={registerMenu} handleClear={handleClear(FILTER_KEYS.BRANDS)}/>
        
         <HorizontalLine/>
         
-        <CollapsibleMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} registerMenu={registerMenu}/>
+        <CollapsibleMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} registerMenu={registerMenu} handleClear={handleClear(FILTER_KEYS.STORES)}/>
        
         <HorizontalLine/>
 
-        {areFiltersSelected && <button onClick={ (e)=>clearAll() }>Clear All</button>}
+        {/*areFiltersSelected && <button onClick={ (e)=>clearAll() }>Clear All</button>*/}
 
         <SortByDropDown selected_filters_handlers={selected_filters_handlers}/>
     </div>)

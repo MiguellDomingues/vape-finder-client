@@ -14,6 +14,7 @@ function usePillList(selected_filters_handlers){
           [filter_key]: selected_filters[filter_key].filter( str => str !== pill_str)})}
 
     function handleClear(filter_key){
+        return _=>
         setAndRefetch({ 
           ...selected_filters,
           [filter_key]: starting_filters[filter_key]})
