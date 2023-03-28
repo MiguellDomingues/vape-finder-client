@@ -8,6 +8,9 @@ function useVertifyAge(){
     const [show, setShow] = useState(true)
     const [error, setError] = useState("")
     const save_vertification = useRef(false)
+    const overlay = useRef(null)
+
+    overlay.current && overlay.current.classList.add('fade-in')
 
     const onChange = e => setBirthDate( {...birth_date,[e.target.name]: e.target.value} )
 
@@ -32,13 +35,19 @@ function useVertifyAge(){
         setError("you are not old enough to view this content")
       }else{
         save_vertification.current && localStorage.setItem(STORAGE_KEY, true); // save the vertification in session storage if the checkbox is selected
-        setShow(false)
+
+        if(overlay.current){                                                  // if the ref is properly referring the overlay..
+            overlay.current.classList.add('fade-out')                         // play the fade-out animation and close the popup upon completion
+            overlay.current.ontransitionend = () => setShow(false);
+        }else{                                                                // otherwise just close the popup
+            setShow(false)
+        }
       }
     }
   
     return [
-        birth_date, show, error,
-        { onChange, validateInput,saveValidation }
+        birth_date, show, error, overlay,
+        { onChange, saveValidation, validateInput }
     ]     
   }
 

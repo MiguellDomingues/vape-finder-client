@@ -10,7 +10,17 @@
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
     z-index: 2;
-    cursor: pointer;   
+    cursor: pointer;  
+    opacity: 0;                       /* the initial state of the overlay */
+    transition: opacity .4s ease-out; /* the fade in/fade out animation when the overlay appears */
+}
+
+.age_vertification_overlay.fade-in {
+  opacity: 1; /* when the overlay renders, play the transition animation */
+}
+
+.age_vertification_overlay.fade-out {
+  opacity: 0; /* when the overlay is closed , play the transition animation */
 }
   
 .show_overlay{
@@ -35,6 +45,7 @@
 /*-------------------------------------*/
   
 .date_input_container{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     height: fit-content;
     display: flex;
     flex-direction: column;

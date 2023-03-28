@@ -8,7 +8,7 @@ function VertifyAge(){
 
   const 
   [
-    birth_date, show, error,
+    birth_date, show, error, overlay,
     { onChange, validateInput, saveValidation }
   ] = useVertifyAge()
 
@@ -27,7 +27,7 @@ function VertifyAge(){
 
     return (
       <>{show && <>
-          <div className="age_vertification_overlay show_overlay no_select">
+          <div ref={overlay} className="age_vertification_overlay show_overlay no_select">
            <div className="date_input_container date_input_container_layout">
             <div className="date_input_heading date_input_heading_txt">
               <span className="date_input_heading_style">
