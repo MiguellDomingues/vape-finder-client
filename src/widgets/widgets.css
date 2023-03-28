@@ -160,6 +160,16 @@
   width: 100%;
 }
 
+.content::-webkit-scrollbar {
+  width: 8px;
+  background-color: #F5F5F5;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: #A9A9A9;
+  border-radius: 10px;
+}
+
 .content-row{
   display: flex;
   /*use this to place items on start/ends of container*/
