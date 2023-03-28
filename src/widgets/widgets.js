@@ -55,13 +55,13 @@ export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
 export function PillList( {pills, filter_key, handleRemove, handleClear} ) {
     return(<>
         {handleClear && pills?.length > 0 && <button onClick={e=>handleClear(filter_key)()}>Clear</button>}
-        {pills.map( (str, idx)=> <Pill key={idx} str={str} removePill={handleRemove(filter_key)}/>)}
+        {pills.map( (str, idx)=> <Pill key={idx} str={str} removePill={handleRemove && handleRemove(filter_key)}/>)}
     </>);
 }
   
 function Pill( {str, removePill} ) { 
     return (<div className="pill pill_container_font"> <span className="pill_str">{str}</span>&nbsp;
-        <span className="pill_close_container" onClick={ e => removePill(str) }><RiCloseFill/></span>
+        {removePill && <span className="pill_close_container" onClick={ e => removePill(str) }><RiCloseFill/></span>}
 </div>); }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,15 +82,15 @@ export function CollapsibleMenu( {title, tags, selected_tags, selectedHandler, r
         handleClear()
     }
 
-    function toggleMenu(e){
-        e.target.classList.toggle("active");
-        let content = e.target.nextElementSibling;
+    function toggleMenu(target){
+        target.classList.toggle("active");
+        let content = target.nextElementSibling;
         content.style.maxHeight = content.style.maxHeight ? null : "20%"
-        registerMenu && registerMenu(e.target)
+        registerMenu && registerMenu(target)
     }
 
     return(<>
-    <button class="collapsible" onClick={toggleMenu}>{title}
+    <button class="collapsible" onClick={e=>toggleMenu(e.target)}>{title}
         {handleClear && selected_tags.length > 0 && <button onClick={clearFilters}>Clear</button>}
     </button>
     <div class="content">
