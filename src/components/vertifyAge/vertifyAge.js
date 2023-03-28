@@ -4,13 +4,13 @@ import useVertifyAge from './useVertifyAge'
 
 import {GiCheckMark} from 'react-icons/gi'
 
-function VertifyAge(){
+function VertifyAge({closeDOBPopup}){
 
   const 
   [
-    birth_date, show, error, overlay,
+    birth_date, error, overlay,
     { onChange, validateInput, saveValidation }
-  ] = useVertifyAge()
+  ] = useVertifyAge(closeDOBPopup)
 
   //an example of JSX spread attributes
   //move all the common props into an object as keys
@@ -26,7 +26,7 @@ function VertifyAge(){
   //then {...input_props} the props, applying overrides when a spread prop is different
 
     return (
-      <>{show && <>
+      <>
           <div ref={overlay} className="age_vertification_overlay show_overlay no_select">
            <div className="date_input_container date_input_container_layout">
             <div className="date_input_heading date_input_heading_txt">
@@ -69,7 +69,7 @@ function VertifyAge(){
 
           </div>
       </div>
-    </>}</>)
+    </>)
   }
 
   export default VertifyAge

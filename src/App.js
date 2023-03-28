@@ -12,14 +12,14 @@ import './app.css'
 
 function App( {SHOW_DOB_POPUP} ) {
 
-  const [selected_filters_handlers, filter_tags_query, query,{ageVertified}] = useApp()
+  const [selected_filters_handlers, filter_tags_query, query, show_dob_popup, 
+        { closeDOBPopup }] = useApp(false)//SHOW_DOB_POPUP
 
   const isMobile = useMediaQuery({ minWidth: 0, maxWidth: 800 });
   
     return( 
-      <div className="page">
-          {/*ageVertified(SHOW_DOB_POPUP) && <VertifyAge/>*/}
-          {ageVertified(true) && <VertifyAge/>}
+      <div className="page">     
+          {show_dob_popup && <VertifyAge closeDOBPopup={closeDOBPopup}/>}
           <div className="app_flex_parent">
               
               <div className="header_flex_child">
@@ -29,12 +29,10 @@ function App( {SHOW_DOB_POPUP} ) {
                       isMobile={isMobile}/>  
               </div>
               
-   
               <div className="pillcontainer_flex_child">
                   {/*<PillContainer selected_filters_handlers={selected_filters_handlers} />*/ }
               </div>
               
-  
               <div className="body_flex_child">
                   <div className="body_flex_parent">
   

@@ -1,11 +1,10 @@
 import { useState, useRef } from 'react'
 import moment from 'moment'
-import { MIN_AGE, STORAGE_KEY } from '../../utils'
+import { MIN_AGE} from '../../utils'
 
-function useVertifyAge(){
+function useVertifyAge(closeDOBPopup){
 
     const [birth_date, setBirthDate] = useState({year: "" , month: "", day: ""})
-    const [show, setShow] = useState(true)
     const [error, setError] = useState("")
     const save_vertification = useRef(false)
     const overlay = useRef(null)
@@ -29,24 +28,24 @@ function useVertifyAge(){
       
       if(!input_str.match(/^[0-9]+$/)){                                       // if the date has non-numbers....
         setError("date must contain only numbers")
-      }else if(isNaN(age) || age > 100){                                      // if the days/months are invalid or the year is before 1923
-        setError("please enter valid date")
+      }else if(isNaN(age)){                                                   // if the days/months are invalid
+        setError("please enter valid date")                                   
+      }else if(age > 110){                                                    // if the year is before 1913
+        setError("please enter a valid year")
       }else if(age < MIN_AGE){                                                
         setError("you are not old enough to view this content")
       }else{
-        save_vertification.current && localStorage.setItem(STORAGE_KEY, true); // save the vertification in session storage if the checkbox is selected
-
         if(overlay.current){                                                  // if the ref is properly referring the overlay..
             overlay.current.classList.add('fade-out')                         // play the fade-out animation and close the popup upon completion
-            overlay.current.ontransitionend = () => setShow(false);
-        }else{                                                                // otherwise just close the popup
-            setShow(false)
+            overlay.current.ontransitionend = _ => closeDOBPopup(save_vertification.current)
+        }else{                                                                // otherwise just close the popup so the user receives no errors
+          closeDOBPopup(save_vertification.current)
         }
       }
     }
   
     return [
-        birth_date, show, error, overlay,
+        birth_date, error, overlay,
         { onChange, saveValidation, validateInput }
     ]     
   }

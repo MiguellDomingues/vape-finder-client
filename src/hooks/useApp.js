@@ -6,7 +6,7 @@ import { GET_SORTED_PRODUCTS,GET_SEARCH_TYPES  } from '../queries/queries.js'
 
 import { starting_query, starting_filters, TIMEOUT, buildAtlasGQLQuery, STORAGE_KEY } from '../utils.js'
 
-function useApp() {
+function useApp(_show_dob_popup) {
 
      //const client = useApolloClient()
     
@@ -29,6 +29,8 @@ function useApp() {
       //const cardScroll = useRef(null); REFS ONLY WORK WITH CLASSES (BECAUSE THEY HAVE INSTANCES?) https://reactjs.org/docs/refs-and-the-dom.html
     
       const [selected_filters, setFilters] = useState(starting_filters);
+
+      const [show_dob_popup, setShow] = useState( (!localStorage.getItem(STORAGE_KEY) && _show_dob_popup) )
     
       const timer = useRef(null)
       //const last_product_id = useRef(null)
@@ -82,24 +84,15 @@ function useApp() {
     return [
         selected_filters_handlers,
         filter_tags_query, 
-        query,{
-            ageVertified: show_dob_popup => !localStorage.getItem(STORAGE_KEY) && show_dob_popup
-    }]//SHOW_DOB_POPUP
+        query,
+        show_dob_popup,{
+            closeDOBPopup: save_validation => {
+              save_validation && localStorage.setItem(STORAGE_KEY, true);
+              setShow(false) }
+    }]
 }
 
 export default useApp
-
- /*<div className="page">
-          {//isDesktop && console.log("DESKTOP")
-          }
-          <VertifyAge enabled={SHOW_DOB_POPUP}/>
-          <div className="app">        
-            <Header selected_filters_handlers={selected_filters_handlers}/>        
-            <PillContainer selected_filters_handlers={selected_filters_handlers} />         
-            <Body query={query} selected_filters_handlers={selected_filters_handlers}/> 
-            <Footer/>
-          </div>
-        </div>*/
 
 /*
     result = client.refetchQueries({
