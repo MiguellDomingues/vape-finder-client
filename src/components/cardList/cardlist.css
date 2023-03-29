@@ -12,11 +12,6 @@ note that webkits only work on chrome and safari; not edge or firefox
 to customize scrollbars in those enviroments, use SimpleScroll, an npm package
 */
 
-.card_container::-webkit-scrollbar {
-  width: 8px;
-  background-color: #F5F5F5;
-}
-
 .card_container::-webkit-scrollbar-thumb {
   background-color: #A9A9A9;
   border-radius: 10px;
@@ -27,12 +22,22 @@ to customize scrollbars in those enviroments, use SimpleScroll, an npm package
         justify-content: space-around;
         align-items: space-between;    
       }
+
+      .card_container::-webkit-scrollbar {
+        width: 4px;
+        background-color: #F5F5F5;
+      }
       
   }
   @media only screen and (min-width: 481px) { 
     .card_container{   
         justify-content: space-evenly;
         align-items: flex-start;
+      }
+
+      .card_container::-webkit-scrollbar {
+        width: 8px;
+        background-color: #F5F5F5;
       }
       
   }
