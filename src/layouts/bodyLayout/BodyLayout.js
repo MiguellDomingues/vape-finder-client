@@ -16,7 +16,7 @@ function BodyLayout( {selected_filters_handlers, query, isMobile} ){
     return (<div className="body_layout_pill_list">
         
         {<div className="pill_list">
-            {areFiltersSelected && <button onClick={ (e)=>clearAll() }>Clear All</button>}
+            {!isMobile && areFiltersSelected && <button onClick={ (e)=>clearAll() }>Clear All</button>}
             <PillList pills={category} filter_key={FILTER_KEYS.CATEGORIES} handleRemove={!isMobile ? handleRemove : null} />   
             <PillList pills={brands} filter_key={FILTER_KEYS.BRANDS} handleRemove={!isMobile ? handleRemove : null} />
             <PillList pills={stores} filter_key={FILTER_KEYS.STORES} handleRemove={!isMobile ? handleRemove : null} />

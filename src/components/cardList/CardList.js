@@ -2,8 +2,6 @@ import './cardlist.css'
 import useCardList from '../../hooks/useCardList'
 import { SpinnerDotted } from 'spinners-react';
 
-const img_src = '../../../demo.webp';
-
 function CardList( { query, selected_filters_handlers } ) {
 
   const { loading, error, data, fetchMore } = query
@@ -30,26 +28,17 @@ function CardList( { query, selected_filters_handlers } ) {
   );
 }
 
-/*
- return (
-    <div className="card_container" id="cardContainer" onScroll={handleScroll}>
-         {loading && <div className={"spinner_middle"}><SpinnerDotted/></div>}   
-        {products.length > 0 ? products.map( (product, idx)=> 
-          <Card key={idx} product={product}/>) : !loading && <div className="no_products">No products found!</div>}       
-    </div>
-*/
-
 export default CardList
 
 //can also link images using import or require() 
 //import demoImage from './demo.webp'; 
 
-
+const img_src = '../../../demo.webp';
 
 function Card( {product} ) {
   //const {id, name, brand, category, img, price, last_updated, source} = product
 
-  const {id, last_updated, source_id, source_url, brand, category, name, price, info_url, } = product
+  const {id, last_updated, source_id, source_url, brand, category, name, price, info_url,} = product
   //const{  } = product_info
 
   const vendor = source_url.split("//")[1].split(".")[0] //remove the domain name from the product source

@@ -30,6 +30,7 @@
   justify-content: center;
 }
 
+/* these classes remove the flicker effect when clicking anywhere outside the popup box */
 .no_select {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
