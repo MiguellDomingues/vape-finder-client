@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Acme";
+  src: url("../../../public/Acme-Regular-webfont.woff") format('woff');
+}
+
 .container_header{
   display: flex; 
   height: 20vh;
@@ -13,6 +18,7 @@
 }
 
 .header_title{
+  font-family: Acme;
   font-style: italic; 
   font-size: 50px;
 }
@@ -26,6 +32,10 @@
   justify-content: space-evenly;
 }
 
+.open_modal_btn{
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
 .warning_img{
   width: 100%;
   height: auto
@@ -36,6 +46,12 @@
     font-size: 33px;
   }   
 }
+
+
+
+
+
+
 
 
 
