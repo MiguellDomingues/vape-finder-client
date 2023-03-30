@@ -168,7 +168,7 @@
   cursor: pointer;
   width: 100%;
   border: none;
-  
+  font-family: system-ui;
   outline: none;
   font-size: 30px;
   border-radius: 10px;
@@ -253,6 +253,8 @@
 .sortby_dropdown_container{
   display: flex;
   column-gap: 20px;
+  font-family: system-ui;
+  
 }
 
 .dropdown{
@@ -263,7 +265,7 @@
 
   .sortby_dropdown_container{    
     align-self: center;
-    font-size: 25px;    
+    font-size: 30px;    
   }
 
 }
@@ -273,7 +275,7 @@
   .sortby_dropdown_container{
     justify-content: space-evenly;
     align-items: center;
-    font-family: sans-serif;
+    font-size: 20px;
   }
 
 }

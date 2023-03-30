@@ -47,7 +47,7 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
       <div className="close" onClick={e=> animateClose(e)}><span><RiCloseFill/></span></div>  
       
       <div className="modal_layout_row">
-      <CollapsibleMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)} />
+        <CollapsibleMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)} />
        
         {/*<DropDownMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)} />  */}   
       </div>
@@ -59,7 +59,7 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
       <HorizontalLine/>
 
       <div className="modal_layout_row">
-      <CollapsibleMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} />
+        <CollapsibleMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} />
         {/*<DropDownMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} />   */  }
       </div>
       
@@ -70,7 +70,7 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
       <HorizontalLine/>
       
       <div className="modal_layout_row">
-      <CollapsibleMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} />
+        <CollapsibleMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} />
         {/*<DropDownMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} />*/}
       </div>
 

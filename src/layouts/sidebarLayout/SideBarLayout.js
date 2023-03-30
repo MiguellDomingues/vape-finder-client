@@ -18,15 +18,33 @@ function SideBarLayout( {selected_filters_handlers, filter_tags_query} ){
 
     return (<div className="sidebar_container">
         
-        <CollapsibleMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)}  handleClear={handleClear(FILTER_KEYS.CATEGORIES)}/>
+        <CollapsibleMenu 
+            title="Categories" 
+            tags={category_tags} 
+            selected_tags={category} 
+            selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)}  
+            handleClear={handleClear(FILTER_KEYS.CATEGORIES)}
+            maxHeight="20%"/>
        
         <HorizontalLine/>
        
-        <CollapsibleMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)}  handleClear={handleClear(FILTER_KEYS.BRANDS)}/>
+        <CollapsibleMenu 
+            title="Brands" 
+            tags={brands_tags} 
+            selected_tags={brands} 
+            selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)}  
+            handleClear={handleClear(FILTER_KEYS.BRANDS)}
+            maxHeight="20%"/>
        
         <HorizontalLine/>
         
-        <CollapsibleMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)}  handleClear={handleClear(FILTER_KEYS.STORES)}/>
+        <CollapsibleMenu 
+            title="Stores" 
+            tags={stores_tags} 
+            selected_tags={stores} 
+            selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)}  
+            handleClear={handleClear(FILTER_KEYS.STORES)}
+            maxHeight="20%"/>
        
         <HorizontalLine/>
 
