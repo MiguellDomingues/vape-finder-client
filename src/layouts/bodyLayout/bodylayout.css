@@ -1,11 +1,8 @@
 .body_layout_pill_list{
     background-color: lightgray;
-    height: 65vh;
     display: flex;
     flex-direction: column;
     padding: 1em;   
-    padding-top: 2em;
-    
     border-radius: 10px;
     margin-top: 5px;
     margin-bottom: 5px;

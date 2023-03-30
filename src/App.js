@@ -32,8 +32,7 @@ function App( {SHOW_DOB_POPUP} ) {
               <div className="pillcontainer_flex_child">
                   {/*<PillContainer selected_filters_handlers={selected_filters_handlers} />*/ }
               </div>
-              
-              <div className="body_flex_child">
+                     
                   <div className="body_flex_parent">
   
                       {!isMobile && <div className="sidebar_flex_child">
@@ -48,8 +47,7 @@ function App( {SHOW_DOB_POPUP} ) {
                       </div>
   
                   </div>
-              </div>
-  
+              
               <div className="footer_flex_child">    
                   <span className="about cursor_hand">About</span>            
               </div>

@@ -19,23 +19,18 @@
     background-color: lightblue;
     border-radius: 10px;
     margin: 1px;
-    margin-top: 5px;
-   
-}
-
-.body_flex_child{
-    border-radius: 10px; 
+    margin-top: 5px;  
 }
 
 .body_flex_parent{
   display: flex;
   flex-direction: row;
+  height: 75vh;
 }
 
 .sidebar_flex_child{
 
   background-color: lightgray;
-  height: 65vh;
   width: 20%;
   display: flex;      
   padding: 1em;   
@@ -54,7 +49,7 @@
 }
 
 .footer_flex_child{
-    height: 15vh;
+    height: 5vh;
     background-color: lightblue;
     border-radius: 10px;
     font-size: 15px;  
