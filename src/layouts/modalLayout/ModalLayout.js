@@ -5,6 +5,8 @@ import { FILTER_KEYS } from '../../utils.js'
 import { RiCloseFill } from 'react-icons/ri';
 import { useRef, useEffect, } from 'react'
 
+import { CSSTransition } from 'react-transition-group';
+
 import './modallayout.css'
 
 function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}){
@@ -44,12 +46,31 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
     <div ref={modal_overlay} className="modal modal_no_select" id="modal-wrapper" onClick={e=>e.target?.id === "modal-wrapper" && animateClose(e)}>
     <div className="modal-content">
       
-      <div className="close" onClick={e=> animateClose(e)}><span><RiCloseFill/></span></div>  
-      
+      <div className="close" onClick={e=> animateClose(e)}><span><RiCloseFill/></span></div>
+
+      <CSSTransition
+        //the timeout represents the amount of time before the component is removed from the DOM 
+        timeout={500} 
+        //when in={exp} evals to false, remove wrapped jsx from dom and play exit animation
+        unmountOnExit              
+        classNames="clear-filter-animation-model"
+        //this is the conditional rendering that shows/unshows the wrapped jsx 
+        in={areFiltersSelected}>
+          <div className="modal_clear_all_filters_section">
+            <div className="modal_clear_all_filters_btn" onClick={ (e)=>clearAll() }>
+              <span>Clear All</span>
+            </div>
+          </div>                             
+      </CSSTransition>
+
+         
       <div className="modal_layout_row">
-        <CollapsibleMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)} />
-       
-        {/*<DropDownMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)} />  */}   
+        <CollapsibleMenu 
+        title="Categories" 
+        tags={category_tags} 
+        selected_tags={category} 
+        selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)} 
+        maxHeight="200px"/>  
       </div>
 
       <div className="modal_pill_list">
@@ -59,8 +80,12 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
       <HorizontalLine/>
 
       <div className="modal_layout_row">
-        <CollapsibleMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} />
-        {/*<DropDownMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} />   */  }
+        <CollapsibleMenu 
+        title="Brands" 
+        tags={brands_tags} 
+        selected_tags={brands} 
+        selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} 
+        maxHeight="200px" />
       </div>
       
       <div className="modal_pill_list">
@@ -70,8 +95,12 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
       <HorizontalLine/>
       
       <div className="modal_layout_row">
-        <CollapsibleMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} />
-        {/*<DropDownMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} />*/}
+        <CollapsibleMenu 
+          title="Stores" 
+          tags={stores_tags} 
+          selected_tags={stores} 
+          selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} 
+          maxHeight="200px"/>
       </div>
 
       <div className="modal_pill_list">
@@ -83,25 +112,19 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
       <div className="modal_layout_row">
         <SortByDropDown selected_filters_handlers={selected_filters_handlers}/>
       </div>
-      {areFiltersSelected && <button onClick={ (e)=>clearAll() }>Clear All Filters</button>}  
-  
+      
     </div>
 </div>
   </>)
   }
 
-  export default ModalLayout
+export default ModalLayout
 
-  /*
-  <CollapsibleMenu title="Categories" tags={category_tags} selected_tags={category} selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)}  handleClear={handleClear(FILTER_KEYS.CATEGORIES)}/>
-       
-        <HorizontalLine/>
-       
-        <CollapsibleMenu title="Brands" tags={brands_tags} selected_tags={brands} selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)}  handleClear={handleClear(FILTER_KEYS.BRANDS)}/>
-       
-        <HorizontalLine/>
-        
-        <CollapsibleMenu title="Stores" tags={stores_tags} selected_tags={stores} selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)}  handleClear={handleClear(FILTER_KEYS.STORES)}/>
-       
-        <HorizontalLine/>
-  */
+/*
+{areFiltersSelected && 
+      <div className="modal_clear_all_filters_section">
+        <div className="modal_clear_all_filters_btn" onClick={ (e)=>clearAll() }>
+          <span className="modal_clear_all_filters_txt">Clear All</span>
+        </div>
+      </div>} 
+*/
