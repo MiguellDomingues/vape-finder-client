@@ -49,7 +49,7 @@ function useApp(_show_dob_popup) {
           console.log("EXECUTING TIMEOUT SELECTED_FILTERS: ", selected_filters)  
         //https://reactpatterns.js.org/docs/accessing-a-child-component
         //call a method on child to invoke this method
-          document.getElementById('cardContainer').scroll({top:0});
+          document?.getElementById('cardContainer')?.scroll({top:0});
     
          // const cache2 = client.readQuery({
           //  query: GET_SORTED_PRODUCTS ,
