@@ -2,6 +2,69 @@ import './cardlist.css'
 import useCardList from '../../hooks/useCardList'
 import { SpinnerDotted } from 'spinners-react';
 
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
+function CardList( { query, selected_filters_handlers } ) {
+
+  const { loading, error, data, fetchMore } = query
+
+  const products = data ? data.getSortedProducts : []
+
+  console.log("CARDLIST PRODUCTS: ", products)
+
+  const { selected_filters } = selected_filters_handlers
+
+  const [
+    { 
+      handleScroll, 
+    } ] = useCardList(products, selected_filters, fetchMore )
+
+    /*
+    {products.length > 0 ? products.map( (product, idx)=> 
+          <Card key={idx} product={product}/>) 
+          : !loading && <div className="no_products">No products found!</div>}  
+    */
+
+  if(error) return <>Error! {error.message}</>
+//<div className="card_container" id="cardContainer" onScroll={handleScroll}>
+  return (
+    <div 
+    //style={{ height: "100%"}}
+    className="card_container" 
+    id="cardContainer" 
+    onScroll={handleScroll}
+    >
+         {loading && <div className={"spinner_middle"}><SpinnerDotted/></div>} 
+         {//issue: because of the animations, this message appears weird on the card container
+         products.length === 0 && !loading ? <div className="no_products">No products found!</div>: null}
+         <TransitionGroup
+          //the transition group creates a div; can manually assign css/listeners to that div
+          //className="card_container" 
+          //id="cardContainer"
+          //onScroll={handleScroll}
+          component={null} // removes the default div that was messing up the css/scroll handler
+          >
+              
+
+            {products.map( (product, index)=>  
+              <CSSTransition
+                //onEnter={() => console.log("enter")}
+                //onExited={() => console.log("exit")}
+                // the key determines if the item was added/removed to the transitiongroup every render
+                // using only _id, sometimes the same product would appear in diff searches, causing the card animation to skip
+                key={product._id+index} 
+                timeout={500} 
+                classNames="item">
+                  <Card key={product._id} product={product}/>
+              </CSSTransition>
+            )}      
+        </TransitionGroup>     
+    </div>
+  );
+}
+
+/* ORIGINAL CARDLIST pre-animations
+
 function CardList( { query, selected_filters_handlers } ) {
 
   const { loading, error, data, fetchMore } = query
@@ -27,6 +90,8 @@ function CardList( { query, selected_filters_handlers } ) {
     </div>
   );
 }
+
+*/
 
 export default CardList
 

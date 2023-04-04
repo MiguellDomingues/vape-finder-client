@@ -17,6 +17,29 @@ to customize scrollbars in those enviroments, use SimpleScroll, an npm package
   border-radius: 10px;
 }
 
+/* TESTING CSSTRANSITION */
+
+.item-enter {
+  opacity: 0;
+}
+
+.item-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.item-exit {
+  opacity: 1;
+}
+
+.item-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+/* ***************** */
+
+
 @media only screen and (max-width: 481px) {
     .card_container {
         justify-content: space-around;
@@ -96,6 +119,7 @@ to customize scrollbars in those enviroments, use SimpleScroll, an npm package
     font-size: large;
   }
 }
+
 
 
 
