@@ -148,6 +148,70 @@
     color: white;
   }
 
+  .pill_clear_tags_btn{
+    padding-top: 1px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 10px;
+    background-color: rgb(31, 188, 186);
+    font-size: 20px;
+    font-family: system-ui;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    transition: background-color .25s ease-out, color .25s ease-out;
+    cursor: pointer;
+  }
+
+  /* TESTING CSSTRANSITION PILL LIST*/
+
+.pill-animation-enter {
+  opacity: 0;
+}
+
+.pill-animation-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.pill-animation-exit {
+  opacity: 1;
+}
+
+.pill-animation-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+/* ***************** */
+
+/* TESTING CSSTRANSITION CLEAR FILTERS BTN*/
+
+.clear-pills-btn-animation-enter {
+  opacity: 0;
+}
+    
+.clear-pills-btn-animation-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+    
+.clear-pills-btn-animation-exit {
+  opacity: 1;
+}
+    
+.clear-pills-btn-animation-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+    
+/* ***************** */
+
+  .pill_clear_tags_btn:hover{
+    background-color: lightblue;
+    color: black;
+  }
+
 @media only screen and (max-width: 481px) {    
   .pill_str{
     font-size: large;
@@ -230,8 +294,24 @@
   
 }
 
-@media only screen and (min-width: 481px) {   
+.clear_tags_btn{
+  padding: 3px;
+  border-radius: 10px;
+  background-color: rgb(31, 188, 186);
+  font-size: 20px;
+  font-family: system-ui;
+  color: white;
+  box-shadow: 0 0 1000px rgba(0, 0, 0, 0.25);
+  transition: background-color .25s ease-out, color .25s ease-out;
+  cursor: pointer;
+}
 
+.clear_tags_btn:hover{
+  background-color: lightblue;
+  color: black;
+}
+
+@media only screen and (min-width: 481px) {   
   .collapsible{
     text-align: left;
     font-size: 20px;

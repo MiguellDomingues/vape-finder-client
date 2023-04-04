@@ -1,4 +1,4 @@
-
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {SORT_TYPE} from '../utils'
 import './widgets.css' 
 
@@ -26,7 +26,7 @@ export function SortByDropDown({selected_filters_handlers })  {
     </div>)
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////CURRENTLY UNUSED//////////////////////////////////////
 
 export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
 
@@ -61,9 +61,29 @@ export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export function PillList( {pills, filter_key, handleRemove, handleClear} ) {
+
     return(<>
-        {handleClear && pills?.length > 0 && <button onClick={e=>handleClear(filter_key)()}>Clear</button>}
-        {pills.map( (str, idx)=> <Pill key={idx} str={str} removePill={handleRemove && handleRemove(filter_key)}/>)}
+        <CSSTransition
+            //the amount of time in ms before the component is removed from the DOM 
+            timeout={500} 
+            //when in={exp} evals to false, remove wrapped jsx from dom and play exit animation
+            unmountOnExit              
+            classNames="clear-pills-btn-animation"
+            //this is the conditional rendering that adds/removes the wrapped jsx from dom
+            in={handleClear && pills?.length > 0}>
+            <div className="pill_clear_tags_btn" onClick={e=>handleClear(filter_key)()}>
+                    <span className="modal_clear_all_filters_txt">Clear</span>
+                </div>                            
+        </CSSTransition> 
+    
+        <TransitionGroup
+            //wrapped jsx added to dom without any outer elements; adds outer div by default
+            component={null}>
+            {pills.map( (str)=> 
+            <CSSTransition key={str} timeout={500} classNames="pill-animation">
+              <Pill key={str} str={str} removePill={handleRemove && handleRemove(filter_key)}/>
+          </CSSTransition>)}
+        </TransitionGroup>
     </>);
 }
   
@@ -71,6 +91,18 @@ function Pill( {str, removePill} ) {
     return (<div className="pill pill_container_font"> <span className="pill_str">{str}</span>&nbsp;
         {removePill && <span className="pill_close_container" onClick={ e => removePill(str) }><RiCloseFill/></span>}
 </div>); }
+
+
+/*
+ {handleClear && pills?.length > 0 && 
+        //<button onClick={e=>handleClear(filter_key)()}>Clear</button>
+            <div className="pill_clear_tags_btn" onClick={e=>handleClear(filter_key)()}>
+                <span className="modal_clear_all_filters_txt">Clear</span>
+            </div>
+        }
+*/
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -107,7 +139,12 @@ export function CollapsibleMenu( {
 
     return(<>
     <button className="collapsible" onClick={e=>toggleMenu(e.target)}>{title}
-        {handleClear && selected_tags.length > 0 && <button onClick={clearFilters}>Clear</button>}
+        {handleClear && selected_tags.length > 0 && 
+            <button onClick={clearFilters}>Clear</button>}
+            {/*<button className="clear_tags_btn" onClick={clearFilters}>
+                    <span className="clear_tags_btn_txt">Clear</span>
+        </button>*/}
+        
     </button>
     <div className="content">
     {tags.map( (tag, idx)=>
