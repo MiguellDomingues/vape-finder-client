@@ -1,27 +1,14 @@
 .modal {
-  will-change: opacity; 
+    will-change: opacity; 
     position: fixed; /* Stay in place */
     z-index: 2; /* Sit on top */
     padding-top: 15%;
-    padding-left: 5%;
-    
+    padding-left: 5%;   
     left: 0;
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    
-   /* background-color: rgb(0,0,0);  Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */  
-    opacity: 0;                /* the initial state of the overlay */
-    transition: opacity .35s ease-out; /* the fade in/fade out animation when the overlay appears */
-  }
-
-  .modal.fade-in {
-    opacity: 1;  /* when the overlay renders, play the transition animation */   
-  }
-  
-  .modal.fade-out {
-    opacity: 0; /* when the overlay is closed , play the transition animation */
   }
 
   .modal_no_select {

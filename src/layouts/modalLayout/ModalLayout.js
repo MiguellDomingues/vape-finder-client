@@ -1,40 +1,16 @@
 import { useFilters } from '../../hooks/useFilters.js'
 import  usePillList  from '../../hooks/usePillList'
-import { DropDownMenu, SortByDropDown, PillList, HorizontalLine, CollapsibleMenu } from '../../widgets/widgets.js'
+import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu } from '../../widgets/widgets.js'
 import { FILTER_KEYS } from '../../utils.js'
 import { RiCloseFill } from 'react-icons/ri';
-import { useRef, useEffect, } from 'react'
-
 import { CSSTransition } from 'react-transition-group';
 
 import './modallayout.css'
 
 function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}){
 
-  
     const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers, filter_tags_query)
     const [areFiltersSelected,{handleRemove, handleClear, clearAll}] = usePillList(selected_filters_handlers)
-
-    const modal_overlay = useRef(null)
-
-    useEffect(() => {
-
-      modal_overlay.current.classList.add('fade-in')
-    },[] );
-
-  
-  console.log("MODAL: ", modal_overlay)
-
-    function animateClose(e){
-      e.stopPropagation()
-      if(modal_overlay){                                                     
-        modal_overlay.current.classList.add('fade-out')                         
-        modal_overlay.current.ontransitionend = _ => toggleModal()
-      }else{                                                                     
-        toggleModal()
-      }
-    }
-
 
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
@@ -43,27 +19,22 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
    const { category, stores, brands, } = selected_filters
 
     return(<>
-    <div ref={modal_overlay} className="modal modal_no_select" id="modal-wrapper" onClick={e=>e.target?.id === "modal-wrapper" && animateClose(e)}>
+    <div className="modal modal_no_select" id="modal-wrapper" onClick={e=>e.target?.id === "modal-wrapper" && toggleModal()}>
     <div className="modal-content">
       
-      <div className="close" onClick={e=> animateClose(e)}><span><RiCloseFill/></span></div>
-
-      <CSSTransition
-        //the timeout represents the amount of time before the component is removed from the DOM 
-        timeout={500} 
-        //when in={exp} evals to false, remove wrapped jsx from dom and play exit animation
-        unmountOnExit              
-        classNames="clear-filter-animation-model"
-        //this is the conditional rendering that shows/unshows the wrapped jsx 
-        in={areFiltersSelected}>
-          <div className="modal_clear_all_filters_section">
-            <div className="modal_clear_all_filters_btn" onClick={ (e)=>clearAll() }>
-              <span>Clear All</span>
-            </div>
-          </div>                             
-      </CSSTransition>
-
-         
+      <div className="close" onClick={e=> toggleModal()}><span><RiCloseFill/></span></div>
+        <CSSTransition 
+          timeout={500} 
+          unmountOnExit              
+          classNames="clear-filter-animation-model" 
+          in={areFiltersSelected}>
+            <div className="modal_clear_all_filters_section">
+              <div className="modal_clear_all_filters_btn" onClick={ (e)=>clearAll() }>
+                <span>Clear All</span>
+              </div>
+            </div>                             
+        </CSSTransition>
+       
       <div className="modal_layout_row">
         <CollapsibleMenu 
         title="Categories" 
@@ -116,15 +87,6 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
     </div>
 </div>
   </>)
-  }
+}
 
 export default ModalLayout
-
-/*
-{areFiltersSelected && 
-      <div className="modal_clear_all_filters_section">
-        <div className="modal_clear_all_filters_btn" onClick={ (e)=>clearAll() }>
-          <span className="modal_clear_all_filters_txt">Clear All</span>
-        </div>
-      </div>} 
-*/
