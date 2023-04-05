@@ -1,5 +1,6 @@
 import ModalLayout from '../modalLayout/ModalLayout'
 import { RxHamburgerMenu } from 'react-icons/rx';
+import { CSSTransition } from 'react-transition-group';
 import {useState} from 'react'
 
 import './header.css'
@@ -13,10 +14,14 @@ function HeaderLayout( {selected_filters_handlers, filter_tags_query, isMobile} 
     const toggleModal = () =>setOpen(!is_open)
 
     return (<>
-      {is_open && <ModalLayout 
+
+<CSSTransition timeout={500} unmountOnExit classNames="toggle-mobile-modal-animation" in={is_open}>
+                  <ModalLayout 
                     selected_filters_handlers={selected_filters_handlers}
                     filter_tags_query={filter_tags_query} 
-                    toggleModal={toggleModal}/>}
+                    toggleModal={toggleModal}/>
+</CSSTransition>
+
       <div className="container_header">
 
         <div className="top">
@@ -34,3 +39,12 @@ function HeaderLayout( {selected_filters_handlers, filter_tags_query, isMobile} 
   }
 
   export default HeaderLayout
+
+  // <CSSTransition timeout={500} unmountOnExit classNames="sidebar-clear-pills-btn-animation" in={brands.length > 0}>
+
+  /*
+{is_open && <ModalLayout 
+                    selected_filters_handlers={selected_filters_handlers}
+                    filter_tags_query={filter_tags_query} 
+                    toggleModal={toggleModal}/>}
+  */

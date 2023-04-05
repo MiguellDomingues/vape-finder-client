@@ -41,6 +41,28 @@
   height: auto
 }
 
+/* TESTING CSSTRANSITION OPEN/CLOSE MODAL*/
+
+.toggle-mobile-modal-animation-enter {
+  opacity: 0;
+}
+    
+.toggle-mobile-modal-animation-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+    
+.toggle-mobile-modal-animation-exit {
+  opacity: 1;
+}
+    
+.toggle-mobile-modal-animation-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+    
+/* ***************** */
+
 @media only screen and (max-width: 481px) {  
   .header_title{ 
     font-size: 33px;
