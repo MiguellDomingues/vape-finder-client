@@ -1,6 +1,6 @@
 import { useFilters } from '../../hooks/useFilters.js'
 import  usePillList  from '../../hooks/usePillList'
-import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu } from '../../widgets/widgets.js'
+import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton } from '../../widgets/widgets.js'
 import { FILTER_KEYS } from '../../utils.js'
 import { RiCloseFill } from 'react-icons/ri';
 import { CSSTransition } from 'react-transition-group';
@@ -45,6 +45,7 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
       </div>
 
       <div className="modal_pill_list">
+        <ClearFiltersButton handleClear={handleClear(FILTER_KEYS.CATEGORIES)} show={category.length > 0}/>  
         <PillList pills={category} filter_key={FILTER_KEYS.CATEGORIES} handleRemove={handleRemove} handleClear={handleClear}/>
       </div>
 
@@ -60,6 +61,7 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
       </div>
       
       <div className="modal_pill_list">
+        <ClearFiltersButton handleClear={handleClear(FILTER_KEYS.BRANDS)} show={brands.length > 0}/>
         <PillList pills={brands} filter_key={FILTER_KEYS.BRANDS} handleRemove={handleRemove} handleClear={handleClear}/>
       </div>
 
@@ -75,6 +77,7 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
       </div>
 
       <div className="modal_pill_list">
+        <ClearFiltersButton handleClear={handleClear(FILTER_KEYS.STORES)} show={stores.length > 0}/>
         <PillList pills={stores} filter_key={FILTER_KEYS.STORES} handleRemove={handleRemove} handleClear={handleClear}/>
       </div>
 

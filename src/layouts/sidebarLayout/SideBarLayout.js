@@ -1,6 +1,5 @@
 import { useFilters } from '../../hooks/useFilters.js'
 import  usePillList  from '../../hooks/usePillList'
-import { CSSTransition } from 'react-transition-group';
 import { SortByDropDown, CollapsibleMenu, HorizontalLine, ClearFiltersButton } from '../../widgets/widgets.js'
 import { FILTER_KEYS } from '../../utils.js'
 
@@ -27,10 +26,8 @@ function SideBarLayout( {selected_filters_handlers, filter_tags_query} ){
             handleClear={handleClear(FILTER_KEYS.CATEGORIES)}
             maxHeight="20%"/>
 
-        <CSSTransition timeout={500} unmountOnExit classNames="sidebar-clear-pills-btn-animation" in={category.length > 0}>
-            <div><ClearFiltersButton title="Categories" handleClear={handleClear(FILTER_KEYS.CATEGORIES)}/></div>                                   
-        </CSSTransition>
-
+        <div><ClearFiltersButton title="Categories" handleClear={handleClear(FILTER_KEYS.CATEGORIES)} show={category.length > 0}/></div>
+      
         <HorizontalLine/>
     
         <CollapsibleMenu 
@@ -41,9 +38,7 @@ function SideBarLayout( {selected_filters_handlers, filter_tags_query} ){
             handleClear={handleClear(FILTER_KEYS.BRANDS)}
             maxHeight="20%"/>  
 
-        <CSSTransition timeout={500} unmountOnExit classNames="sidebar-clear-pills-btn-animation" in={brands.length > 0}>
-            <div><ClearFiltersButton title="Brands" handleClear={handleClear(FILTER_KEYS.BRANDS)}/></div>
-        </CSSTransition>
+        <div><ClearFiltersButton title="Brands" handleClear={handleClear(FILTER_KEYS.BRANDS)} show={brands.length > 0}/></div>
 
         <HorizontalLine/>
     
@@ -54,9 +49,8 @@ function SideBarLayout( {selected_filters_handlers, filter_tags_query} ){
             selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)}  
             handleClear={handleClear(FILTER_KEYS.STORES)}
             maxHeight="20%"/>
-        <CSSTransition timeout={500} unmountOnExit classNames="sidebar-clear-pills-btn-animation" in={stores.length > 0}>
-            <div><ClearFiltersButton title="Stores" handleClear={handleClear(FILTER_KEYS.STORES)}/></div>
-        </CSSTransition>
+        
+        <div><ClearFiltersButton title="Stores" handleClear={handleClear(FILTER_KEYS.STORES)} show={stores.length > 0}/></div>
 
         <HorizontalLine/>
 
