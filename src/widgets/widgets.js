@@ -63,19 +63,6 @@ export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
 export function PillList( {pills, filter_key, handleRemove, handleClear} ) {
 
     return(<>
-        <CSSTransition
-            //the amount of time in ms before the component is removed from the DOM 
-            timeout={500} 
-            //when in={exp} evals to false, remove wrapped jsx from dom and play exit animation
-            unmountOnExit              
-            classNames="clear-pills-btn-animation"
-            //this is the conditional rendering that adds/removes the wrapped jsx from dom
-            in={handleClear && pills?.length > 0}>
-            <div className="pill_clear_tags_btn" onClick={e=>handleClear(filter_key)()}>
-                    <span className="modal_clear_all_filters_txt">Clear</span>
-                </div>                            
-        </CSSTransition> 
-    
         <TransitionGroup
             //wrapped jsx added to dom without any outer elements; adds outer div by default
             component={null}>
@@ -91,18 +78,6 @@ function Pill( {str, removePill} ) {
     return (<div className="pill pill_container_font"> <span className="pill_str">{str}</span>&nbsp;
         {removePill && <span className="pill_close_container" onClick={ e => removePill(str) }><RiCloseFill/></span>}
 </div>); }
-
-
-/*
- {handleClear && pills?.length > 0 && 
-        //<button onClick={e=>handleClear(filter_key)()}>Clear</button>
-            <div className="pill_clear_tags_btn" onClick={e=>handleClear(filter_key)()}>
-                <span className="modal_clear_all_filters_txt">Clear</span>
-            </div>
-        }
-*/
-
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -148,9 +123,12 @@ export function HorizontalLine(){
     return (<div className="outer_line"><hr/></div>)
 }
 
+/**************button to clear a single filter***************** */
+
 export function ClearFiltersButton({
     title = "",
-    handleClear
+    handleClear,
+    show = false,
 }){
 
     function clearFilters(e){
@@ -158,8 +136,10 @@ export function ClearFiltersButton({
         handleClear()
     }
 
-    return( 
+    return(
+    <CSSTransition timeout={500} unmountOnExit classNames="clear-pills-btn-animation" in={show}>
         <div className="pill_clear_tags_btn pill_clear_tags_layout" onClick={clearFilters}>
-        <span className="modal_clear_all_filters_txt">Clear {title}</span>
-    </div>)
+            <span className="modal_clear_all_filters_txt">Clear {title}</span>
+        </div>
+    </CSSTransition>)
 }

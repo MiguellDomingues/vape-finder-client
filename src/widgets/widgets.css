@@ -144,7 +144,6 @@
   }
 
   .pill_str{
-    font-weight: 600;
     color: white;
   }
 
@@ -154,6 +153,7 @@
   }
 
   .pill_clear_tags_btn{
+    margin: 3px;
     padding-top: 1px;
     padding-bottom: 3px;
     padding-left: 5px;
@@ -162,7 +162,7 @@
     background-color: rgb(31, 188, 186);
     font-size: 20px;
     font-family: system-ui;
-    color: white;
+    color: black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     transition: background-color .25s ease-out, color .25s ease-out;
     cursor: pointer;
