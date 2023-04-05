@@ -1,9 +1,8 @@
 import { useFilters } from '../../hooks/useFilters.js'
 import  usePillList  from '../../hooks/usePillList'
-import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton } from '../../widgets/widgets.js'
+import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton, ClearAllFiltersButton } from '../../widgets/widgets.js'
 import { FILTER_KEYS } from '../../utils.js'
 import { RiCloseFill } from 'react-icons/ri';
-import { CSSTransition } from 'react-transition-group';
 
 import './modallayout.css'
 
@@ -23,18 +22,10 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
     <div className="modal-content">
       
       <div className="close" onClick={e=> toggleModal()}><span><RiCloseFill/></span></div>
-        <CSSTransition 
-          timeout={500} 
-          unmountOnExit              
-          classNames="clear-filter-animation-model" 
-          in={areFiltersSelected}>
-            <div className="modal_clear_all_filters_section">
-              <div className="modal_clear_all_filters_btn" onClick={ (e)=>clearAll() }>
-                <span>Clear All</span>
-              </div>
-            </div>                             
-        </CSSTransition>
-       
+      <div className="modal_clear_all_filters_section">
+        <ClearAllFiltersButton title={"Clear All Filters"} clearAll={clearAll} show={areFiltersSelected}/>
+      </div>
+      
       <div className="modal_layout_row">
         <CollapsibleMenu 
         title="Categories" 

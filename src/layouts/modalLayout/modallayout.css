@@ -43,7 +43,7 @@
   .modal_pill_list{
     display: flex;
     align-self: flex-start;
-    margin-top: 15px;
+    margin-top: 5px;
     flex-flow: row wrap;
     justify-content: center;
   }
@@ -94,27 +94,6 @@
     margin-bottom: 15px;
   }
 
-    /* TESTING CSSTRANSITION CLEAR ALL FILTERS BTN*/
-
-.clear-filter-animation-model-enter {
-  opacity: 0;
-}
-
-.clear-filter-animation-model-enter-active {
-  opacity: 1;
-  transition: opacity 500ms;
-}
-
-.clear-filter-animation-model-exit {
-  opacity: 1;
-}
-
-.clear-filter-animation-model-exit-active {
-  opacity: 0;
-  transition: opacity 500ms;
-}
-
-/* ***************** */
 
 
   

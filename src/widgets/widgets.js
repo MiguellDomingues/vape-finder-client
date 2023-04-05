@@ -138,8 +138,26 @@ export function ClearFiltersButton({
 
     return(
     <CSSTransition timeout={500} unmountOnExit classNames="clear-pills-btn-animation" in={show}>
-        <div className="pill_clear_tags_btn pill_clear_tags_layout" onClick={clearFilters}>
-            <span className="modal_clear_all_filters_txt">Clear {title}</span>
+        <div className="clear_filters_btn" onClick={clearFilters}>
+            <span className="clear_all_filters_txt">Clear {title}</span>
+        </div>
+    </CSSTransition>)
+}
+
+/**************button to clear a single filter***************** */
+
+export function ClearAllFiltersButton({
+    title = "",
+    clearAll,
+    show = false,
+}){
+
+    return(
+    <CSSTransition timeout={500} unmountOnExit classNames="clear-pills-btn-animation" in={show}>
+        <div>
+            <div className="clear_all_filters_btn" onClick={ (e)=>clearAll() }>
+                <span>{title}</span>
+            </div>
         </div>
     </CSSTransition>)
 }
