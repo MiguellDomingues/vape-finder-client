@@ -148,6 +148,11 @@
     color: white;
   }
 
+  .pill_clear_tags_layout{
+    display: flex;
+    align-self: center;
+  }
+
   .pill_clear_tags_btn{
     padding-top: 1px;
     padding-bottom: 3px;

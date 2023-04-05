@@ -111,56 +111,55 @@ export function CollapsibleMenu( {
     tags          = [], 
     selected_tags = [], 
     selectedHandler, 
-    //registerMenu, 
-    handleClear,
     maxHeight = "100px"
 } ){
 
     const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected content-row" : "content-row"
 
     const isTagSelected = (tag, arr) => arr.includes(tag) 
-    //!isTagSelected(tag.tag_name,selected_tags) && 
 
     //move the selected tags to the top of the dropdown list
     //const sortedtags = [ ...tags.filter( t=> selected_tags.includes(t.tag_name) )]
                       //  .concat([...tags.filter( t=> !selected_tags.includes(t.tag_name)) ])
 
-    function clearFilters(e){
-        e.stopPropagation()
-        handleClear()
-    }
-
     function toggleMenu(target){
         target.classList.toggle("active");
         let content = target.nextElementSibling;
         content.style.maxHeight = content.style.maxHeight ? null : maxHeight//"100px"
-        //registerMenu && registerMenu(target)
     }
 
     return(<>
-    <button className="collapsible" onClick={e=>toggleMenu(e.target)}>{title}
-        {handleClear && selected_tags.length > 0 && 
-            <button onClick={clearFilters}>Clear</button>}
-            {/*<button className="clear_tags_btn" onClick={clearFilters}>
-                    <span className="clear_tags_btn_txt">Clear</span>
-        </button>*/}
-        
-    </button>
+    <button className="collapsible" onClick={e=>toggleMenu(e.target)}>{title}</button>
     <div className="content">
-    {tags.map( (tag, idx)=>
-            <div className={selectedTagsBGC(tag.tag_name, selected_tags)}
-                  key={idx} 
-                  onClick={ ()=> selectedHandler(tag.tag_name)}>
-                 <div className="content-row-left">{tag.tag_name}</div> 
-                 <div className="content-row-right">{tag.product_count}</div>       
-            </div>
-        )}                  
+        {tags.map( (tag, idx)=>
+                <div className={selectedTagsBGC(tag.tag_name, selected_tags)}
+                    key={idx} 
+                    onClick={ ()=> selectedHandler(tag.tag_name)}>
+                    <div className="content-row-left">{tag.tag_name}</div> 
+                    <div className="content-row-right">{tag.product_count}</div>       
+                </div>
+            )}                  
     </div></>)
-
 }
 
 /**************wrapper for <hr/> tag that appears inside flex containers***************** */
 
 export function HorizontalLine(){
     return (<div className="outer_line"><hr/></div>)
+}
+
+export function ClearFiltersButton({
+    title = "",
+    handleClear
+}){
+
+    function clearFilters(e){
+        e.stopPropagation()
+        handleClear()
+    }
+
+    return( 
+        <div className="pill_clear_tags_btn pill_clear_tags_layout" onClick={clearFilters}>
+        <span className="modal_clear_all_filters_txt">Clear {title}</span>
+    </div>)
 }
