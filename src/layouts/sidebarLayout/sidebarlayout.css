@@ -11,3 +11,28 @@
   width: 80%
 }
 
+/* TESTING CSSTRANSITION CLEAR ALL FILTERS BTN*/
+
+.sidebar-clear-pills-btn-animation-enter {
+  opacity: 0;
+}
+    
+.sidebar-clear-pills-btn-animation-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+    
+.sidebar-clear-pills-btn-animation-exit {
+  opacity: 1;
+}
+    
+.sidebar-clear-pills-btn-animation-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+    
+/* ***************** */
+
+
+
+
