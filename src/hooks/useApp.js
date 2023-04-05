@@ -11,9 +11,8 @@ function useApp(_show_dob_popup) {
      //const client = useApolloClient()
     
      const [getProducts, { loading, error, data, fetchMore }] = useLazyQuery(GET_SORTED_PRODUCTS);
-
      const filter_tags_query = useQuery(GET_SEARCH_TYPES,  { variables: { query: {} } } );
-
+     const isMobile = useMediaQuery({ minWidth: 0, maxWidth: 800 });
 
      //run once upon app load
      useEffect(() => {
@@ -29,13 +28,12 @@ function useApp(_show_dob_popup) {
       //const cardScroll = useRef(null); REFS ONLY WORK WITH CLASSES (BECAUSE THEY HAVE INSTANCES?) https://reactjs.org/docs/refs-and-the-dom.html
     
       const [selected_filters, setFilters] = useState(starting_filters);
-
       const [show_dob_popup, setShow] = useState( (!localStorage.getItem(STORAGE_KEY) && _show_dob_popup) )
     
       const timer = useRef(null)
-      //const last_product_id = useRef(null)
-    
-      //const setLPID = (lpid) => last_product_id.current = lpid //update the ref with the id of the last item on the current page
+      // this is a requirement for animating the vertifyage popup using the "appear" prop
+      // otherwise tcsstransnition will invoke FindDOMNode which generates warnings in strictmode
+      const nodeRef = useRef(null)
     
       const setAndRefetch = (selected_filters = starting_filters, timeout = TIMEOUT) => {
     
@@ -66,29 +64,20 @@ function useApp(_show_dob_popup) {
           timer.current = null
         }, timeout)}
     }
-    
-    //const ageVertified = show_dob_popup => !localStorage.getItem(STORAGE_KEY) && show_dob_popup
-    
-    const selected_filters_handlers = {
-        selected_filters,
-        setAndRefetch,
-    }
-    
-    const query ={
-      fetchMore,
-      loading, 
-      error, 
-      data
-    }
+     
+    const selected_filters_handlers = { selected_filters, setAndRefetch } 
+    const query = {fetchMore,loading, error, data}
     
     return [
         selected_filters_handlers,
         filter_tags_query, 
         query,
-        show_dob_popup,{
-            closeDOBPopup: save_validation => {
-              save_validation && localStorage.setItem(STORAGE_KEY, true);
-              setShow(false) }
+        show_dob_popup,
+        isMobile,
+        nodeRef,{
+          closeDOBPopup: save_validation => {
+            save_validation && localStorage.setItem(STORAGE_KEY, true);
+            setShow(false) }
     }]
 }
 

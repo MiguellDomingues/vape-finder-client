@@ -1,10 +1,10 @@
 //import Layout from './layout'
 import useApp from './hooks/useApp'
 
-import { useMediaQuery } from 'react-responsive';
 import HeaderLayout from './layouts/headerLayout/HeaderLayout'
 import SideBarLayout from './layouts/sidebarLayout/SideBarLayout'
 import BodyLayout from './layouts/bodyLayout/BodyLayout'
+import { CSSTransition } from 'react-transition-group';
 
 import CardList from './components/cardList/CardList'
 import VertifyAge from './components/vertifyAge/VertifyAge'
@@ -12,14 +12,33 @@ import './app.css'
 
 function App( {SHOW_DOB_POPUP} ) {
 
-  const [selected_filters_handlers, filter_tags_query, query, show_dob_popup, 
-        { closeDOBPopup }] = useApp(false)//SHOW_DOB_POPUP
+  const [
+    selected_filters_handlers, 
+    filter_tags_query, 
+    query, 
+    show_dob_popup, 
+    isMobile, 
+    nodeRef,
+    { closeDOBPopup }] = useApp(true)//SHOW_DOB_POPUP
 
-  const isMobile = useMediaQuery({ minWidth: 0, maxWidth: 800 });
-  
     return( 
-      <div className="page">     
-          {show_dob_popup && <VertifyAge closeDOBPopup={closeDOBPopup}/>}
+      <div className="page">
+         <CSSTransition timeout={500} unmountOnExit classNames="toggle-vertifyage-popup-animation" 
+            /* if an animated component appears when app first loads, need the 'appear' prop along with the 'in' prop
+               also need to define *-appear and *-appear-active css classes
+            */
+            in={show_dob_popup}
+            appear={show_dob_popup}
+            /* because we use the 'in' prop with a custom functional component, also need to define a nodeRef prop
+               which is a useRef instance. the ref gets set by the CSSTransition wrapper
+               the alternative is to lift the wrapping div into 
+            */
+            nodeRef={nodeRef}>
+            <VertifyAge 
+                ref={nodeRef} // pass the ref to vertifyage, which is wrapped in forwardRef
+                closeDOBPopup={closeDOBPopup}/>
+        </CSSTransition>     
+          
           <div className="app_flex_parent">
               
               <div className="header_flex_child">

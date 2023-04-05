@@ -7,10 +7,7 @@ function useVertifyAge(closeDOBPopup){
     const [birth_date, setBirthDate] = useState({year: "" , month: "", day: ""})
     const [error, setError] = useState("")
     const save_vertification = useRef(false)
-    const overlay = useRef(null)
-
-    overlay.current && overlay.current.classList.add('fade-in')                // add the fade-in css when the component is mounted
-
+    
     const onChange = e => setBirthDate( {...birth_date,[e.target.name]: e.target.value} )
 
     const saveValidation = _ => save_vertification.current = !save_vertification.current
@@ -34,18 +31,13 @@ function useVertifyAge(closeDOBPopup){
         setError("please enter a valid year")
       }else if(age < MIN_AGE){                                                
         setError("you are not old enough to view this content")
-      }else{
-        if(overlay.current){                                                  // if the ref is properly referring the overlay..
-            overlay.current.classList.add('fade-out')                         // play the fade-out animation and close the popup upon form validation
-            overlay.current.ontransitionend = _ => closeDOBPopup(save_vertification.current)
-        }else{                                                                // otherwise just close the popup so the user receives no errors
-          closeDOBPopup(save_vertification.current)
-        }
+      }else{                                                             
+          closeDOBPopup(save_vertification.current)    
       }
     }
   
     return [
-        birth_date, error, overlay,
+        birth_date, error,
         { onChange, saveValidation, validateInput }
     ]     
   }

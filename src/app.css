@@ -55,6 +55,28 @@
     font-size: 15px;  
 }
 
+/* TESTING CSSTRANSITION APPEAR/EXIT */
+
+.toggle-vertifyage-popup-animation-appear {
+  opacity: 0;
+}
+    
+.toggle-vertifyage-popup-animation-appear-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+    
+.toggle-vertifyage-popup-animation-exit {
+  opacity: 1;
+}
+    
+.toggle-vertifyage-popup-animation-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+    
+/* ***************** */
+
 
 
   
