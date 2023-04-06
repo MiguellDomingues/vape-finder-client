@@ -28,21 +28,6 @@
   height: 75vh;
 }
 
-.sidebar_flex_child{
-
-  background-color: lightgray;
-  width: 20%;
-  display: flex;      
-  padding: 1em;   
-  padding-top: 2em;
-  border-radius: 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  /*margin-left:5px;*/
-  margin-right:5px;
-
-}
-
 .cardlist_flex_child{
   display: flex;
   width: 100%;
@@ -75,7 +60,43 @@
   transition: opacity 500ms;
 }
     
-/* ***************** */
+/* *******testing slide/out sidebar animations********* */
+
+.sidebar_flex_child{
+  
+  background-color: lightgray;
+  display: flex;      
+  overflow: hidden;
+    
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+    
+  max-width: 17%;
+  padding-right: 4em;  
+  margin-right:  5px;
+}
+
+.show-filters-animation-enter {
+  max-width: 0%;
+}
+    
+.show-filters-animation-enter-active { 
+  max-width: 17%;
+  padding-right: 4em;
+  transition: max-width 500ms;
+}
+    
+.show-filters-animation-exit {
+  max-width: 17%;
+  padding-right: 4em;
+}
+    
+.show-filters-animation-exit-active {
+  max-width: 0%;
+  padding-right: 0em;
+  transition: max-width 500ms;
+}
 
 
 
