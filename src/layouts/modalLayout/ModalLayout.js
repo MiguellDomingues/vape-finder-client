@@ -19,13 +19,16 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
 
     return(<>
     <div className="modal modal_no_select" id="modal-wrapper" onClick={e=>e.target?.id === "modal-wrapper" && toggleModal()}>
-    <div className="modal-content">
+      <div className="modal-content">
       
-      <div className="close" onClick={e=> toggleModal()}><span><RiCloseFill/></span></div>
-      <div className="modal_clear_all_filters_section">
-        <ClearAllFiltersButton title={"Clear All Filters"} clearAll={clearAll} show={areFiltersSelected}/>
+      <div className="modal-top">
+        <div className="modal_clear_all_filters_section">
+          <ClearAllFiltersButton title={"Clear All Filters"} clearAll={clearAll} show={areFiltersSelected}/>
+        </div>
+
+        <div className="close" onClick={e=> toggleModal()}><span><RiCloseFill/></span></div>
       </div>
-      
+          
       <div className="modal_layout_row">
         <CollapsibleMenu 
         title="Categories" 

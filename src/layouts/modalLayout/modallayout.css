@@ -34,12 +34,6 @@
     width:100%;
   }
 
-  .close {
-    display: flex;
-    align-self: flex-end;
-    font-size: 20px !important;
-  }
-
   .modal_pill_list{
     display: flex;
     align-self: flex-start;
@@ -87,12 +81,23 @@
     color: black;
   }
 
+  .modal-top{
+    flex-direction: row;
+    display: flex;
+    width: 100%;
+    margin-bottom: 5px;
+    justify-content: space-between;
+  }
+
   .modal_clear_all_filters_section{
     display: flex;
-    flex-direction: column;
-    font-size: 20px;
-    margin-bottom: 15px;
   }
+
+  .close {
+    display: flex;
+    font-size: 20px !important;
+  }
+  
 
 
 
