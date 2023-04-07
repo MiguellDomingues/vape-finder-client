@@ -21,7 +21,7 @@ function usePillList(selected_filters_handlers){
     }
 
     function clearAll(){
-        setAndRefetch({...starting_filters}, 0)
+        setAndRefetch({...starting_filters})
     }
 
     return[

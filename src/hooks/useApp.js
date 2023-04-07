@@ -8,8 +8,7 @@ import { starting_query, starting_filters, TIMEOUT, buildAtlasGQLQuery, STORAGE_
 
 function useApp(_show_dob_popup) {
 
-     //const client = useApolloClient()
-    
+     const client = useApolloClient()  
      const [getProducts, { loading, error, data, fetchMore }] = useLazyQuery(GET_SORTED_PRODUCTS);
      const filter_tags_query = useQuery(GET_SEARCH_TYPES,  { variables: { query: {} } } );
      const isMobile = useMediaQuery({ minWidth: 0, maxWidth: 800 });
@@ -34,8 +33,16 @@ function useApp(_show_dob_popup) {
       // this is a requirement for animating the vertifyage popup using the "appear" prop
       // otherwise tcsstransnition will invoke FindDOMNode which generates warnings in strictmode
       const nodeRef = useRef(null)
-    
-      const setAndRefetch = (selected_filters = starting_filters, timeout = TIMEOUT) => {
+
+      const setAndRefetch = (selected_filters = starting_filters) => {
+
+        const isQueryResultCached = (selected_filters) =>{
+          return client.readQuery({ query: GET_SORTED_PRODUCTS, variables: {  ...buildAtlasGQLQuery(selected_filters) } }) !== null
+        }
+
+        //console.log("----CACHED????---- ", isQueryResultCached(selected_filters))
+
+        const timeout = isQueryResultCached(selected_filters) ? 0 : TIMEOUT
     
         //console.log("SELECTED_FILTERS: ", selected_filters)
         setFilters(selected_filters)
@@ -48,13 +55,6 @@ function useApp(_show_dob_popup) {
         //https://reactpatterns.js.org/docs/accessing-a-child-component
         //call a method on child to invoke this method
           document?.getElementById('cardContainer')?.scroll({top:0});
-    
-         // const cache2 = client.readQuery({
-          //  query: GET_SORTED_PRODUCTS ,
-           //  variables: { ...buildAtlasGQLQuery(selected_filters) },
-           //  });
-      
-           //   console.log("CACHE QUERY: ", cache2)
     
           getProducts({ 
             variables: {  ...buildAtlasGQLQuery(selected_filters) } , 
