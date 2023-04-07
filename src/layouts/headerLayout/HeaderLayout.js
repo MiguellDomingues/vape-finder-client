@@ -14,13 +14,12 @@ function HeaderLayout( {selected_filters_handlers, filter_tags_query, isMobile} 
     const toggleModal = () =>setOpen(!is_open)
 
     return (<>
-
-<CSSTransition timeout={500} unmountOnExit classNames="toggle-mobile-modal-animation" in={is_open}>
-                  <ModalLayout 
-                    selected_filters_handlers={selected_filters_handlers}
-                    filter_tags_query={filter_tags_query} 
-                    toggleModal={toggleModal}/>
-</CSSTransition>
+      <CSSTransition timeout={500} unmountOnExit classNames="toggle-mobile-modal-animation" in={is_open}>
+        <ModalLayout 
+          selected_filters_handlers={selected_filters_handlers}
+          filter_tags_query={filter_tags_query} 
+          toggleModal={toggleModal}/>
+      </CSSTransition>
 
       <div className="container_header">
 
@@ -39,12 +38,3 @@ function HeaderLayout( {selected_filters_handlers, filter_tags_query, isMobile} 
   }
 
   export default HeaderLayout
-
-  // <CSSTransition timeout={500} unmountOnExit classNames="sidebar-clear-pills-btn-animation" in={brands.length > 0}>
-
-  /*
-{is_open && <ModalLayout 
-                    selected_filters_handlers={selected_filters_handlers}
-                    filter_tags_query={filter_tags_query} 
-                    toggleModal={toggleModal}/>}
-  */

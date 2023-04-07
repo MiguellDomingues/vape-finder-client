@@ -429,7 +429,7 @@
 
 .tab_button_content{
     font-size: 15px;   
-    color: black;
+    
     font-weight: 900;
     
 }
@@ -442,7 +442,12 @@
     padding-bottom: 10px;
     padding-right: 2px;   
     box-shadow: 5px 0 10px rgba(0, 0, 0, 0.5);
-    background: lightgrey;
+    background:  rgb(31, 188, 186);
+    color: black;
+}
+
+.tab_button_wrapper:hover{
+  background: lightblue;
 }
 
 .tab-button-animation-enter {

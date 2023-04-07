@@ -9,7 +9,9 @@ import {useState} from 'react'
 
 /////////////////////////////////////////////////////////////////////////////////
 
-export function SortByDropDown({selected_filters_handlers })  {
+export function SortByDropDown({
+    selected_filters_handlers 
+}){
   
     const {setAndRefetch, selected_filters} = selected_filters_handlers
       
