@@ -3,6 +3,9 @@ import {SORT_TYPE} from '../utils'
 import './widgets.css' 
 
 import { RiCloseFill } from 'react-icons/ri';
+import { FaSearch } from 'react-icons/fa';
+
+import {useState} from 'react'
 
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -60,8 +63,11 @@ export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export function PillList( {pills, filter_key, handleRemove, handleClear} ) {
-
+export function PillList({
+    pills, 
+    filter_key, 
+    handleRemove, 
+}){
     return(<>
         <TransitionGroup
             //wrapped jsx added to dom without any outer elements; adds outer div by default
@@ -160,4 +166,43 @@ export function ClearAllFiltersButton({
             </div>
         </div>
     </CSSTransition>)
+}
+
+/**************floating tab that toggles filters in/out on desktop***************** */
+
+export function AnimatedTabButton({
+    toggleSidebar,
+    sidebar_open = false   
+}){
+    const [animate_close, setAnimateClose] = useState(sidebar_open)
+
+    return(<div className="tab_button_layout">   
+        <div className="tab_button_wrapper" onClick={e=>toggleSidebar()}>                 
+            <span className="tab_button_content">
+                <CSSTransition 
+                    timeout={500} 
+                    unmountOnExit 
+                    classNames="tab-button-animation"
+                    in={!sidebar_open && !animate_close}
+                    onExited={()=>setAnimateClose(true)}> 
+                        <span>
+                            <FaSearch size={'1.5em'}/>
+                            &gt;&gt;
+                        </span>
+                </CSSTransition> 
+
+                <CSSTransition 
+                    timeout={500} 
+                    unmountOnExit 
+                    classNames="tab-button-animation"
+                    in={sidebar_open && animate_close}
+                    onExited={()=>setAnimateClose(false)}> 
+                        <span>
+                            <RiCloseFill size={'1.5em'}/>
+                            &lt;&lt;
+                        </span>
+                </CSSTransition> 
+            </span>                             
+        </div>
+    </div>)
 }

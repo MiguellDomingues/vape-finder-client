@@ -13,8 +13,6 @@ import './app.css'
 
 function App( {SHOW_DOB_POPUP} ) {
 
-    const [show, toggleShow ] = useState(false)
-
   const [
     selected_filters_handlers, 
     filter_tags_query, 
@@ -24,8 +22,11 @@ function App( {SHOW_DOB_POPUP} ) {
     nodeRef,
     { closeDOBPopup }] = useApp(true)//SHOW_DOB_POPUP
 
+    const [sidebar_open, toggleSidebar ] = useState(false)
+
     return( 
       <div className="page">
+
          <CSSTransition timeout={500} unmountOnExit classNames="toggle-vertifyage-popup-animation" 
             /* if an animated component appears when app first loads, need the 'appear' prop along with the 'in' prop
                also need to define *-appear and *-appear-active css classes
@@ -34,7 +35,7 @@ function App( {SHOW_DOB_POPUP} ) {
             appear={show_dob_popup}
             /* because we use the 'in' prop with a custom functional component, also need to define a nodeRef prop
                which is a useRef instance. the ref gets set by the CSSTransition wrapper
-               the alternative is to lift the wrapping div into 
+               the alternative is to lift the wrapping div from the vertify age cmp and put it in here
             */
             nodeRef={nodeRef}>
             <VertifyAge 
@@ -50,26 +51,31 @@ function App( {SHOW_DOB_POPUP} ) {
                     filter_tags_query={filter_tags_query}
                     isMobile={isMobile}/>  
             </div>
-                
+ 
               <div className="body_flex_parent">
                 <CSSTransition 
-                    timeout={500} 
+                    timeout={1000} 
                     unmountOnExit 
                     classNames="show-filters-animation" 
-                    in={!isMobile && show}>
+                    in={!isMobile && sidebar_open}>
                         <div className="sidebar_flex_child">
                           <SideBarLayout 
                               selected_filters_handlers={selected_filters_handlers}
                               filter_tags_query={filter_tags_query}/>    
                         </div>
                 </CSSTransition>
+
                 <div className="cardlist_flex_child">
-                    <BodyLayout selected_filters_handlers={selected_filters_handlers} query={query} isMobile={isMobile}/>                    
+                    <BodyLayout 
+                      selected_filters_handlers={selected_filters_handlers} 
+                      query={query} 
+                      isMobile={isMobile} 
+                      toggleSidebar={()=> toggleSidebar(!sidebar_open)}
+                      sidebar_open={sidebar_open}/>                    
                 </div>
             </div>     
               <div className="footer_flex_child">    
-                  <span className="about cursor_hand">About</span>  
-                  <button onClick={ e=> toggleShow(!show)}>toggle</button>          
+                  <span className="about cursor_hand">About</span>          
               </div>          
           </div> 
       </div>)
