@@ -1,3 +1,4 @@
+
 export const SORT_TYPE = {
     NONE: "NONE",
     ASC: "ASC",
@@ -9,26 +10,39 @@ export const SORT_TYPE = {
     BRANDS: "brands",
     STORES: "stores"
   }
-  
-  //I NEED TO STORE THE STRINGS FOR EACH KEY ALPHABETICALLY?
-  //BUG: category["a", "b"] is the same as ["b", "a"], but they invoke new fetches because order is different
-  // can i use client-side only variables in apollo to fix this?
+
+  //convert client filters object into object consumed by gql endpoint
   export function buildAtlasGQLQuery(filters = {}, sorting = {} ){
-      //console.log("SELECTED_FILTERS in BUILD_QUERY: ", filters)
-  
+
+    // sort the arrays on filter keys before converting to a request query
+    // this would prevent redundant queries in the case of filters = A:{a,b}, filters = A:{b,a}
+    function copyAndSortFilters(filters){
+      return{ //copy the original source arrays before sorting
+        category: [...filters.category].sort(),
+        brands: [...filters.brands].sort(),
+        stores: [...filters.stores].sort(),
+        sort_by: filters.sort_by
+      }
+    }
+
+      const sorted_filters = copyAndSortFilters(filters)
+
+      //console.log(" PRESORTED SELECTED_FILTERS in BUILD_QUERY: ", filters)
+      //console.log(" SORTED SELECTED_FILTERS in BUILD_QUERY: ", sortFilters(filters))
+     
       const input = {}
   
-      if(filters.category?.length > 0) input["categories"] = [...filters.category] 
-      if(filters.brands?.length > 0)   input["brands"] = [...filters.brands]
-      if(filters.stores?.length > 0)   input["stores"] = [...filters.stores]
-      if(filters.sort_by)              input["sort_by"] = filters.sort_by
+      if(sorted_filters.category?.length > 0) input["categories"] = [...sorted_filters.category] 
+      if(sorted_filters.brands?.length > 0)   input["brands"] = [...sorted_filters.brands]
+      if(sorted_filters.stores?.length > 0)   input["stores"] = [...sorted_filters.stores]
+      if(sorted_filters.sort_by)              input["sort_by"] = sorted_filters.sort_by
   
       if(sorting.last_product_ids?.length > 0) input["last_product_ids"] = sorting.last_product_ids  
       if(sorting.last_product_price)           input["last_product_price"] = sorting.last_product_price
   
       input["limit"] = PAGE_LIMIT
   
-      console.log("QUERY: ", {input: input})
+      //console.log("QUERY: ", {input: input})
   
       return {input}
   }
