@@ -24,7 +24,7 @@ function SideBarLayout( {selected_filters_handlers, filter_tags_query} ){
             selected_tags={category} 
             selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)}  
             handleClear={handleClear(FILTER_KEYS.CATEGORIES)}
-            maxHeight="20%"/>
+            maxHeight="150px"/>
 
         <div><ClearFiltersButton title="Categories" handleClear={handleClear(FILTER_KEYS.CATEGORIES)} show={category.length > 0}/></div>
       
@@ -36,7 +36,7 @@ function SideBarLayout( {selected_filters_handlers, filter_tags_query} ){
             selected_tags={brands} 
             selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)}  
             handleClear={handleClear(FILTER_KEYS.BRANDS)}
-            maxHeight="20%"/>  
+            maxHeight="150px"/>  
 
         <div><ClearFiltersButton title="Brands" handleClear={handleClear(FILTER_KEYS.BRANDS)} show={brands.length > 0}/></div>
 
@@ -48,7 +48,7 @@ function SideBarLayout( {selected_filters_handlers, filter_tags_query} ){
             selected_tags={stores} 
             selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)}  
             handleClear={handleClear(FILTER_KEYS.STORES)}
-            maxHeight="20%"/>
+            maxHeight="150px"/>
         
         <div><ClearFiltersButton title="Stores" handleClear={handleClear(FILTER_KEYS.STORES)} show={stores.length > 0}/></div>
 

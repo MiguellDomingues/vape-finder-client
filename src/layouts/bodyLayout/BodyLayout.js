@@ -29,9 +29,9 @@ function BodyLayout({
             <PillList pills={brands} filter_key={FILTER_KEYS.BRANDS} handleRemove={!isMobile ? handleRemove : null} />
             <PillList pills={stores} filter_key={FILTER_KEYS.STORES} handleRemove={!isMobile ? handleRemove : null} />
         </div>
-        <div className="body_layout_card_container">
+        
             <CardList query={query} selected_filters_handlers={selected_filters_handlers}/>
-        </div>
+        
              
     </div>)
 }

@@ -2,10 +2,10 @@
     background-color: lightgray;
     display: flex;
     flex-direction: column;
-    padding: 1em;   
-    border-radius: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    padding-left: 1em;
+    padding-right: 1em; 
+    padding-top: 1em;   
+    
     width: 100%; 
 }
 
