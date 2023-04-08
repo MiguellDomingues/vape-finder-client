@@ -66,7 +66,7 @@ function useApp(_show_dob_popup) {
     }
      
     const selected_filters_handlers = { selected_filters, setAndRefetch } 
-    const query = {fetchMore,loading, error, data}
+    const query = {fetchMore, loading, error, data, debounced_query_counting_down: !!timer.current}
     
     return [
         selected_filters_handlers,

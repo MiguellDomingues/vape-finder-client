@@ -1,17 +1,11 @@
 import { PAGE_LIMIT, SORT_TYPE, buildAtlasGQLQuery } from '../utils'
 
-function useCardList(products, selected_filters, fetchMore) {
-
-  console.log("////usecardlist: ", selected_filters)
+function useCardList(products, selected_filters, fetchMore, debounced_query_counting_down) {
 
   const handleBottom = () =>{
     const lpid = products[products.length-1]._id
 
-    console.log("last_product_id calc: ", lpid ) //removed lpid ref
-
-    if(products.length%PAGE_LIMIT === 0)
-      // && last_product_id.current !== lpid)
-      {
+    if(products.length%PAGE_LIMIT === 0){
 
       function getSortParams(products){
         const last_product_price = products[products.length-1].price //the highest(or lowest price) in the sorted products is the tail of the products arr
@@ -19,8 +13,6 @@ function useCardList(products, selected_filters, fetchMore) {
         products.forEach( p => p.price === last_product_price && last_product_ids.push(p._id)) //add all the ids of the products with price === to last product price
         return { last_product_price,last_product_ids }
       }
-
-      //setLPID(lpid)
 
       if(selected_filters.sort_by === SORT_TYPE.NONE){
         fetchMore({ variables: { ...buildAtlasGQLQuery(selected_filters, {last_product_ids: [lpid]})},})
@@ -33,15 +25,13 @@ function useCardList(products, selected_filters, fetchMore) {
   const handleScroll = (e) =>{ 
     const hasProducts = p => p?.length > 0
     const isBottom = e => e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-    isBottom(e) && hasProducts(products) && handleBottom() 
+    !debounced_query_counting_down && // if the user has not selected other filters
+      isBottom(e) &&                  // and the user has scrolled to the bottom 
+        hasProducts(products) &&      // and there are items from the last query
+          handleBottom()              // fetch the next page of items
   }
 
-  return [
-   // sortSelect, 
-    {
-      //sortSelected, 
-      handleScroll
-    }]
+  return [{handleScroll}]
 }
 
 export default useCardList

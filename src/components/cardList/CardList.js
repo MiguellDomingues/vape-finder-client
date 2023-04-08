@@ -6,7 +6,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 function CardList( { query, selected_filters_handlers } ) {
 
-  const { loading, error, data, fetchMore } = query
+  const { loading, error, data, fetchMore, debounced_query_counting_down } = query
 
   const products = data ? data.getSortedProducts : []
 
@@ -17,7 +17,7 @@ function CardList( { query, selected_filters_handlers } ) {
   const [
     { 
       handleScroll, 
-    } ] = useCardList(products, selected_filters, fetchMore )
+    } ] = useCardList(products, selected_filters, fetchMore, debounced_query_counting_down )
 
     /*
     {products.length > 0 ? products.map( (product, idx)=> 
