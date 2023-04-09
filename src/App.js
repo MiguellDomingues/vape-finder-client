@@ -9,6 +9,11 @@ import {useState} from 'react'
 
 import CardList from './components/cardList/CardList'
 import VertifyAge from './components/vertifyAge/VertifyAge'
+
+import { Route, Routes, Link, useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+
+
 import './app.css'
 
 function App( {SHOW_DOB_POPUP} ) {
@@ -24,7 +29,12 @@ function App( {SHOW_DOB_POPUP} ) {
 
     const [sidebar_open, toggleSidebar ] = useState(false)
 
+    let location = useLocation();
+
+    console.log("location:", location)
+
     return( 
+
       <div className="page">
 
          <CSSTransition timeout={500} unmountOnExit classNames="toggle-vertifyage-popup-animation" 
@@ -65,20 +75,62 @@ function App( {SHOW_DOB_POPUP} ) {
                         </div>
                 </CSSTransition>
 
-                <div className="cardlist_flex_child">
-                    <BodyLayout 
+                {/*<div className="cardlist_flex_child">*/}
+                  <Routes>
+                    <Route path="/" element={
+                      <BodyLayout 
+                        selected_filters_handlers={selected_filters_handlers} 
+                        query={query} 
+                        isMobile={isMobile} 
+                        toggleSidebar={()=> toggleSidebar(!sidebar_open)}
+                        sidebar_open={sidebar_open}/>}/>
+                    <Route path="/about" element={<div>My About</div>}/>
+                    <Route path="/disclaimer" element={<div>My Disclaimer</div>}/>
+                    <Route path="/message" element={<div>Message Me!</div>} />
+                    <Route path="*" element={<ErrorPage/>} />
+                  </Routes>
+
+
+                  
+                    {/*<BodyLayout 
                       selected_filters_handlers={selected_filters_handlers} 
                       query={query} 
                       isMobile={isMobile} 
                       toggleSidebar={()=> toggleSidebar(!sidebar_open)}
-                      sidebar_open={sidebar_open}/>                    
-                </div>
+                      sidebar_open={sidebar_open}/>*/}                  
+                {/*</div>*/}
             </div>     
-              <div className="footer_flex_child">    
-                  <span className="about cursor_hand">About</span>          
+              <div className="footer_flex_parent">
+                <Link onClick={e=>toggleSidebar(false)} to={`/`}><span className={location.pathname === '/' && "current_page_link"}>Home</span></Link> 
+                <Link onClick={e=>toggleSidebar(false)} to={`/about`}>About</Link> 
+                <Link onClick={e=>toggleSidebar(false)} to={`/disclaimer`}>Disclaimer</Link>
+                <Link onClick={e=>toggleSidebar(false)} to={`/message`}>Message</Link>          
               </div>          
           </div> 
       </div>)
 }
 
 export default App;
+
+function About(){
+  return (
+  <div className="content_section">
+    <h1>About The Author</h1>
+  </div>)
+}
+
+function Disclaimer(){
+
+}
+
+function ErrorPage() {
+  return (
+    <div id="error-page">
+      <h1>Oops!</h1>
+      <p>Sorry, an unexpected error has occurred.</p>
+      <p>
+       
+      </p>
+    </div>
+  );
+}

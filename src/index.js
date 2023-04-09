@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, } from '@apollo/client'
 import * as Realm from "realm-web";
+import { BrowserRouter } from "react-router-dom";
 
 const env_configs = {
   BACKEND_URL: process.env.REACT_APP_BACKEND_URL || "http://localhost:4000/graphql",
@@ -98,8 +99,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App {...env_configs} />
-    </ApolloProvider>
+      <BrowserRouter>
+        <App {...env_configs} />
+      </BrowserRouter>
+  </ApolloProvider>
   </React.StrictMode>
 );
 

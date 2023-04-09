@@ -63,36 +63,6 @@ function CardList( { query, selected_filters_handlers } ) {
   );
 }
 
-/* ORIGINAL CARDLIST pre-animations
-
-function CardList( { query, selected_filters_handlers } ) {
-
-  const { loading, error, data, fetchMore } = query
-
-  const products = data ? data.getSortedProducts : []
-
-  console.log("CARDLIST PRODUCTS: ", products)
-
-  const { selected_filters } = selected_filters_handlers
-
-  const [
-    { 
-      handleScroll, 
-    } ] = useCardList(products, selected_filters, fetchMore )
-
-  if(error) return <>Error! {error.message}</>
-//<div className="card_container" id="cardContainer" onScroll={handleScroll}>
-  return (
-    <div className="card_container" id="cardContainer" onScroll={handleScroll}>
-         {loading && <div className={"spinner_middle"}><SpinnerDotted/></div>}   
-        {products.length > 0 ? products.map( (product, idx)=> 
-          <Card key={idx} product={product}/>) : !loading && <div className="no_products">No products found!</div>}       
-    </div>
-  );
-}
-
-*/
-
 export default CardList
 
 //can also link images using import or require() 
