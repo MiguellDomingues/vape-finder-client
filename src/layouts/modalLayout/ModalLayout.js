@@ -1,8 +1,11 @@
 import { useFilters } from '../../hooks/useFilters.js'
 import  usePillList  from '../../hooks/usePillList'
+import useOnClickOutside from '../../hooks/useOnClickOutside'
 import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton, ClearAllFiltersButton } from '../../widgets/widgets.js'
 import { FILTER_KEYS } from '../../utils.js'
 import { RiCloseFill } from 'react-icons/ri';
+
+import { useRef } from 'react'
 
 import './modallayout.css'
 
@@ -11,6 +14,12 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
     const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers, filter_tags_query)
     const [areFiltersSelected,{handleRemove, handleClear, clearAll}] = usePillList(selected_filters_handlers)
 
+    const ref = useRef();
+
+    //notice how we declare the ref, pass it to the hook, and then attach it to the div
+    //inside useffect, the ref is available because useffect runs after the component is mounted
+    useOnClickOutside(ref, () => toggleModal()); 
+
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
 
@@ -18,8 +27,13 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
    const { category, stores, brands, } = selected_filters
 
     return(<>
-    <div className="modal modal_no_select" id="modal-wrapper" onClick={e=>e.target?.id === "modal-wrapper" && toggleModal()}>
-      <div className="modal-content">
+    <div  className="modal modal_no_select" 
+    //id="modal-wrapper" 
+    //onClick={e=>e.target?.id === "modal-wrapper" && toggleModal()}
+    >
+      <div 
+      ref={ref} 
+      className="modal-content">
       
       <div className="modal-top">
         <div className="modal_clear_all_filters_section">
@@ -87,3 +101,4 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
 }
 
 export default ModalLayout
+

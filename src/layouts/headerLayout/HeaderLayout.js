@@ -13,14 +13,14 @@ function HeaderLayout( {selected_filters_handlers, filter_tags_query, isMobile} 
 
     const toggleModal = () =>setOpen(!is_open)
 
-    return (<>
+    return (<>   
       <CSSTransition timeout={500} unmountOnExit classNames="toggle-mobile-modal-animation" in={is_open}>
         <ModalLayout 
           selected_filters_handlers={selected_filters_handlers}
           filter_tags_query={filter_tags_query} 
           toggleModal={toggleModal}/>
       </CSSTransition>
-
+      
       <div className="container_header">
 
         <div className="top">
@@ -38,3 +38,12 @@ function HeaderLayout( {selected_filters_handlers, filter_tags_query, isMobile} 
   }
 
   export default HeaderLayout
+
+  /*
+
+   {is_open&&<ModalLayout 
+          selected_filters_handlers={selected_filters_handlers}
+          filter_tags_query={filter_tags_query} 
+          toggleModal={toggleModal}/>}
+
+  */
