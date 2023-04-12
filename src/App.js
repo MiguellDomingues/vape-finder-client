@@ -4,19 +4,15 @@ import HeaderLayout from './layouts/headerLayout/HeaderLayout'
 import SideBarLayout from './layouts/sidebarLayout/SideBarLayout'
 import BodyLayout from './layouts/bodyLayout/BodyLayout'
 import FooterLayout from './layouts/footerLayout/FooterLayout'
-import { CSSTransition } from 'react-transition-group';
-import emailjs from '@emailjs/browser';
-
-import {useState, useRef} from 'react'
-
-import CardList from './components/cardList/CardList'
+import ContactForm from './components/contactForm/ContactForm'
 import VertifyAge from './components/vertifyAge/VertifyAge'
 
+import { CSSTransition } from 'react-transition-group';
 import { Route, Routes } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+import {useState} from 'react'
 
 import { PAGE_URIS } from "./utils.js";
-
 
 import './app.css'
 
@@ -33,7 +29,7 @@ function App( {SHOW_DOB_POPUP} ) {
 
     const [sidebar_open, toggleSidebar ] = useState(false)
 
-    let location = useLocation();
+    const location = useLocation();
 
     //console.log("location:", location)
 
@@ -88,9 +84,8 @@ function App( {SHOW_DOB_POPUP} ) {
                         isMobile={isMobile} 
                         toggleSidebar={()=> toggleSidebar(!sidebar_open)}
                         sidebar_open={sidebar_open}/>}/>
-                    <Route path={PAGE_URIS.ABOUT} element={<div>My About</div>}/>
-                    <Route path={PAGE_URIS.DISCLAIMER} element={<Disclaimer/>}/>
-                    <Route path={PAGE_URIS.CONTACT} element={<ContactForm/>} />
+                    <Route path={PAGE_URIS.ABOUT} element={<About/>}/>                    
+                    <Route path={PAGE_URIS.CONTACT} element={<ContactForm/>}/>
                     <Route path="*" element={<ErrorPage/>} />
                   </Routes>
 
@@ -113,71 +108,6 @@ function App( {SHOW_DOB_POPUP} ) {
 
 export default App;
 
-function ContactForm(){
-
-  const [length_remaining, setLengthRemaining] = useState(0)
-  const form_ref = useRef(null)
-  const max_chars = 500
-
-  const textEntered = (e) => {
-
-      setLengthRemaining(max_chars-e.target.value.length)
-
-      //https://www.codingnepalweb.com/auto-resize-textarea-html-css-javascript/
-      const textarea = e.target   
-      textarea.style.height = "104px"; //+4 the height defined in css
-      let scHeight = e.target.scrollHeight;
-      textarea.style.height = `${scHeight}px`;
-  }
-
-  const sendEmail = (e) => {
-    e.preventDefault(); // prevents the page from reloading when form submitted
-    //console.log("onsubmit: ", 
-   // "name",e.target[0].value, 
-   // "email",e.target[1].value, 
-   // "msg",e.target[2].value,
-   // "msg length",e.target[2].value.length)
-
-    emailjs.sendForm("service_26wow18","template_ae7w1sz", form_ref.current , "u9Zhvtr96iH2sakMP")
-      .then((result) => {
-          console.log(result.text);
-      }, (error) => {
-          console.log(error.text);
-      });
-  };
-
-  return (
-    <div className="alt_page">
-      <div className="alt_page_card">
-        <p>
-        If you would like to reach out with questions, concerns, or opportunities -  leave a message!
-        </p>
-
-        <form ref={form_ref} className="contact_form" onSubmit={sendEmail}> 
-
-          <div className="contact_header_name_email">
-            <input type="text" name="from_name" placeholder="Name" className="contact_name" required/>    
-            <input type="email" name="reply_to" placeholder="Email" className="contact_email" required/>        
-          </div>
-
-          <div className="contact_body">
-            <textarea name="message" maxLength={max_chars} spellCheck="false" placeholder="Message" className="contact_message" required onInput={textEntered}/>
-          </div>
-
-          <div className="contact_footer">
-            <div className="send_message_btn" onClick={e=>{form_ref?.current.requestSubmit()}}>
-              <span>Send Message!</span>
-            </div>
-          <span className="chars_remaining">{length_remaining} characters remaining</span>
-        </div>
-
-      </form>
-    </div>
-  </div>
-  );
- };
-  
-
 function ErrorPage() {
   return (
     <div id="error-page">
@@ -191,13 +121,6 @@ function ErrorPage() {
 }
 
 function About(){
-  return (
-  <div className="content_section">
-    <h1>About The Author</h1>
-  </div>)
-}
-
-function Disclaimer(){
   return (
     <div className="alt_page">
       <div className="alt_page_card">
