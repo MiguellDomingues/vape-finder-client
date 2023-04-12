@@ -1,5 +1,6 @@
 import emailjs from '@emailjs/browser';
 import {useState, useRef} from 'react'
+import { EMAILJS_INFO } from '../../utils'
 
 import './contactform.css'
 
@@ -28,15 +29,13 @@ function ContactForm(){
       e.preventDefault(); // prevents the page from reloading when form submitted
       button_ref.current.style.visibility = "hidden" //hide the button
       form_ref.current.style.display = "none" //hide the form
-      //console.log("onsubmit: ", 
-     // "name",e.target[0].value, 
-     // "email",e.target[1].value, 
-     // "msg",e.target[2].value)
-  
+
       setMessageSent(true)
       setMessageSending(true)
+
+      const { SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY } = EMAILJS_INFO
   
-      emailjs.sendForm("service_26wow18","template_ae7w1sz", form_ref.current , "u9Zhvtr96iH2sakM")//"u9Zhvtr96iH2sakMP"
+      emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form_ref.current, PUBLIC_KEY)
         .then((result) => {
             console.log(result.text);
             setMessageSuccess(true)

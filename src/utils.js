@@ -4,6 +4,12 @@ export const SORT_TYPE = {
     ASC: "ASC",
     DESC: "DESC"
   }
+
+  export const EMAILJS_INFO = {
+    SERVICE_ID: "service_26wow18",
+    TEMPLATE_ID: "template_ae7w1sz",
+    PUBLIC_KEY: "u9Zhvtr96iH2sakM" //"u9Zhvtr96iH2sakMP"
+  }
   
   export const FILTER_KEYS = {
     CATEGORIES: "category",
@@ -14,9 +20,17 @@ export const SORT_TYPE = {
   export const PAGE_URIS = {
     HOME: "/",
     ABOUT: "/about",
-    DISCLAIMER: "/disclaimer",
     CONTACT: "/contact"
   }
+
+  export const PAGE_LIMIT = 11
+  export const TIMEOUT = 3000
+  
+  export const starting_filters = { category: [], brands: [], stores: [], sort_by : "NONE" }
+  export const starting_query = { input: {limit: PAGE_LIMIT, sort_by:"NONE" } }
+
+  export const MIN_AGE = 19
+  export const STORAGE_KEY = 'BC_VAPE_FINDER'
 
   //convert client filters object into object consumed by gql endpoint
   export function buildAtlasGQLQuery(filters = {}, sorting = {} ){
@@ -55,11 +69,3 @@ export const SORT_TYPE = {
       return {input}
   }
   
-  export const PAGE_LIMIT = 11
-  export const TIMEOUT = 3000
-  
-  export const starting_filters = { category: [], brands: [], stores: [], sort_by : "NONE" }
-  export const starting_query = { input: {limit: PAGE_LIMIT, sort_by:"NONE" } }
-
-  export const MIN_AGE = 19
-  export const STORAGE_KEY = 'BC_VAPE_FINDER'

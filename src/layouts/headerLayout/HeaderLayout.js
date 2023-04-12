@@ -38,12 +38,3 @@ function HeaderLayout( {selected_filters_handlers, filter_tags_query, isMobile} 
   }
 
   export default HeaderLayout
-
-  /*
-
-   {is_open&&<ModalLayout 
-          selected_filters_handlers={selected_filters_handlers}
-          filter_tags_query={filter_tags_query} 
-          toggleModal={toggleModal}/>}
-
-  */
