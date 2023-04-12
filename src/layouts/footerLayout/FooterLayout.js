@@ -17,9 +17,6 @@ function FooterLayout({
       <Link onClick={e=>toggleSidebar(false)} to={PAGE_URIS.ABOUT}>
         <span className={stylePageLink(PAGE_URIS.ABOUT)}>About</span>
       </Link> 
-      <Link onClick={e=>toggleSidebar(false)} to={PAGE_URIS.DISCLAIMER}>
-        <span className={stylePageLink(PAGE_URIS.DISCLAIMER)}>Disclaimer</span>
-      </Link>
       <Link onClick={e=>toggleSidebar(false)} to={PAGE_URIS.CONTACT}>
         <span className={stylePageLink(PAGE_URIS.CONTACT)}>Contact Me</span>
       </Link> 

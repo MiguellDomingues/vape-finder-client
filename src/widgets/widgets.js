@@ -32,6 +32,7 @@ export function SortByDropDown({
 }
 
 //////////////////////////CURRENTLY UNUSED//////////////////////////////////////
+/*
 
 export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
 
@@ -62,7 +63,7 @@ export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
         </div>
     </div>)
 }
-
+*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export function PillList({
