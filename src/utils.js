@@ -11,10 +11,18 @@ export const SORT_TYPE = {
     STORES: "stores"
   }
 
+  export const PAGE_URIS = {
+    HOME: "/",
+    ABOUT: "/about",
+    DISCLAIMER: "/disclaimer",
+    CONTACT: "/contact"
+  }
+
   //convert client filters object into object consumed by gql endpoint
   export function buildAtlasGQLQuery(filters = {}, sorting = {} ){
 
     // sort the arrays on filter keys before converting to a request query
+    // since apollo cache keys are order-sensitive
     // this would prevent redundant queries in the case of filters = A:{a,b}, filters = A:{b,a}
     function copyAndSortFilters(filters){
       return{ //copy the original source arrays before sorting
