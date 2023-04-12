@@ -1,8 +1,7 @@
-import './cardlist.css'
-import useCardList from '../../hooks/useCardList'
+import useCardList from '../hooks/useCardList'
 import { SpinnerDotted } from 'spinners-react';
-
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import '../styles/cardlist.css'
 
 function CardList( { query, selected_filters_handlers } ) {
 
@@ -19,21 +18,10 @@ function CardList( { query, selected_filters_handlers } ) {
       handleScroll, 
     } ] = useCardList(products, selected_filters, fetchMore, debounced_query_counting_down )
 
-    /*
-    {products.length > 0 ? products.map( (product, idx)=> 
-          <Card key={idx} product={product}/>) 
-          : !loading && <div className="no_products">No products found!</div>}  
-    */
-
   if(error) return <>Error! {error.message}</>
-//<div className="card_container" id="cardContainer" onScroll={handleScroll}>
+
   return (
-    <div 
-    //style={{ height: "100%"}}
-    className="card_container" 
-    id="cardContainer" 
-    onScroll={handleScroll}
-    >
+    <div className="card_container" id="cardContainer" onScroll={handleScroll}>
          {loading && <div className={"spinner_middle"}><SpinnerDotted/></div>} 
          {//issue: because of the animations, this message appears weird on the card container
          products.length === 0 && !loading ? <div className="no_products">No products found!</div>: null}
@@ -44,8 +32,6 @@ function CardList( { query, selected_filters_handlers } ) {
           //onScroll={handleScroll}
           component={null} // removes the default div that was messing up the css/scroll handler
           >
-              
-
             {products.map( (product, index)=>  
               <CSSTransition
                 //onEnter={() => console.log("enter")}

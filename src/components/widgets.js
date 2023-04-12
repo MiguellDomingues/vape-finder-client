@@ -1,6 +1,6 @@
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {SORT_TYPE} from '../utils'
-import './widgets.css' 
+import '../styles/widgets.css' 
 
 import { RiCloseFill } from 'react-icons/ri';
 import { FaSearch } from 'react-icons/fa';

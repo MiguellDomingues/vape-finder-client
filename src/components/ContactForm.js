@@ -1,8 +1,8 @@
 import emailjs from '@emailjs/browser';
 import {useState, useRef} from 'react'
-import { EMAILJS_INFO } from '../../utils'
+import { EMAILJS_INFO } from '../utils'
 
-import './contactform.css'
+import '../styles/contactform.css'
 
 function ContactForm(){
 

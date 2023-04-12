@@ -1,9 +1,6 @@
-import './vertifyage.css'
-
-import useVertifyAge from './useVertifyAge'
-
+import '../styles/vertifyage.css'
+import useVertifyAge from '../hooks/useVertifyAge'
 import {GiCheckMark} from 'react-icons/gi'
-
 import { forwardRef } from 'react';
 
 const VertifyAge = forwardRef( ({closeDOBPopup}, ref) => {

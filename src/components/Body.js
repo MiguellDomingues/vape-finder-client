@@ -1,12 +1,12 @@
 
-import  usePillList  from '../../hooks/usePillList'
-import CardList from '../../components/cardList/CardList'
-import {  PillList, ClearAllFiltersButton, AnimatedTabButton } from '../../widgets/widgets.js'
-import { FILTER_KEYS } from '../../utils.js'
+import  usePillList  from '../hooks/usePillList'
+import CardList from './CardList'
+import {  PillList, ClearAllFiltersButton, AnimatedTabButton } from './widgets.js'
+import { FILTER_KEYS } from '../utils.js'
 
-import './bodylayout.css'
+import '../styles/body.css'
 
-function BodyLayout({
+function Body({
     selected_filters_handlers, 
     query, 
     isMobile, 
@@ -36,4 +36,4 @@ function BodyLayout({
     </div>)
 }
 
-export default BodyLayout
+export default Body

@@ -1,11 +1,11 @@
 import useApp from './hooks/useApp'
 
-import HeaderLayout from './layouts/headerLayout/HeaderLayout'
-import SideBarLayout from './layouts/sidebarLayout/SideBarLayout'
-import BodyLayout from './layouts/bodyLayout/BodyLayout'
-import FooterLayout from './layouts/footerLayout/FooterLayout'
-import ContactForm from './components/contactForm/ContactForm'
-import VertifyAge from './components/vertifyAge/VertifyAge'
+import Header from './components/Header'
+import SideBar from './components/SideBar'
+import BodyLayout from './components/Body'
+import Footer from './components/Footer'
+import ContactForm from './components/ContactForm'
+import VertifyAge from './components/VertifyAge'
 
 import { CSSTransition } from 'react-transition-group';
 import { Route, Routes } from "react-router-dom";
@@ -56,7 +56,7 @@ function App( {SHOW_DOB_POPUP} ) {
           <div className="app_flex_parent">
               
             <div className="header_flex_child">
-                <HeaderLayout 
+                <Header
                     selected_filters_handlers={selected_filters_handlers} 
                     filter_tags_query={filter_tags_query}
                     isMobile={isMobile}/>  
@@ -69,7 +69,7 @@ function App( {SHOW_DOB_POPUP} ) {
                     classNames="show-filters-animation" 
                     in={!isMobile && sidebar_open}>
                         <div className="sidebar_flex_child">
-                          <SideBarLayout 
+                          <SideBar 
                               selected_filters_handlers={selected_filters_handlers}
                               filter_tags_query={filter_tags_query}/>    
                         </div>
@@ -100,7 +100,7 @@ function App( {SHOW_DOB_POPUP} ) {
                 {/*</div>*/}
             </div>     
               <div className="footer_flex_parent">
-                <FooterLayout current_location={location.pathname} toggleSidebar={toggleSidebar}/>    
+                <Footer current_location={location.pathname} toggleSidebar={toggleSidebar}/>    
               </div>          
           </div> 
       </div>)

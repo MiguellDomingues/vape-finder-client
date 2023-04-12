@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Acme";
-  src: url("../../../public/Acme-Regular-webfont.woff") format('woff');
+  src: url("../../public/Acme-Regular-webfont.woff") format('woff');
 }
 
 .container_header{

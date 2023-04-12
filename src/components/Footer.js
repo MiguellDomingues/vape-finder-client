@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { PAGE_URIS } from "../../utils.js";
+import { PAGE_URIS } from "../utils.js";
 
-import "./footerlayout.css"
+import "../styles/footer.css"
 
-function FooterLayout({
+function Footer({
     current_location,
     toggleSidebar,
 }){
@@ -23,7 +23,7 @@ function FooterLayout({
     </>)
 }
 
-  export default FooterLayout
+  export default Footer
 
 
   

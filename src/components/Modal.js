@@ -1,15 +1,15 @@
-import { useFilters } from '../../hooks/useFilters.js'
-import  usePillList  from '../../hooks/usePillList'
-import useOnClickOutside from '../../hooks/useOnClickOutside'
-import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton, ClearAllFiltersButton } from '../../widgets/widgets.js'
-import { FILTER_KEYS } from '../../utils.js'
+import { useFilters } from '../hooks/useFilters.js'
+import  usePillList  from '../hooks/usePillList.js'
+import useOnClickOutside from '../hooks/useOnClickOutside.js'
+import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton, ClearAllFiltersButton } from './widgets.js'
+import { FILTER_KEYS } from '../utils.js'
 import { RiCloseFill } from 'react-icons/ri';
 
 import { useRef } from 'react'
 
-import './modallayout.css'
+import '../styles/modal.css'
 
-function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}){
+function Modal({selected_filters_handlers, filter_tags_query, toggleModal}){
 
     const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers, filter_tags_query)
     const [areFiltersSelected,{handleRemove, handleClear, clearAll}] = usePillList(selected_filters_handlers)
@@ -100,5 +100,5 @@ function ModalLayout({selected_filters_handlers, filter_tags_query, toggleModal}
   </>)
 }
 
-export default ModalLayout
+export default Modal
 

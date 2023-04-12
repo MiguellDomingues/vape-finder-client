@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import moment from 'moment'
-import { MIN_AGE} from '../../utils'
+import { MIN_AGE} from '../utils'
 
 function useVertifyAge(closeDOBPopup){
 

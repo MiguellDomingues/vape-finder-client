@@ -1,13 +1,13 @@
-import ModalLayout from '../modalLayout/ModalLayout'
+import ModalLayout from './Modal'
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { CSSTransition } from 'react-transition-group';
 import {useState} from 'react'
 
-import './header.css'
+import '../styles/header.css'
 
 const img_src = '../../../health_warning.webp';
 
-function HeaderLayout( {selected_filters_handlers, filter_tags_query, isMobile} ) {
+function Header( {selected_filters_handlers, filter_tags_query, isMobile} ) {
 
     const [is_open, setOpen] = useState(false)
 
@@ -37,4 +37,4 @@ function HeaderLayout( {selected_filters_handlers, filter_tags_query, isMobile} 
       </div></>);
   }
 
-  export default HeaderLayout
+  export default Header

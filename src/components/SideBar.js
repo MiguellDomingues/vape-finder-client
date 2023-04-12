@@ -1,11 +1,11 @@
-import { useFilters } from '../../hooks/useFilters.js'
-import  usePillList  from '../../hooks/usePillList'
-import { SortByDropDown, CollapsibleMenu, HorizontalLine, ClearFiltersButton } from '../../widgets/widgets.js'
-import { FILTER_KEYS } from '../../utils.js'
+import { useFilters } from '../hooks/useFilters.js'
+import  usePillList  from '../hooks/usePillList.js'
+import { SortByDropDown, CollapsibleMenu, HorizontalLine, ClearFiltersButton } from './widgets.js'
+import { FILTER_KEYS } from '../utils.js'
 
-import './sidebarlayout.css'
+import '../styles/sidebar.css'
 
-function SideBarLayout( {selected_filters_handlers, filter_tags_query} ){
+function SideBar( {selected_filters_handlers, filter_tags_query} ){
 
     const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers, filter_tags_query)
     const [,{ handleClear, }] = usePillList(selected_filters_handlers)
@@ -58,5 +58,5 @@ function SideBarLayout( {selected_filters_handlers, filter_tags_query} ){
     </div>)
 }
 
-export default SideBarLayout
+export default SideBar
 
