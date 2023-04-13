@@ -37,22 +37,25 @@
   
 .date_input_container{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    height: fit-content; 
     z-index: 3;
     background-color: lightblue;
     border-radius: 10px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding: 15px;
 }
 
 .date_input_container_layout{
   width: 50%;
+}
+
+.bottom{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   row-gap: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
 }
 
 .date_input_heading{
@@ -90,6 +93,11 @@
   color: red;
 }
 
+.date_input_btns{
+  display: flex;
+  gap: 10px;
+}
+
 .submit_btn{
   width: 50px;
 }
@@ -98,14 +106,31 @@
   font-size: medium;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 481px) {
   
   .date_input_container_layout{
     width: 75%;
-    row-gap: 20px;
   }
   .date_input_heading_txt{
     font-size: x-large;
   }
+  .bottom{
+    row-gap: 20px;
+  }
 }
+
+.warning_img{
+  width: 100%;
+  height: auto
+}
+
+
+/*
+.top{   
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 60%;  
+}
+*/
   

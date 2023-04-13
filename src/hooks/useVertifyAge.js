@@ -32,7 +32,7 @@ function useVertifyAge(closeDOBPopup){
       }else if(age < MIN_AGE){                                                
         setError("you are not old enough to view this content")
       }else{                                                             
-          closeDOBPopup(save_vertification.current)    
+          closeDOBPopup(save_vertification.current, true)    
       }
     }
   

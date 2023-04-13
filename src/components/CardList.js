@@ -28,18 +28,23 @@ function CardList( { query, selected_filters_handlers } ) {
     const product_url = useRef(null)
     const nodeRef = useRef(null)
 
-    const closeDOBPopup = save_validation => {
-      save_validation && localStorage.setItem(STORAGE_KEY, true);
-      //product_url.current && window.open(product_url.current , "_blank", "noopener,noreferrer")
-      setShow(false)}
+    const closeDOBPopup = (save_validation, open_link) => {    
+      if(open_link){ // if user entered valid dob
+        save_validation && localStorage.setItem(STORAGE_KEY, true); // save validation in local storage
+      }else{  // if user opted to just close the pop up
+        product_url.current = null // unset the ref, preventing the link from opening
+      }
+      setShow(false) // close the window
+    }
 
-    function openProductTab(info_url){
-      product_url.current = info_url
-      if(!localStorage.getItem(STORAGE_KEY) && _show_dob_popup){
-        setShow(true)
-      }else{
-        window.open(info_url, "_blank", "noopener,noreferrer")
-      }}
+  function handleProductLinkClick(info_url){ //when a product link is clicked
+    product_url.current = info_url           // save the current product url in a ref
+    if(!localStorage.getItem(STORAGE_KEY) && _show_dob_popup){ // if user did not save dob previously
+      setShow(true)                                            // open the validate age pop up          
+    }else{
+      window.open(info_url, "_blank", "noopener,noreferrer")  // otherwise just open the product tab
+    }
+  }
 
   if(error) return <>Error! {error.message}</>
 
@@ -55,6 +60,7 @@ function CardList( { query, selected_filters_handlers } ) {
       //because we use the 'in' prop with a custom functional component, also need to define a nodeRef prop
       //which is a useRef instance. the ref gets set by the CSSTransition wrapper
       //the alternative is to lift the wrapping div from the vertify age cmp and put it in here
+      // when the exit animation for the popup finishes, the product tab will appear only if the ref has not been unset
       onExited={()=>{product_url.current && window.open(product_url.current , "_blank", "noopener,noreferrer")}}
       nodeRef={nodeRef}>
         <VertifyAge 
@@ -82,7 +88,7 @@ function CardList( { query, selected_filters_handlers } ) {
                 key={product._id+index} 
                 timeout={500} 
                 classNames="item">
-                  <Card key={product._id} product={product} openProductTab={openProductTab}/>
+                  <Card key={product._id} product={product} productLinkClick={handleProductLinkClick}/>
               </CSSTransition>
             )}      
         </TransitionGroup>     
@@ -99,7 +105,7 @@ const img_src = '../../../demo.webp';
 
 function Card({
   product,
-  openProductTab,
+  productLinkClick,
 }) {
   //const {id, name, brand, category, img, price, last_updated, source} = product
 
@@ -119,7 +125,7 @@ function Card({
   return (
     <div className="card">
 
-      <span className="product_link" onClick={e=>{openProductTab(info_url)}}>{vendor}<br/></span>
+      <span className="product_link" onClick={e=>{productLinkClick(info_url)}}>{vendor}<br/></span>
       {brand && <><span>{brand}<br/></span></> }    
       <span className="title">{format_name}<br/></span>   
       <span>${format_price}<br/></span>

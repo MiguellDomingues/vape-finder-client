@@ -5,17 +5,19 @@
 
 .container_header{
   display: flex; 
-  height: 20vh;
+  height: 100%;
   flex-direction: column;
   align-items: stretch;   
 }
 
+/*
 .top{   
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   height: 60%;  
 }
+*/
 
 .header_title{
   font-family: Acme;
@@ -26,7 +28,7 @@
 /*** pull out later ***/
 
 .bottom{
-  height: 40%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
