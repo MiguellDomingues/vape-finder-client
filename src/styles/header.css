@@ -5,19 +5,12 @@
 
 .container_header{
   display: flex; 
+  position: relative;
   height: 100%;
-  flex-direction: column;
-  align-items: stretch;   
-}
-
-/*
-.top{   
-  display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  height: 60%;  
+  justify-content: center;
+  align-items: center;  
 }
-*/
 
 .header_title{
   font-family: Acme;
@@ -25,22 +18,8 @@
   font-size: 50px;
 }
 
-/*** pull out later ***/
-
-.bottom{
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
 .open_modal_btn{
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-}
-
-.warning_img{
-  width: 100%;
-  height: auto
 }
 
 /* TESTING CSSTRANSITION OPEN/CLOSE MODAL*/
@@ -67,7 +46,7 @@
 
 @media only screen and (max-width: 481px) {  
   .header_title{ 
-    font-size: 33px;
+    font-size: 34px;
   }   
 }
 

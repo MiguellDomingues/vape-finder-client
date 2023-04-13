@@ -4,14 +4,14 @@ import {useState, useRef, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive';
 import { GET_SORTED_PRODUCTS,GET_SEARCH_TYPES  } from '../gql/queries.js'
 
-import { starting_query, starting_filters, TIMEOUT, buildAtlasGQLQuery, STORAGE_KEY } from '../utils.js'
+import { starting_query, starting_filters, TIMEOUT, buildAtlasGQLQuery } from '../utils.js'
 
-function useApp(_show_dob_popup) {
+function useApp() {
 
      const client = useApolloClient()  
      const [getProducts, { loading, error, data, fetchMore }] = useLazyQuery(GET_SORTED_PRODUCTS);
      const filter_tags_query = useQuery(GET_SEARCH_TYPES,  { variables: { query: {} } } );
-     const isMobile = useMediaQuery({ minWidth: 0, maxWidth: 800 });
+     const isMobile = useMediaQuery({ minWidth: 0, maxWidth: 481 });
 
      //run once upon app load
      useEffect(() => {
@@ -27,12 +27,12 @@ function useApp(_show_dob_popup) {
       //const cardScroll = useRef(null); REFS ONLY WORK WITH CLASSES (BECAUSE THEY HAVE INSTANCES?) https://reactjs.org/docs/refs-and-the-dom.html
     
       const [selected_filters, setFilters] = useState(starting_filters);
-      const [show_dob_popup, setShow] = useState( (!localStorage.getItem(STORAGE_KEY) && _show_dob_popup) )
+      //const [show_dob_popup, setShow] = useState( (!localStorage.getItem(STORAGE_KEY) && _show_dob_popup) )
     
       const timer = useRef(null)
       // this is a requirement for animating the vertifyage popup using the "appear" prop
       // otherwise tcsstransnition will invoke FindDOMNode which generates warnings in strictmode
-      const nodeRef = useRef(null)
+      //const nodeRef = useRef(null)
 
       const setAndRefetch = (selected_filters = starting_filters) => {
 
@@ -72,13 +72,8 @@ function useApp(_show_dob_popup) {
         selected_filters_handlers,
         filter_tags_query, 
         query,
-        show_dob_popup,
         isMobile,
-        nodeRef,{
-          closeDOBPopup: save_validation => {
-            save_validation && localStorage.setItem(STORAGE_KEY, true);
-            setShow(false) }
-    }]
+      ]
 }
 
 export default useApp

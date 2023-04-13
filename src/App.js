@@ -5,7 +5,6 @@ import SideBar from './components/SideBar'
 import BodyLayout from './components/Body'
 import Footer from './components/Footer'
 import ContactForm from './components/ContactForm'
-import VertifyAge from './components/VertifyAge'
 
 import { CSSTransition } from 'react-transition-group';
 import { Route, Routes } from "react-router-dom";
@@ -22,86 +21,52 @@ function App( {SHOW_DOB_POPUP} ) {
     selected_filters_handlers, 
     filter_tags_query, 
     query, 
-    show_dob_popup, 
-    isMobile, 
-    nodeRef,
-    { closeDOBPopup }] = useApp(true)//SHOW_DOB_POPUP
+    isMobile] = useApp()
 
     const [sidebar_open, toggleSidebar ] = useState(false)
 
     const location = useLocation();
 
-    //console.log("location:", location)
-
-    return( 
-
+    return(
       <div className="page">
-
-         {/*<CSSTransition timeout={500} unmountOnExit classNames="toggle-vertifyage-popup-animation" 
-             if an animated component appears when app first loads, need the 'appear' prop along with the 'in' prop
-               also need to define *-appear and *-appear-active css classes
-            
-            in={show_dob_popup}
-            appear={show_dob_popup}
-            /because we use the 'in' prop with a custom functional component, also need to define a nodeRef prop
-               which is a useRef instance. the ref gets set by the CSSTransition wrapper
-               the alternative is to lift the wrapping div from the vertify age cmp and put it in here
-            
-            nodeRef={nodeRef}>
-            <VertifyAge 
-                ref={nodeRef} // pass the ref to vertifyage, which is wrapped in forwardRef
-                closeDOBPopup={closeDOBPopup}/>
-        </CSSTransition>*/   }  
-          
           <div className="app_flex_parent">
               
             <div className="header_flex_child">
-                <Header
-                    selected_filters_handlers={selected_filters_handlers} 
-                    filter_tags_query={filter_tags_query}
-                    isMobile={isMobile}/>  
+              <Header
+                selected_filters_handlers={selected_filters_handlers} 
+                filter_tags_query={filter_tags_query}
+                isMobile={isMobile}/>  
             </div>
  
-              <div className="body_flex_parent">
-                <CSSTransition 
-                    timeout={1000} 
-                    unmountOnExit 
-                    classNames="show-filters-animation" 
-                    in={!isMobile && sidebar_open}>
-                      <div className="sidebar_flex_child">
-                        <SideBar 
-                          selected_filters_handlers={selected_filters_handlers}
-                          filter_tags_query={filter_tags_query}/>    
-                      </div>
-                </CSSTransition>
+            <div className="body_flex_parent">
+              <CSSTransition 
+                timeout={1000} 
+                unmountOnExit 
+                classNames="show-filters-animation" 
+                in={!isMobile && sidebar_open}>
+                  <div className="sidebar_flex_child">
+                    <SideBar 
+                      selected_filters_handlers={selected_filters_handlers}
+                      filter_tags_query={filter_tags_query}/>    
+                  </div>
+              </CSSTransition>
 
-                {/*<div className="cardlist_flex_child">*/}
-                  <Routes>
-                    <Route path={PAGE_URIS.HOME} element={
-                      <BodyLayout 
-                        selected_filters_handlers={selected_filters_handlers} 
-                        query={query} 
-                        isMobile={isMobile} 
-                        toggleSidebar={()=> toggleSidebar(!sidebar_open)}
-                        sidebar_open={sidebar_open}/>}/>
-                    <Route path={PAGE_URIS.ABOUT} element={<About/>}/>                    
-                    <Route path={PAGE_URIS.CONTACT} element={<ContactForm/>}/>
-                    <Route path="*" element={<ErrorPage/>} />
-                  </Routes>
-
-
-                  
-                    {/*<BodyLayout 
-                      selected_filters_handlers={selected_filters_handlers} 
-                      query={query} 
-                      isMobile={isMobile} 
-                      toggleSidebar={()=> toggleSidebar(!sidebar_open)}
-                      sidebar_open={sidebar_open}/>*/}                  
-                {/*</div>*/}
+              <Routes>
+                <Route path={PAGE_URIS.HOME} element={
+                  <BodyLayout 
+                    selected_filters_handlers={selected_filters_handlers} 
+                    query={query} 
+                    isMobile={isMobile} 
+                    toggleSidebar={()=> toggleSidebar(!sidebar_open)}
+                    sidebar_open={sidebar_open}/>}/>
+                <Route path={PAGE_URIS.ABOUT} element={<About/>}/>                    
+                <Route path={PAGE_URIS.CONTACT} element={<ContactForm/>}/>
+                <Route path="*" element={<ErrorPage/>} />
+              </Routes>
             </div>     
-              <div className="footer_flex_parent">
-                <Footer current_location={location.pathname} toggleSidebar={toggleSidebar}/>    
-              </div>          
+            <div className="footer_flex_parent">
+              <Footer current_location={location.pathname} toggleSidebar={toggleSidebar}/>    
+            </div>          
           </div> 
       </div>)
 }
@@ -147,6 +112,22 @@ function About(){
   </p> */}   
     </div>)
 }
+
+ /*<CSSTransition timeout={500} unmountOnExit classNames="toggle-vertifyage-popup-animation" 
+             if an animated component appears when app first loads, need the 'appear' prop along with the 'in' prop
+               also need to define *-appear and *-appear-active css classes
+            
+            in={show_dob_popup}
+            appear={show_dob_popup}
+            /because we use the 'in' prop with a custom functional component, also need to define a nodeRef prop
+               which is a useRef instance. the ref gets set by the CSSTransition wrapper
+               the alternative is to lift the wrapping div from the vertify age cmp and put it in here
+            
+            nodeRef={nodeRef}>
+            <VertifyAge 
+                ref={nodeRef} // pass the ref to vertifyage, which is wrapped in forwardRef
+                closeDOBPopup={closeDOBPopup}/>
+        </CSSTransition>*/  
 
 
 
