@@ -37,6 +37,24 @@ to customize scrollbars in those enviroments, use SimpleScroll, an npm package
   transition: opacity 500ms;
 }
 
+.toggle-vertifyage-popup-animation-enter {
+  opacity: 0;
+}
+    
+.toggle-vertifyage-popup-animation-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms;
+}
+    
+.toggle-vertifyage-popup-animation-exit {
+  opacity: 1;
+}
+    
+.toggle-vertifyage-popup-animation-exit-active {
+  opacity: 0;
+  transition: opacity 1000ms;
+}
+
 /* ***************** */
 
 
@@ -82,6 +100,12 @@ to customize scrollbars in those enviroments, use SimpleScroll, an npm package
   overflow-wrap: normal;
   text-align: center;
   position: relative;
+}
+
+.product_link{
+  color: -webkit-link;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /* width *; height auto;  will preserve the aspect ratio of image*/

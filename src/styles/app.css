@@ -44,7 +44,7 @@
   display: flex;
 }
 
-/* TESTING CSSTRANSITION APPEAR/EXIT */
+/* TESTING CSSTRANSITION APPEAR/EXIT 
 
 .toggle-vertifyage-popup-animation-appear {
   opacity: 0;
@@ -63,6 +63,8 @@
   opacity: 0;
   transition: opacity 500ms;
 }
+
+*/
     
 /* *******slide/out sidebar animations********* */
 

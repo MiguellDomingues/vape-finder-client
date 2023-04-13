@@ -1,7 +1,13 @@
 import useCardList from '../hooks/useCardList'
 import { SpinnerDotted } from 'spinners-react';
+import {useState, useRef} from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import VertifyAge from './VertifyAge'
 import '../styles/cardlist.css'
+
+import { STORAGE_KEY } from '../utils.js'
+
+const _show_dob_popup = true
 
 function CardList( { query, selected_filters_handlers } ) {
 
@@ -18,9 +24,44 @@ function CardList( { query, selected_filters_handlers } ) {
       handleScroll, 
     } ] = useCardList(products, selected_filters, fetchMore, debounced_query_counting_down )
 
+    const [show_dob_popup, setShow] = useState( false ) //(!localStorage.getItem(STORAGE_KEY) && _show_dob_popup)
+    const product_url = useRef(null)
+    const nodeRef = useRef(null)
+
+    const closeDOBPopup = save_validation => {
+      save_validation && localStorage.setItem(STORAGE_KEY, true);
+      //product_url.current && window.open(product_url.current , "_blank", "noopener,noreferrer")
+      setShow(false)}
+
+    function openProductTab(info_url){
+      product_url.current = info_url
+      if(!localStorage.getItem(STORAGE_KEY) && _show_dob_popup){
+        setShow(true)
+      }else{
+        window.open(info_url, "_blank", "noopener,noreferrer")
+      }}
+
   if(error) return <>Error! {error.message}</>
 
-  return (
+  return (<>
+    <CSSTransition 
+      timeout={1000} 
+      unmountOnExit 
+      classNames="toggle-vertifyage-popup-animation" 
+      //if an animated component appears when app first loads, need the 'appear' prop along with the 'in' prop
+      // also need to define *-appear and *-appear-active css classes    
+      in={show_dob_popup}   
+      //appear={show_dob_popup}
+      //because we use the 'in' prop with a custom functional component, also need to define a nodeRef prop
+      //which is a useRef instance. the ref gets set by the CSSTransition wrapper
+      //the alternative is to lift the wrapping div from the vertify age cmp and put it in here
+      onExited={()=>{product_url.current && window.open(product_url.current , "_blank", "noopener,noreferrer")}}
+      nodeRef={nodeRef}>
+        <VertifyAge 
+          ref={nodeRef} // pass the ref to vertifyage, which is wrapped in forwardRef
+          closeDOBPopup={closeDOBPopup}/>
+    </CSSTransition>
+
     <div className="card_container" id="cardContainer" onScroll={handleScroll}>
          {loading && <div className={"spinner_middle"}><SpinnerDotted/></div>} 
          {//issue: because of the animations, this message appears weird on the card container
@@ -41,12 +82,12 @@ function CardList( { query, selected_filters_handlers } ) {
                 key={product._id+index} 
                 timeout={500} 
                 classNames="item">
-                  <Card key={product._id} product={product}/>
+                  <Card key={product._id} product={product} openProductTab={openProductTab}/>
               </CSSTransition>
             )}      
         </TransitionGroup>     
     </div>
-  );
+    </>);
 }
 
 export default CardList
@@ -56,7 +97,10 @@ export default CardList
 
 const img_src = '../../../demo.webp';
 
-function Card( {product} ) {
+function Card({
+  product,
+  openProductTab,
+}) {
   //const {id, name, brand, category, img, price, last_updated, source} = product
 
   const {id, last_updated, source_id, source_url, brand, category, name, price, info_url,} = product
@@ -69,13 +113,13 @@ function Card( {product} ) {
   format_name = format_name.replace(/^[^A-Z0-9]+|[^A-Z0-9]+$/ig, '') //remove all start/end nonalphanumeric chars
 
   //if(format_name.includes(' - ')) format_name = format_name.replace(' - ', ' ').trim()
-
+  
   //rel="noopener noreferrer" is to prevent 'tabnabbing', a kind of phishing attack
- 
+  //<a href={info_url} target="_blank" rel="noopener noreferrer">{vendor}<br/></a>
   return (
     <div className="card">
-      
-      <a href={info_url} target="_blank" rel="noopener noreferrer">{vendor}<br/></a>
+
+      <span className="product_link" onClick={e=>{openProductTab(info_url)}}>{vendor}<br/></span>
       {brand && <><span>{brand}<br/></span></> }    
       <span className="title">{format_name}<br/></span>   
       <span>${format_price}<br/></span>

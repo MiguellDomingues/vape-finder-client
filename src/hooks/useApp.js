@@ -2,7 +2,7 @@
 import { useApolloClient, useLazyQuery, useQuery } from '@apollo/client' 
 import {useState, useRef, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive';
-import { GET_SORTED_PRODUCTS,GET_SEARCH_TYPES  } from '../queries/queries.js'
+import { GET_SORTED_PRODUCTS,GET_SEARCH_TYPES  } from '../gql/queries.js'
 
 import { starting_query, starting_filters, TIMEOUT, buildAtlasGQLQuery, STORAGE_KEY } from '../utils.js'
 

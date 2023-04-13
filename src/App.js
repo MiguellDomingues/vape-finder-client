@@ -14,7 +14,7 @@ import {useState} from 'react'
 
 import { PAGE_URIS } from "./utils.js";
 
-import './app.css'
+import './styles/app.css'
 
 function App( {SHOW_DOB_POPUP} ) {
 
@@ -37,21 +37,21 @@ function App( {SHOW_DOB_POPUP} ) {
 
       <div className="page">
 
-         <CSSTransition timeout={500} unmountOnExit classNames="toggle-vertifyage-popup-animation" 
-            /* if an animated component appears when app first loads, need the 'appear' prop along with the 'in' prop
+         {/*<CSSTransition timeout={500} unmountOnExit classNames="toggle-vertifyage-popup-animation" 
+             if an animated component appears when app first loads, need the 'appear' prop along with the 'in' prop
                also need to define *-appear and *-appear-active css classes
-            */
+            
             in={show_dob_popup}
             appear={show_dob_popup}
-            /* because we use the 'in' prop with a custom functional component, also need to define a nodeRef prop
+            /because we use the 'in' prop with a custom functional component, also need to define a nodeRef prop
                which is a useRef instance. the ref gets set by the CSSTransition wrapper
                the alternative is to lift the wrapping div from the vertify age cmp and put it in here
-            */
+            
             nodeRef={nodeRef}>
             <VertifyAge 
                 ref={nodeRef} // pass the ref to vertifyage, which is wrapped in forwardRef
                 closeDOBPopup={closeDOBPopup}/>
-        </CSSTransition>     
+        </CSSTransition>*/   }  
           
           <div className="app_flex_parent">
               
@@ -68,11 +68,11 @@ function App( {SHOW_DOB_POPUP} ) {
                     unmountOnExit 
                     classNames="show-filters-animation" 
                     in={!isMobile && sidebar_open}>
-                        <div className="sidebar_flex_child">
-                          <SideBar 
-                              selected_filters_handlers={selected_filters_handlers}
-                              filter_tags_query={filter_tags_query}/>    
-                        </div>
+                      <div className="sidebar_flex_child">
+                        <SideBar 
+                          selected_filters_handlers={selected_filters_handlers}
+                          filter_tags_query={filter_tags_query}/>    
+                      </div>
                 </CSSTransition>
 
                 {/*<div className="cardlist_flex_child">*/}
