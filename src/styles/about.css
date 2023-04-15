@@ -1,0 +1,27 @@
+.alt_page{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: lightgrey;
+    /* 
+      clamp(min,preferred,max) 
+    
+    padding-left: clamp(0px, 10%, 10%);
+    padding-right: clamp(0px, 10%, 10%);
+    padding-top: clamp(0px, 5%, 5%);
+    */
+  }
+  
+  .alt_page_card{
+    min-width: 60%;
+    max-height: 80%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    
+    height: fit-content;
+  }
+  

@@ -1,0 +1,18 @@
+.alt_page{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: lightgrey;
+  }
+  
+  .error_card{
+    min-width: 60%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    
+    height: fit-content;
+  }
