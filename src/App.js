@@ -30,7 +30,7 @@ function App( {SHOW_DOB_POPUP} ) {
               <Header
                 selected_filters_handlers={selected_filters_handlers} 
                 filter_tags_query={filter_tags_query}
-                isMobile={isMobile}/>  
+                show_button={isMobile && location.pathname === PAGE_URIS.HOME}/>  
             </div>
  
             <div className="body_flex_parent">

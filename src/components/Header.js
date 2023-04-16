@@ -5,10 +5,14 @@ import {useState} from 'react'
 
 import '../styles/header.css'
 
-function Header( {selected_filters_handlers, filter_tags_query, isMobile} ) {
+function Header({
+  selected_filters_handlers, 
+  filter_tags_query, 
+  show_button
+}){
 
     const [is_open, setOpen] = useState(false)
-
+ 
     const toggleModal = () =>setOpen(!is_open)
 
     return (<>   
@@ -20,7 +24,7 @@ function Header( {selected_filters_handlers, filter_tags_query, isMobile} ) {
       </CSSTransition>
       
       <div className="container_header">
-        {isMobile && <div className="open_modal_btn"><RxHamburgerMenu size={'2em'} onClick={ e=> toggleModal()}/></div>}
+        {show_button && <div className="open_modal_btn"><RxHamburgerMenu size={'2em'} onClick={ e=> toggleModal()}/></div>}
         <span className="header_title">BC VAPE FINDER</span>        
       </div></>);
   }

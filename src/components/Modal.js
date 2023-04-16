@@ -27,13 +27,8 @@ function Modal({selected_filters_handlers, filter_tags_query, toggleModal}){
    const { category, stores, brands, } = selected_filters
 
     return(<>
-    <div  className="modal modal_no_select" 
-    //id="modal-wrapper" 
-    //onClick={e=>e.target?.id === "modal-wrapper" && toggleModal()}
-    >
-      <div 
-      ref={ref} 
-      className="modal-content">
+    <div  className="modal modal_no_select">
+      <div ref={ref} className="modal-content">
       
       <div className="modal-top">
         <div className="modal_clear_all_filters_section">

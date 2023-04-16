@@ -1,8 +1,9 @@
 import '../styles/vertifyage.css'
 import useVertifyAge from '../hooks/useVertifyAge'
+import useOnClickOutside from '../hooks/useOnClickOutside'
 import {GiCheckMark} from 'react-icons/gi'
 import { RiCloseFill } from 'react-icons/ri';
-import { forwardRef } from 'react';
+import { forwardRef, useRef } from 'react';
 
 const VertifyAge = forwardRef( ({closeDOBPopup}, ref) => {
 
@@ -13,6 +14,10 @@ const VertifyAge = forwardRef( ({closeDOBPopup}, ref) => {
     birth_date, error, 
     { onChange, validateInput, saveValidation }
   ] = useVertifyAge(closeDOBPopup)
+
+  const inner_ref = useRef(null)
+
+  useOnClickOutside(inner_ref, () => closeDOBPopup(null, false));
 
   //an example of JSX spread attributes
   //move all the common props into an object as keys
@@ -30,15 +35,13 @@ const VertifyAge = forwardRef( ({closeDOBPopup}, ref) => {
           <div ref={ref} // the CSSTransition wrapper will set ref to this element
               className="age_vertification_overlay show_overlay no_select">
 
-           <div className="date_input_container date_input_container_layout">
+           <div ref={inner_ref} className="date_input_container date_input_container_layout">
 
-             <div 
-             //className="top"
-             >
-                  <img className="warning_img"
-                    src={img_src}
-                    alt="Health_Warning">
-                  </img>   
+             <div>
+                <img className="warning_img"
+                  src={img_src}
+                  alt="Health_Warning">
+                </img>   
             </div>
 
             <div className="bottom">
