@@ -64,7 +64,7 @@ function ContactForm(){
       <div className="alt_page">
         <div className="alt_page_card">
           <p>
-            If you would like to reach out with questions, concerns, or opportunities -  leave a message!
+            Questions? Opportunities? Suggestions? Leave a message!
           </p>
           {message_sent && (message_sending ? <>sending</> : message_success ? messageSuccess() : messageFailed())}
           <form ref={form_ref} className="contact_form" onSubmit={sendEmail}>

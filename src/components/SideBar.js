@@ -2,6 +2,9 @@ import { useFilters } from '../hooks/useFilters.js'
 import  usePillList  from '../hooks/usePillList.js'
 import { SortByDropDown, CollapsibleMenu, HorizontalLine, ClearFiltersButton } from './widgets.js'
 import { FILTER_KEYS } from '../utils.js'
+import { CgOptions } from 'react-icons/cg';
+
+import {useState} from 'react'
 
 import '../styles/sidebar.css'
 
@@ -10,6 +13,8 @@ function SideBar( {selected_filters_handlers, filter_tags_query} ){
     const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers, filter_tags_query)
     const [,{ handleClear, }] = usePillList(selected_filters_handlers)
 
+    const [show_options, setShowOptions] = useState(false)
+
     const { category_tags, brands_tags, stores_tags } = filter_tags
     const { category, stores, brands, } = selected_filters
 
@@ -17,7 +22,9 @@ function SideBar( {selected_filters_handlers, filter_tags_query} ){
     if (error) return `Error! ${error.message}`;
 
     return (<div className="sidebar_container">
-        
+
+        {/*<div className="options_icon" onClick={e=>setShowOptions(!show_options)}><CgOptions/></div>*/}
+
         <CollapsibleMenu 
             title="Categories" 
             tags={category_tags} 
@@ -55,6 +62,11 @@ function SideBar( {selected_filters_handlers, filter_tags_query} ){
         <HorizontalLine/>
 
         <SortByDropDown selected_filters_handlers={selected_filters_handlers}/>
+
+        {/*show_options && <>
+            <HorizontalLine/>
+            <div className="options_txt">Use Dynamic Query <input type="checkbox"/></div>
+        </>*/}
     </div>)
 }
 

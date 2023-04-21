@@ -68,10 +68,22 @@
   font-size: xxx-large;
 }
 
-.date_input_txt{
+.date_input_txt_1{
   font-size: 20px;
   display: flex;
   text-align: center;
+}
+
+.date_input_txt_2{
+  font-style: italic;
+  font-size: 15px;
+  display: flex;
+  text-align: center;
+}
+
+.date_input_txt_blue{
+  color: blue;
+  font-style: none;
 }
 
 .date_input_dmy{

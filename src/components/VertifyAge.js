@@ -48,12 +48,18 @@ const VertifyAge = forwardRef( ({closeDOBPopup}, ref) => {
 
               <div className="date_input_heading date_input_heading_txt">
                 <span className="date_input_heading_style">
-                  You must be 19+ to view the content on this website!
+                The referenced website sells products not intended for anyone under the age of 19!
                 </span>
               </div>
-              <div className="date_input_txt">
+              <div className="date_input_txt_1">
                 <span className="date_input_txt_style">
-                  This website has material not intended for anyone under the age of 19
+                  To continue, please enter your date of birth
+                </span>
+              </div>
+
+              <div className="date_input_txt_2">
+                <span className="date_input_txt_style">
+                  enable <span className="date_input_txt_blue">Save Vertification</span> to prevent seeing this popup again
                 </span>
               </div>
               
@@ -82,7 +88,7 @@ const VertifyAge = forwardRef( ({closeDOBPopup}, ref) => {
               </div>
 
               <div className="date_input_save_choice">       
-                Save Vertification <input type="checkbox" onClick={ e=>saveValidation() }/>
+                <span className="date_input_txt_blue">Save Vertification</span> <input type="checkbox" onClick={ e=>saveValidation() }/>
               </div>
             </div>
           </div>

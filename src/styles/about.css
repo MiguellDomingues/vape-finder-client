@@ -20,8 +20,47 @@
     flex-direction: column;
     background-color: white;
     border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 10px;
     
     height: fit-content;
   }
-  
+
+.pointer_link{
+  width: fit-content;
+  cursor: pointer;
+}
+
+.disclaimer_msg{
+  font-size: 15px;
+  font-style: italic;
+}
+
+.content_card_header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  padding-bottom: 5px;
+}
+
+.content_card_layout{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.content_card{
+  padding: 15px;
+  border-radius: 10px;
+  background-color: lightblue;
+  max-width: fit-content;
+}
+
+.icons_layout{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
