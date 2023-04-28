@@ -1,28 +1,37 @@
 import emailjs from '@emailjs/browser';
-import {useState, useRef} from 'react'
+import {useState, useRef } from 'react'
 import { EMAILJS_INFO } from '../utils'
 
 import '../styles/contactform.css'
 
+const MAX_MESSAGE_LENGTH = 500
+
 function ContactForm(){
 
-    const max_chars = 500
-    const [length_remaining, setLengthRemaining] = useState(max_chars)
-  
+    const [length_remaining, setLengthRemaining] = useState(MAX_MESSAGE_LENGTH)
+
     const [message_sent, setMessageSent] = useState(false)
     const [message_sending, setMessageSending] = useState(false)
     const [message_success, setMessageSuccess] = useState(undefined)
   
     const form_ref = useRef(null)
     const button_ref = useRef(null)
+    const length_remaining_ref = useRef(null)
+ 
+    const toggleSpan = (msg_length, span_ref) => {
+      if( (msg_length > 0 && !span_ref.classList.contains("show_chars") ) || //if the textarea has text and the span is hidden
+        (msg_length === 0 && span_ref.classList.contains("show_chars") )){ //or the textarea has no chars and the span is showing
+          span_ref.classList.toggle("show_chars")}
+    }
    
     //https://www.codingnepalweb.com/auto-resize-textarea-html-css-javascript/
     const textEntered = (e) => {
-        setLengthRemaining(max_chars-e.target.value.length)
-        const textarea = e.target   
-        textarea.style.height = "104px"; //+4 the height defined in css
-        let scHeight = e.target.scrollHeight;
-        textarea.style.height = `${scHeight}px`;
+      toggleSpan(e.target.value.length, length_remaining_ref?.current)
+      setLengthRemaining(MAX_MESSAGE_LENGTH-e.target.value.length)
+      const textarea = e.target   
+      textarea.style.height = "104px"; //+4 the height defined in css
+      let scHeight = e.target.scrollHeight;
+      textarea.style.height = `${scHeight}px`;
     }
   
     const sendEmail = (e) => {
@@ -70,24 +79,24 @@ function ContactForm(){
           <form ref={form_ref} className="contact_form" onSubmit={sendEmail}>
   
             <div className="contact_header_name_email">
-              <input type="text" name="from_name" placeholder="Name" className="contact_name" required/>    
+              <input type="text" name="from_name" placeholder="Name" className="contact_name" required/>   
               <input type="email" name="reply_to" placeholder="Email" className="contact_email" required/>        
             </div>
   
             <div className="contact_body">
-              <textarea name="message" maxLength={max_chars} spellCheck="false" placeholder="Message" className="contact_message" required onInput={textEntered}/>
+             <textarea name="message" maxLength={MAX_MESSAGE_LENGTH} spellCheck="false" placeholder="Message" className="contact_message" required onInput={textEntered}/>
             </div>
   
             <div className="contact_footer">
               <div ref={button_ref} className="send_message_btn" onClick={e=>{form_ref?.current.requestSubmit()}}>
                 <span>Send Message!</span>
               </div>
-              <span className="chars_remaining">{length_remaining} characters remaining</span>
+              {<span ref={length_remaining_ref} className="chars_remaining">{length_remaining} characters remaining</span>}
             </div>
         </form>        
       </div>
     </div>
-    );
-   };
+  );
+};
 
-   export default ContactForm
+export default ContactForm

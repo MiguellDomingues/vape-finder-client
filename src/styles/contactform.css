@@ -78,8 +78,14 @@
   }
   
   .chars_remaining{
+    opacity: 0;
+    transition: opacity .5s ease-out;
     font-size: 15px;
     font-style: italic;
+  }
+
+  .show_chars{
+    opacity: 1;
   }
   
   @media only screen and (max-width: 481px) {
