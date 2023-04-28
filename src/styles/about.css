@@ -13,8 +13,8 @@
   }
   
   .alt_page_card{
-    min-width: 60%;
-    max-height: 80%;
+    
+    max-height: 90%;
     display: flex;
     position: relative;
     flex-direction: column;
@@ -29,11 +29,23 @@
 .pointer_link{
   width: fit-content;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .disclaimer_msg{
   font-size: 15px;
   font-style: italic;
+}
+
+.author_info_section{
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.author_info{
+  display: flex;
+  flex-flow: row wrap;
+  gap: 5px;
 }
 
 .content_card_header{
@@ -47,7 +59,9 @@
 .content_card_layout{
   display: flex;
   justify-content: space-evenly;
+  flex-flow: row wrap;
   align-items: center;
+  gap: 5px;
 }
 
 .content_card{
@@ -64,3 +78,59 @@
   flex-direction: row;
   gap: 1em;
 }
+
+@media only screen and (max-width: 481px) {
+  .alt_page{
+    padding-top: 0px;
+  }
+  .alt_page_card{
+    min-width: 95%;
+    max-height: 100%;
+  }
+  .content_card_header{
+    font-size: 17px;
+    padding-bottom: 5px;
+  }
+  .content_card{
+    padding: 5px;
+  }
+  .icons_layout{
+    gap: 1px;
+  }
+  .author_info_section{
+    justify-content: center;
+  }
+}
+
+@media only screen and (min-width: 481px) { 
+  .alt_page{
+    padding-top: 5%;
+    min-width: 80%;
+  }
+  .alt_page_card{
+    max-width: 80%;
+    min-width: 80%;
+  }
+  .author_info_section{
+    justify-content: space-evenly;
+  }
+}
+
+.content-cards-section-animation-enter {
+  opacity: 0;
+}
+    
+.content-cards-section-animation-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+    
+.content-cards-section-animation-exit {
+  opacity: 1;
+}
+    
+.content-cards-section-animation-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+

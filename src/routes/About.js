@@ -1,91 +1,134 @@
 import '../styles/about.css'
 
 import { FaGithub, FaNodeJs, FaReact, FaLinkedin } from 'react-icons/fa';
-import { SiMongodb, SiRealm, SiApollographql, SiReactrouter, SiHeroku, SiGraphql, SiCreatereactapp } from 'react-icons/si';
-//MAKE THE ABOUT PAGE YOUR HOME PAGE
-//introduce apps
-//use this as domain name
-//LINK TO YOUR PRODUCT PAGE
-// REPLACE header as you change pages
-//register own domain and https
-//create a new project for a temp projects page
-//link to bc vape finder
+import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
+import { SiMongodb, SiRealm, SiApollographql, SiReactrouter, SiHeroku, SiGraphql, SiCreatereactapp,SiAxios } from 'react-icons/si';
+import { PillList  } from '../components/widgets'
+
+import { useRef, useState } from 'react'
+import { CSSTransition } from 'react-transition-group';
+
 function About(){
 
-    const LinkTagWrapper = (cmp, url) =>
-      <a className="pointer_link" href={url} target="_blank" rel="noopener noreferrer"><cmp.type {...cmp.props}/></a>
-    
+  const [show_build_with, setShowBuildWith] = useState(false)
+  const [show_disclaimer, setShowDisclaimer] = useState(false)
+  const [show_creator, setShowCreator] = useState(false)
 
+  const active_section_ref = useRef({})
+
+  const openActiveSection = () => active_section_ref.current?.openActiveSection && active_section_ref.current.openActiveSection()
+
+  const setActiveSectionIcon = (is_active_section) => is_active_section ?  <AiFillCaretDown/> : <AiFillCaretUp/>
+
+  const toggleDetailSections = (section_open, selectedSectionControls ) =>{
+    const openSection = selectedSectionControls(true)
+    const closeSection = selectedSectionControls(false)
+
+    if( !show_build_with & !show_disclaimer && !show_creator){      // ....if all sections are closed....
+      openSection()                                                   //open the section next frame     
+      active_section_ref.current.closeActiveSection = closeSection    //set this section to close if another section is opened
+    }else if(section_open){                                         // ....if the selected section is already open..
+      closeSection()                                                   //close the section and reset the references
+      active_section_ref.current = {}                                            
+    }else{                                                          //...otherwise close the current section and update the active section
+      active_section_ref.current.closeActiveSection()                 //close the current section                                                       
+      active_section_ref.current.openActiveSection = openSection      //update open/close refs for this new active section  
+      active_section_ref.current.closeActiveSection = closeSection                  
+      }    
+  }
+
+  const wrapCmpWithAnchorTag = (cmp, url) =>
+    <a className="pointer_link" href={url} target="_blank" rel="noopener noreferrer"><cmp.type {...cmp.props}/></a>
+
+  const wrapSentenceWordsWithDivs = sentence => sentence.split(" ").map( (token, idx) => <div key={idx}>{token}</div> )
+    
     return (
       <div className="alt_page">
         <div className="alt_page_card">
 
-          <div className="content_card_header">About BC Vape Finder</div>
-          <p>
-            BC Vape Finder is a web application which allows users to search a catalog of vaping-related products that are sourced from multiple online vendors across the lower mainland. 
-          </p>
-
-               
-          <p>
-            This project is very much a work in progress: i'm experimenting new features, the look, feel, usability of the site, playing around with different
-            frameworks and frontend, backend implementations and technologies?
-          </p>
-
-          <p>
-            For more technical details about the project details about the Author, check out the site
-          </p>
-
-          <>{//move these to the side of the card, like a tab
+          {//<div className="content_card_header">About BC Vape Finder</div>
           }
-          {LinkTagWrapper(<FaLinkedin size={'1.5em'} color={'blue'} />, "https://www.linkedin.com/in/m-domingues/")}
-          {LinkTagWrapper(<FaGithub size={'1.5em'}/>, "https://github.com/MiguellDomingues/")}
-          </>
-        <div className="content_card_layout">
-
-        
-
-          <div className="content_card">
-            <div className="content_card_header">Website</div>
-            <div className="icons_layout">
-              {LinkTagWrapper(<FaGithub size={'1.5em'}/>, "https://github.com/MiguellDomingues/vape-finder-client")}
-              {LinkTagWrapper(<FaReact size={'1.5em'} color={'#087ea4'}/>, "https://react.dev/")}
-              {LinkTagWrapper(<SiCreatereactapp size={'1.5em'} color={'#087ea4'}/>, "https://create-react-app.dev/")}
-              {LinkTagWrapper(<SiReactrouter size={'1.5em'}/>, "https://reactrouter.com/en/main")}
-              {LinkTagWrapper(<SiApollographql size={'1.5em'}/>, "https://www.apollographql.com/")}
-              {LinkTagWrapper(<SiRealm size={'1.5em'}/>, "https://realm.io/")}
-              {LinkTagWrapper(<SiGraphql size={'1.5em'}/>, "https://graphql.org/")}
-            </div>
+          <p>BC Vape Finder is a catalog of vaping-related products that are sourced online from multiple vendors across the lower mainland. </p>
+   
+        <div className="author_info_section">
+   
+          <div onClick={e=>{toggleDetailSections(show_build_with, (setter) => ()=>setShowBuildWith(setter) )}}>
+            {setActiveSectionIcon(show_build_with)} Project Details
           </div>
-
-          <div className="content_card">
-            <div className="content_card_header">Data Acquisition</div>
-            <div className="icons_layout">
-            {LinkTagWrapper(<FaGithub size={'1.5em'}/>, "https://github.com/MiguellDomingues/vape-finder-scraper")}
-            {LinkTagWrapper(<FaNodeJs size={'1.5em'} />, "https://nodejs.org/en")}
-            {LinkTagWrapper(<CheerioJSIcon/>, "https://cheerio.js.org/")}
-            </div>
+             
+          <div onClick={e=>{toggleDetailSections(show_creator,  (setter) => ()=>setShowCreator(setter))}}>
+            {setActiveSectionIcon(show_creator)} Creator Contact
           </div>
-
-          <div className="content_card">
-            <div className="content_card_header">Service Providers</div>
-            <div className="icons_layout">
-              {LinkTagWrapper(<SiHeroku size={'1.5em'}/>, "https://www.heroku.com/home?")}
-              {LinkTagWrapper(<SiMongodb size={'1.5em'} color={'green'}/>, "https://www.mongodb.com/atlas/database")}
-              {LinkTagWrapper(<EmailJSIcon/>, "https://www.emailjs.com/")}
-            </div>
+               
+          <div onClick={e=>{toggleDetailSections(show_disclaimer, (setter) => ()=>setShowDisclaimer(setter) )}}>
+            {setActiveSectionIcon(show_disclaimer)} Disclaimer
           </div>
-
+           
         </div>
 
+        <CSSTransition timeout={500} unmountOnExit classNames="content-cards-section-animation" 
+          in={show_build_with}
+          onExited={openActiveSection}>
+            <div className="content_card_layout">
+              <div className="content_card">
+                <div className="content_card_header">Website</div>
+                <div className="icons_layout">
+                  {wrapCmpWithAnchorTag(<FaGithub size={'1.5em'}/>, "https://github.com/MiguellDomingues/vape-finder-client")}
+                  {wrapCmpWithAnchorTag(<FaReact size={'1.5em'} color={'#087ea4'}/>, "https://react.dev/")}
+                  {wrapCmpWithAnchorTag(<SiCreatereactapp size={'1.5em'} color={'#087ea4'}/>, "https://create-react-app.dev/")}
+                  {wrapCmpWithAnchorTag(<SiReactrouter size={'1.5em'}/>, "https://reactrouter.com/en/main")}
+                  {wrapCmpWithAnchorTag(<SiApollographql size={'1.5em'}/>, "https://www.apollographql.com/")}
+                  {wrapCmpWithAnchorTag(<SiRealm size={'1.5em'}/>, "https://realm.io/")}
+                  {wrapCmpWithAnchorTag(<SiGraphql size={'1.5em'}/>, "https://graphql.org/")}
+                </div>
+              </div>
+
+              <div className="content_card">
+                <div className="content_card_header">Data Extraction</div>
+                <div className="icons_layout">
+                  {wrapCmpWithAnchorTag(<FaGithub size={'1.5em'}/>, "https://github.com/MiguellDomingues/vape-finder-scraper")}
+                  {wrapCmpWithAnchorTag(<FaNodeJs size={'1.5em'} />, "https://nodejs.org/en")}
+                  {wrapCmpWithAnchorTag(<CheerioJSIcon/>, "https://cheerio.js.org/")}
+                  {wrapCmpWithAnchorTag(<SiAxios size={'1.5em'} color={'#087ea4'}/>, "https://axios-http.com/")}  
+                  {wrapCmpWithAnchorTag(<PillList pills={["ODM"]}/> , "https://mongoosejs.com/")}
+                  {wrapCmpWithAnchorTag(<PillList pills={["Logging"]}/> , "https://www.npmjs.com/package/winston")}             
+                </div>
+              </div>
+
+              <div className="content_card">
+                <div className="content_card_header">Service Providers</div>
+                <div className="icons_layout">
+                  {wrapCmpWithAnchorTag(<SiHeroku size={'1.5em'}/>, "https://www.heroku.com/home?")}
+                  {wrapCmpWithAnchorTag(<SiMongodb size={'1.5em'} color={'green'}/>, "https://www.mongodb.com/atlas/database")}
+                  {wrapCmpWithAnchorTag(<EmailJSIcon/>, "https://www.emailjs.com/")}
+                </div>
+              </div>
+            </div>
+        </CSSTransition>
+
+        <CSSTransition timeout={500} unmountOnExit classNames="content-cards-section-animation" 
+          in={show_creator}
+          onExited={openActiveSection}>
+           <div className="author_info">
+            {wrapSentenceWordsWithDivs("For more information about the creator and his experience:")}    
+            <div>{wrapCmpWithAnchorTag(<FaLinkedin size={'1.5em'} color={'blue'} />, "https://www.linkedin.com/in/m-domingues/")}
+            {wrapCmpWithAnchorTag(<FaGithub size={'1.5em'}/>, "https://github.com/MiguellDomingues/")}</div>     
+          </div>
+          
+        </CSSTransition>
+
+        <CSSTransition timeout={500} unmountOnExit classNames="content-cards-section-animation" 
+          in={show_disclaimer}
+          onExited={openActiveSection}>
           <p className="disclaimer_msg">
-          This website includes content that has been obtained through scraped publicly-available data sources. 
-          Please note that the scraped data is not intended for commercial use or profit. I do not endorse or promote any products or services based on the scraped data.
-          I do not claim ownership or copyright of the scraped data, and I acknowledge the intellectual property rights of the original authors and publishers of such information.
-          I have used the data solely for demonstration purposes ONLY.
-          </p>
-
-        </div>
-       
+            This website includes content that has been obtained through scraping publicly-available data sources. 
+            Please note that the scraped data is not intended for commercial use or profit. I do not endorse or promote any products or services based on the scraped data.
+            I do not claim ownership or copyright of the scraped data, and I acknowledge the intellectual property rights of the original authors and publishers of such information.
+            I have used the data solely for demonstration purposes ONLY.
+            </p>
+        </CSSTransition>
+          
+        </div>     
       </div>)
 }
 
@@ -117,26 +160,48 @@ function EmailJSIcon(){
   </svg>)
 }
 
+
+ /*<div className="author_info">
+            {wrapSentenceWordsWithDivs("For more details about the project:")}  
+            <div>{wrapCmpWithAnchorTag(<FaGithub size={'1.5em'}/>, "https://github.com/MiguellDomingues/vape-finder-client")}
+            {wrapCmpWithAnchorTag(<FaGithub size={'1.5em'}/>, "https://github.com/MiguellDomingues/vape-finder-scraper")}</div>
+        </div>*/
+
+          /*<div className="author_info">
+            {wrapSentenceWordsWithDivs("For more information about the creator:")}    
+            <div>{wrapCmpWithAnchorTag(<FaLinkedin size={'1.5em'} color={'blue'} />, "https://www.linkedin.com/in/m-domingues/")}
+            {wrapCmpWithAnchorTag(<FaGithub size={'1.5em'}/>, "https://github.com/MiguellDomingues/")}</div>      
+          </div>*/
+
+
+//MAKE THE ABOUT PAGE YOUR HOME PAGE
+//introduce apps
+//use this as domain name
+//LINK TO YOUR PRODUCT PAGE
+// REPLACE header as you change pages
+//register own domain and https
+//create a new project for a temp projects page
+//link to bc vape finder
+
+
  /* 
+
+  <div className="content_card_layout">
+              <div className="content_card">
+                <div className="content_card_header">Miguel Domingues</div>
+                <div className="icons_layout">
+                  {wrapCmpWithAnchorTag(<FaLinkedin size={'1.5em'} color={'blue'} />, "https://www.linkedin.com/in/m-domingues/")}
+                  {wrapCmpWithAnchorTag(<FaGithub size={'1.5em'}/>, "https://github.com/MiguellDomingues/")}
+                </div>
+              </div>
+            </div>
+
+
+
+  of vaping-related products that are sourced online from multiple vendors across the lower mainland.
 
  BC Vape Finder is a consolidated inventory of vaping-related products from multiple online vendors across the lower mainland.
 
-You may 
-
-  
-
-             To website was created as a single page application 
-          
-             To create the inventory, I created an 
-             <a className="pointer_link" href="https://github.com/MiguellDomingues/vape-finder-scraper" target="_blank" rel="noopener noreferrer">automated process</a> 
-             that scraped online storefronts for product information, which was cleaned and categorized into a unified dataset
-
-
-
-            <details>
-    <summary>Front End</summary>
-    .
-</details>
 
  Hi. i'm Miguel. 
             Welcome to BC Vape Finder: a consolidated inventory of vaping-related products from multiple online vendors across the lower mainland.
@@ -145,37 +210,7 @@ You may
  the lower mainland. Maybe put this section in respective repos?----- To gather the data, I created an automated process that 
  scraped online storefronts for product information, which was cleaned and categorized into a unified dataset and inserted into the cloud ------
 
-
-
- 
- <div className="content_card_header">About Me</div>
-          <p>Hi! My name is Miguel! I'm a (budding?) full-stack developer and lover of all things programming! I have built stuff across a variety of 
-            technologies in school, . I'm currently exploring js implementing 
-          </p>
- 
- <p>
-
-         <p>
-          This website includes content that has been obtained through scraping publicly-available data sources, such as government websites, public records, and online directories. 
-          While I strive to ensure the accuracy and completeness of the information presented on our website, I cannot guarantee the reliability or currency of the data obtained 
-          through scraping, as it may be subject to errors, omissions, or changes.
-          </p>
-  
-          <p>
-          Please note that the scraped data is not intended for commercial use or profit. I do not endorse or promote any products or services based on the scraped data.
-          I do not claim ownership or copyright of the scraped data, and I acknowledge the intellectual property rights of the original authors and publishers of such information.
-          I have used the data solely for demonstration purposes ONLY.
-          </p>
-  
-          <p>
-          However, I recognize that some individuals or organizations may object to the use of their information on our website. If you are the owner of any data that has been scraped and used on this website, 
-          and you wish to have it removed or corrected, please leave a message.
-          </p>
-
-
-        By using my website, you agree to this disclaimer and acknowledge that we are not responsible for any damages, losses, or liabilities that may arise from your reliance on the scraped data or the 
-        content presented on my website. You also agree to comply with all applicable Canadian laws and regulations governing the use of public data and online content.
-    </p> */ 
+*/ 
 
     /*
     - a website that allows users to filter and search for vaping-related products from online vendors across lower mainland
