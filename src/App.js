@@ -1,7 +1,7 @@
 import useApp from './hooks/useApp'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import ContactForm from './components/ContactForm'
+import ContactPage from './routes/ContactPage'
 import About from './routes/About'
 import Home from './routes/Home'
 import Error from './routes/Error'
@@ -42,7 +42,7 @@ function App( {SHOW_DOB_POPUP} ) {
                   query={query}
                   isMobile={isMobile}/>}/>
               <Route path={PAGE_URIS.ABOUT} element={<About/>}/>                    
-              <Route path={PAGE_URIS.CONTACT} element={<ContactForm/>}/>
+              {/*<Route path={PAGE_URIS.CONTACT} element={<ContactPage/>}/>*/}
               <Route path="*" element={<Error/>} />
             </Routes>
           </div>

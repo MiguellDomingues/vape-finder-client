@@ -1,0 +1,45 @@
+.alt_page{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: lightgrey;
+    /* 
+      clamp(min,preferred,max) 
+    
+    padding-left: clamp(0px, 10%, 10%);
+    padding-right: clamp(0px, 10%, 10%);
+    padding-top: clamp(0px, 5%, 5%);
+    */
+  }
+  
+  .alt_page_card{
+    min-width: 60%;
+    max-height: 80%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    
+    height: fit-content;
+  }
+
+  @media only screen and (max-width: 481px) {
+    .alt_page{
+      padding-top: 0px;
+    }
+    .alt_page_card{
+      min-width: 95%;
+    }
+  }
+  
+  @media only screen and (min-width: 481px) { 
+    .alt_page{
+      padding-top: 5%;
+      min-width: 80%;
+    }
+    .alt_page_card{
+      max-width: 80%;
+    }
+  }

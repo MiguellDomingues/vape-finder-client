@@ -1,8 +1,8 @@
-.alt_page{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background-color: lightgrey;
+.alt_page_about{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: lightgrey;
     /* 
       clamp(min,preferred,max) 
     
@@ -10,21 +10,23 @@
     padding-right: clamp(0px, 10%, 10%);
     padding-top: clamp(0px, 5%, 5%);
     */
-  }
+}
   
-  .alt_page_card{
-    
-    max-height: 90%;
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    
-    height: fit-content;
-  }
+.alt_page_card_about{   
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  padding-bottom: 1em;
+  height: fit-content;
+}
+
+.about_text{
+  align-self: center;
+}
 
 .pointer_link{
   width: fit-content;
@@ -37,15 +39,34 @@
   font-style: italic;
 }
 
-.author_info_section{
+.section_controls{
   display: flex;
   flex-flow: row wrap;
+  padding-bottom: 1em;
+  gap: 5px;
+}
+
+.section_control{
+  padding-top: 1px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 10px;
+  font-family: system-ui;
+  color: black;
+  transition: background-color .25s ease-out, color .25s ease-out;
+  cursor: pointer;
+}
+
+.selected_section_control{
+  background-color: lightblue;
 }
 
 .author_info{
   display: flex;
   flex-flow: row wrap;
   gap: 5px;
+  padding-bottom: 1em;
 }
 
 .content_card_header{
@@ -80,12 +101,14 @@
 }
 
 @media only screen and (max-width: 481px) {
-  .alt_page{
+  .alt_page_about{
     padding-top: 0px;
   }
-  .alt_page_card{
+  .alt_page_card_about{
     min-width: 95%;
     max-height: 100%;
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 0px 0px 10px 10px;
   }
   .content_card_header{
     font-size: 17px;
@@ -93,25 +116,26 @@
   }
   .content_card{
     padding: 5px;
+    min-width: 100%;
   }
   .icons_layout{
     gap: 1px;
   }
-  .author_info_section{
-    justify-content: center;
+  .section_controls{
+    flex-flow: column wrap;
   }
 }
 
 @media only screen and (min-width: 481px) { 
-  .alt_page{
+  .alt_page_about{
     padding-top: 5%;
     min-width: 80%;
   }
-  .alt_page_card{
+  .alt_page_card_about{
     max-width: 80%;
     min-width: 80%;
   }
-  .author_info_section{
+  .section_controls{
     justify-content: space-evenly;
   }
 }

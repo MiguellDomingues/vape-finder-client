@@ -65,16 +65,12 @@ function ContactForm(){
   
     function messageFailed(){
       return(<p>
-        Sorry, something went wrong! If you would like, shoot me an email directly at <a href="mailto:mdomingues1001@gmail.com">mdomingues1001@gmail.com</a>
+        Sorry, something went wrong! Email me directly at <a href="mailto:mdomingues1001@gmail.com">mdomingues1001@gmail.com</a>
       </p>)
     }
   
-    return (
-      <div className="alt_page">
-        <div className="alt_page_card">
-          <p>
-            Questions? Opportunities? Suggestions? Leave a message!
-          </p>
+    return (<>
+     
           {message_sent && (message_sending ? <>sending</> : message_success ? messageSuccess() : messageFailed())}
           <form ref={form_ref} className="contact_form" onSubmit={sendEmail}>
   
@@ -94,9 +90,8 @@ function ContactForm(){
               {<span ref={length_remaining_ref} className="chars_remaining">{length_remaining} characters remaining</span>}
             </div>
         </form>        
-      </div>
-    </div>
-  );
+     
+        </>);
 };
 
 export default ContactForm

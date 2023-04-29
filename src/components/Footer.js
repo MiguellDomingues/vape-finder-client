@@ -16,9 +16,9 @@ function Footer({
       <Link to={PAGE_URIS.ABOUT}>
         <span className={stylePageLink(PAGE_URIS.ABOUT)}>About</span>
       </Link> 
-      <Link to={PAGE_URIS.CONTACT}>
-        <span className={stylePageLink(PAGE_URIS.CONTACT)}>Contact Me</span>
-      </Link> 
+      {/*<Link to={PAGE_URIS.CONTACT}>
+        <span className={stylePageLink(PAGE_URIS.CONTACT)}>Contact</span>
+    </Link>*/ }
     </>)
 }
 
