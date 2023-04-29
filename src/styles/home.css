@@ -2,7 +2,7 @@
     background-color: lightgray;  
     display: flex;      
     overflow: hidden;      
-    border-radius: 10px;     
+    border-radius: 0px 10px 10px 0px;    
     max-width: 17%;
     padding-right: 3em;  
     margin-right:  5px;

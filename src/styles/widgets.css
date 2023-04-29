@@ -342,8 +342,6 @@
   color: black;
 }
 
-/* TESTING CSSTRANSITION CLEAR FILTERS BTN*/
-
 .clear-pills-btn-animation-enter {
   opacity: 0;
 }

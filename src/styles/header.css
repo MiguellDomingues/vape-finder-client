@@ -20,6 +20,9 @@
 
 .open_modal_btn{
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 27.5%;
+  left: 5%;
 }
 
 /* TESTING CSSTRANSITION OPEN/CLOSE MODAL*/
