@@ -1,119 +1,3 @@
-.dropdown_container{
-    display: flex;
-    flex-direction: column;
-    margin-top: 5px; 
-    margin-bottom: 5px;
-    
-    /* this is used to remove the flickering effect from clicking the drop-down 
-    NOTICED AN rare ISSUE WHERE THE DROPDOWNS BECAME UNSELECTABLE 
-    keep an eye on it*/
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.dropdown_container:focus{
-  outline: none !important; /* this is used to remove the flickering effect from clicking the drop-down */
-}
-
-
-.dropdown_title{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.filter_selected{
-    background-color: rgb(31, 188, 186);
-    color: white;
-}
-
-.search_bar_product_count{
-    font-style: italic;
-    font-size: 10px;
-}
-
-.dropdown-arrow{
-    height: 0;
-    width: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid #333;
-    position: relative;   
-    top: 5px;
-    float: right;
-}
-
-
-.dropdown_item{
-  display: flex;
-  place-content: end space-between;
-  font-size: large;
-  color: black;
-  padding: 5px; 
-  border-radius: 10px;  
-}
-
-/*
-.dropdown-content {
-  display: flex;
-  flex-direction: column;
-  max-height:0px;
-  background-color: lightblue;
-  
-  min-width: 200px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  
-  transition: max-height 0.2s ease-out;
-  overflow-y:auto;
-}
-*/
-
-.dropdown-content {
-    
-    display: none;
-    background-color: lightblue;
-    /*min-width: fit-content;*/
-    min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    max-height:0px;
-    
-    overflow-y:auto;
-}
-
-
-.dropdown_container:hover .dropdown-content {
-  display: flex;
-  flex-direction: column;
-  max-height:200px;
-}
-
-
-
-.dropdown-content::-webkit-scrollbar {
-  width: 4px;
-}
-
-.dropdown-content::-webkit-scrollbar-thumb {
-  background-color: #A9A9A9;
-  border-radius: 10px;
-}
-
-.dropdown_container:hover .dropdown-content {
-  display: flex;
-  flex-direction: column;
-  max-height:200px;
-}
-
-.cursor_hand{
-    cursor: pointer;
-}
-
 /************************PILLS***************************/
 
 .pill_close_container{
@@ -163,8 +47,6 @@
     cursor: pointer;
   }
 
-  /* TESTING CSSTRANSITION PILL LIST*/
-
 .pill-animation-enter {
   opacity: 0;
 }
@@ -183,7 +65,6 @@
   transition: opacity 500ms;
 }
 
-/* ***************** */
 
   .pill_clear_tags_btn:hover{
     background-color: lightblue;
@@ -264,6 +145,11 @@
   margin-right: 3px;
 }
 
+.filter_selected{
+  background-color: rgb(31, 188, 186);
+  color: white;
+}
+
 .content-row-left{
   
 }
@@ -283,10 +169,24 @@
   }
 }
 
+@media only screen and (max-width: 481px) {   
+  .content{
+    font-size: 16px;
+  }
+  .collapsible { 
+    font-size: 25px;
+  }
+}
+
 /************************HORIZONTAL LINE***************************/
 
 .outer_line{
-  width: 80%
+  width: 80%;
+}
+
+.inner_line{
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 /********************SORTBY DROPDOWN**********************************/
@@ -306,7 +206,7 @@
 
   .sortby_dropdown_container{    
     align-self: center;
-    font-size: 30px;    
+    font-size: 25px;    
   }
 
 }
@@ -475,6 +375,120 @@
   writing-mode: vertical-rl;
     text-orientation: mixed; 
   */
+
+  /* OLD DROPDOWN MENU CSS
+.dropdown_container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px; 
+    margin-bottom: 5px;
+    
+     this is used to remove the flickering effect from clicking the drop-down 
+    NOTICED AN rare ISSUE WHERE THE DROPDOWNS BECAME UNSELECTABLE 
+    keep an eye on it
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.dropdown_container:focus{
+  outline: none !important;  this is used to remove the flickering effect from clicking the drop-down 
+}
+
+
+.dropdown_title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.search_bar_product_count{
+    font-style: italic;
+    font-size: 10px;
+}
+
+.dropdown-arrow{
+    height: 0;
+    width: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #333;
+    position: relative;   
+    top: 5px;
+    float: right;
+}
+
+
+.dropdown_item{
+  display: flex;
+  place-content: end space-between;
+  font-size: large;
+  color: black;
+  padding: 5px; 
+  border-radius: 10px;  
+}
+
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+  max-height:0px;
+  background-color: lightblue;
+  
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  
+  transition: max-height 0.2s ease-out;
+  overflow-y:auto;
+}
+
+
+.dropdown-content {
+    
+    display: none;
+    background-color: lightblue;
+    min-width: fit-content;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    max-height:0px;
+    
+    overflow-y:auto;
+}
+
+
+.dropdown_container:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+  max-height:200px;
+}
+
+
+
+.dropdown-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+  background-color: #A9A9A9;
+  border-radius: 10px;
+}
+
+.dropdown_container:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+  max-height:200px;
+}
+
+.cursor_hand{
+    cursor: pointer;
+}
+
+*/
 
 
 

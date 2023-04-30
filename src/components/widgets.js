@@ -7,7 +7,7 @@ import { FaSearch } from 'react-icons/fa';
 
 import {useState} from 'react'
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////SORT BY DROPDOWN///////////////////////////////////
 
 export function SortByDropDown({
     selected_filters_handlers 
@@ -31,41 +31,6 @@ export function SortByDropDown({
     </div>)
 }
 
-//////////////////////////CURRENTLY UNUSED//////////////////////////////////////
-/*
-
-export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
-
-    const selectedTagsBGC = (str, arr) => arr.includes(str) ? "filter_selected dropdown_item" : "dropdown_item"
-
-    //move the selected tags to the top of the dropdown list
-    //const sortedtags = [ ...tags.filter( t=> selected_tags.includes(t.tag_name) )]
-                      //  .concat([...tags.filter( t=> !selected_tags.includes(t.tag_name)) ])
-     function toggleMenu(e){ 
-        //e.stopPropagation()
-        //console.log("mouse enter! ", )
-       // let content = e.target.nextElementSibling;
-       // content.style.maxHeight = content.style.maxHeight ? null : "200px"
-    }
-    
-    return(
-    <div className="dropdown_container cursor_hand">
-        <div className="dropdown_title" onMouseEnter={e=>toggleMenu(e)} onMouseLeave={e=>toggleMenu(e)}
-        > {title}<div className="dropdown-arrow"></div> </div>
-            
-        <div className="dropdown-content">    
-            {tags.map( (tag, idx)=>
-                <div className={selectedTagsBGC(tag.tag_name, selected_tags)}
-                    key={idx} 
-                    onClick={ ()=> selectedHandler(tag.tag_name)}>
-                <div>{tag.tag_name}</div> <div>{tag.product_count}</div>         
-            </div>)}                  
-        </div>
-    </div>)
-}
-*/
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 export function PillList({
     pills, 
     filter_key, 
@@ -88,7 +53,7 @@ function Pill( {str, removePill} ) {
         {removePill && <span className="pill_close_container" onClick={ e => removePill(str) }><RiCloseFill/></span>}
 </div>); }
 
-////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////NEW DROPDOWN MENU//////////////////////////////////////////////
 
 export function CollapsibleMenu( {
     title         = "", 
@@ -129,7 +94,7 @@ export function CollapsibleMenu( {
 /**************wrapper for <hr/> tag that appears inside flex containers***************** */
 
 export function HorizontalLine(){
-    return (<div className="outer_line"><hr/></div>)
+    return (<div className="outer_line"><hr className="inner_line"/></div>)
 }
 
 /**************button to clear a single filter***************** */
@@ -247,3 +212,38 @@ export function IconCard({
 }){
     return(<></>)
 }
+
+//////////////////////////CURRENTLY UNUSED//////////////////////////////////////
+/*
+
+export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
+
+    const selectedTagsBGC = (str, arr) => arr.includes(str) ? "filter_selected dropdown_item" : "dropdown_item"
+
+    //move the selected tags to the top of the dropdown list
+    //const sortedtags = [ ...tags.filter( t=> selected_tags.includes(t.tag_name) )]
+                      //  .concat([...tags.filter( t=> !selected_tags.includes(t.tag_name)) ])
+     function toggleMenu(e){ 
+        //e.stopPropagation()
+        //console.log("mouse enter! ", )
+       // let content = e.target.nextElementSibling;
+       // content.style.maxHeight = content.style.maxHeight ? null : "200px"
+    }
+    
+    return(
+    <div className="dropdown_container cursor_hand">
+        <div className="dropdown_title" onMouseEnter={e=>toggleMenu(e)} onMouseLeave={e=>toggleMenu(e)}
+        > {title}<div className="dropdown-arrow"></div> </div>
+            
+        <div className="dropdown-content">    
+            {tags.map( (tag, idx)=>
+                <div className={selectedTagsBGC(tag.tag_name, selected_tags)}
+                    key={idx} 
+                    onClick={ ()=> selectedHandler(tag.tag_name)}>
+                <div>{tag.tag_name}</div> <div>{tag.product_count}</div>         
+            </div>)}                  
+        </div>
+    </div>)
+}
+*/
+////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -9,6 +9,8 @@ import { useRef } from 'react'
 
 import '../styles/modal.css'
 
+const maxHeight = "150px" //max height of collapsible menu when its opened
+
 function Modal({selected_filters_handlers, filter_tags_query, toggleModal}){
 
     const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers, filter_tags_query)
@@ -44,7 +46,7 @@ function Modal({selected_filters_handlers, filter_tags_query, toggleModal}){
         tags={category_tags} 
         selected_tags={category} 
         selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)} 
-        maxHeight="200px"/>  
+        maxHeight={maxHeight}/>  
       </div>
 
       <div className="modal_pill_list">
@@ -60,7 +62,7 @@ function Modal({selected_filters_handlers, filter_tags_query, toggleModal}){
         tags={brands_tags} 
         selected_tags={brands} 
         selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)} 
-        maxHeight="200px" />
+        maxHeight={maxHeight} />
       </div>
       
       <div className="modal_pill_list">
@@ -76,7 +78,7 @@ function Modal({selected_filters_handlers, filter_tags_query, toggleModal}){
           tags={stores_tags} 
           selected_tags={stores} 
           selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)} 
-          maxHeight="200px"/>
+          maxHeight={maxHeight}/>
       </div>
 
       <div className="modal_pill_list">

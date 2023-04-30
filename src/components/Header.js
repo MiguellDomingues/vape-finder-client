@@ -1,4 +1,4 @@
-import ModalLayout from './Modal'
+import Modal from './Modal'
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { CSSTransition } from 'react-transition-group';
 import {useState} from 'react'
@@ -17,7 +17,7 @@ function Header({
 
     return (<>   
       <CSSTransition timeout={500} unmountOnExit classNames="toggle-mobile-modal-animation" in={is_open}>
-        <ModalLayout 
+        <Modal 
           selected_filters_handlers={selected_filters_handlers}
           filter_tags_query={filter_tags_query} 
           toggleModal={toggleModal}/>

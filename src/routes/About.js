@@ -55,9 +55,7 @@ function About(){
    
         <div className="section_controls">
 
-          <div 
-          className={addSectionControlCSS(show_build_with)}
-          onClick={e=>{toggleDetailSections(show_build_with, setShowBuildWith )}}>
+          <div className={addSectionControlCSS(show_build_with)} onClick={e=>{toggleDetailSections(show_build_with, setShowBuildWith )}}>
             {setActiveSectionIcon(show_build_with)} Project Details
           </div>
              
@@ -75,7 +73,7 @@ function About(){
           in={show_build_with}
           onExited={openActiveSection}>
             <div className="content_card_layout">
-              
+
               <div className="content_card">
                 <div className="content_card_header">Website</div>
                 <div className="icons_layout">
@@ -120,8 +118,7 @@ function About(){
             <div className="author_info">
               {wrapCmpWithAnchorTag(<FaLinkedin size={'1.5em'} color={'blue'} />, "https://www.linkedin.com/in/m-domingues/")}
               {wrapCmpWithAnchorTag(<FaGithub size={'1.5em'}/>, "https://github.com/MiguellDomingues/")}
-              {wrapSentenceWordsWithDivs(" Questions? Opportunities? Suggestions? Leave a message! ")} 
-              
+              {wrapSentenceWordsWithDivs(" Questions? Opportunities? Suggestions? Leave a message! ")}           
             </div>
             <ContactForm/> 
           </div>     
