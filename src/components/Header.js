@@ -8,6 +8,7 @@ import '../styles/header.css'
 function Header({
   selected_filters_handlers, 
   filter_tags_query, 
+  history,
   show_button
 }){
 
@@ -19,7 +20,8 @@ function Header({
       <CSSTransition timeout={500} unmountOnExit classNames="toggle-mobile-modal-animation" in={is_open}>
         <Modal 
           selected_filters_handlers={selected_filters_handlers}
-          filter_tags_query={filter_tags_query} 
+          filter_tags_query={filter_tags_query}
+          history={history} 
           toggleModal={toggleModal}/>
       </CSSTransition>
       

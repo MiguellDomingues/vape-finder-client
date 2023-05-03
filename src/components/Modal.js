@@ -11,10 +11,15 @@ import '../styles/modal.css'
 
 const maxHeight = "150px" //max height of collapsible menu when its opened
 
-function Modal({selected_filters_handlers, filter_tags_query, toggleModal}){
+function Modal({
+  selected_filters_handlers, 
+  filter_tags_query, 
+  history,
+  toggleModal
+}){
 
     const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers, filter_tags_query)
-    const [areFiltersSelected,{handleRemove, handleClear, clearAll}] = usePillList(selected_filters_handlers)
+    const [ areFiltersSelected,{ handleRemove, handleClear, clearAll }] = usePillList(selected_filters_handlers)
 
     const ref = useRef();
 
@@ -27,6 +32,7 @@ function Modal({selected_filters_handlers, filter_tags_query, toggleModal}){
 
    const { category_tags, brands_tags, stores_tags } = filter_tags
    const { category, stores, brands, } = selected_filters
+   const {current_filter_name, restoreFiltersFromHistory, filterHistoryToCollapsibleMenu } = history
 
     return(<>
     <div  className="modal modal_no_select">
@@ -38,6 +44,15 @@ function Modal({selected_filters_handlers, filter_tags_query, toggleModal}){
         </div>
 
         <div className="close" onClick={e=> toggleModal()}><span><RiCloseFill/></span></div>
+      </div>
+
+      <div className="modal_layout_row">
+        <CollapsibleMenu 
+          title="History" 
+          tags={filterHistoryToCollapsibleMenu()} 
+          selected_tags={current_filter_name}
+          selectedHandler={restoreFiltersFromHistory}  
+          maxHeight={maxHeight}/>
       </div>
           
       <div className="modal_layout_row">

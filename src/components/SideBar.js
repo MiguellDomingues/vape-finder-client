@@ -43,9 +43,6 @@ function SideBar({
             selectedHandler={restoreFiltersFromHistory}  
             maxHeight="125px"/>
         
-        
-        
-
         <CollapsibleMenu 
             title="Categories" 
             tags={category_tags} 
