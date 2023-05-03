@@ -8,6 +8,7 @@ import '../styles/home.css'
 function Home({
     selected_filters_handlers,
     filter_tags_query,
+    history,
     query,
     isMobile,
 }){
@@ -23,7 +24,8 @@ function Home({
                 <div className="sidebar_flex_child">
                     <SideBar 
                         selected_filters_handlers={selected_filters_handlers}
-                        filter_tags_query={filter_tags_query}/>    
+                        filter_tags_query={filter_tags_query}
+                        history={history}/>    
                 </div>
         </CSSTransition>
 

@@ -1,29 +1,63 @@
 import { useFilters } from '../hooks/useFilters.js'
 import  usePillList  from '../hooks/usePillList.js'
 import { SortByDropDown, CollapsibleMenu, HorizontalLine, ClearFiltersButton } from './widgets.js'
-import { FILTER_KEYS } from '../utils.js'
+import { FILTER_KEYS, starting_filters } from '../utils.js'
 import { CgOptions } from 'react-icons/cg';
 
 import {useState} from 'react'
 
 import '../styles/sidebar.css'
 
-function SideBar( {selected_filters_handlers, filter_tags_query} ){
+
+function SideBar({
+    selected_filters_handlers, 
+    filter_tags_query,
+    history
+} ){
+
+    //console.log("new data: ", current_filter_name, filter_history)
+    //console.log("filter_tags_query: ", filter_tags_query)
 
     const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers, filter_tags_query)
     const [,{ handleClear, }] = usePillList(selected_filters_handlers)
 
-    const [show_options, setShowOptions] = useState(false)
+   // const [show_options, setShowOptions] = useState(false)
 
     const { category_tags, brands_tags, stores_tags } = filter_tags
     const { category, stores, brands, } = selected_filters
+    const { setAndRefetch } = selected_filters_handlers 
+    const {current_filter_name, filter_history} = history
+
+ 
+    function handleSetHistory(query_name){
+        //check ORIGINAL prev queries list to link by query name
+        const entry = filter_history.find( (entry)=> entry.query_name === query_name )
+     
+        if(entry){      
+            setAndRefetch(entry.query)
+        }else{
+            console.log("error: no txt match ")
+        }
+    }
 
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
 
     return (<div className="sidebar_container">
 
-        {/*<div className="options_icon" onClick={e=>setShowOptions(!show_options)}><CgOptions/></div>*/}
+        {/*
+        <div className="options_icon" onClick={e=>setShowOptions(!show_options)}><CgOptions/></div>
+        */}
+
+        <CollapsibleMenu 
+            title="History" 
+            tags={filter_history.map( (entry) => { return {tag_name: entry.query_name, product_count: ""}})} 
+            selected_tags={current_filter_name}
+            selectedHandler={handleSetHistory}  
+            maxHeight="125px"/>
+        
+        
+        
 
         <CollapsibleMenu 
             title="Categories" 
@@ -31,7 +65,7 @@ function SideBar( {selected_filters_handlers, filter_tags_query} ){
             selected_tags={category} 
             selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)}  
             handleClear={handleClear(FILTER_KEYS.CATEGORIES)}
-            maxHeight="150px"/>
+            maxHeight="125px"/>
 
         <div><ClearFiltersButton title="Categories" handleClear={handleClear(FILTER_KEYS.CATEGORIES)} show={category.length > 0}/></div>
       
@@ -43,7 +77,7 @@ function SideBar( {selected_filters_handlers, filter_tags_query} ){
             selected_tags={brands} 
             selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)}  
             handleClear={handleClear(FILTER_KEYS.BRANDS)}
-            maxHeight="150px"/>  
+            maxHeight="125px"/>  
 
         <div><ClearFiltersButton title="Brands" handleClear={handleClear(FILTER_KEYS.BRANDS)} show={brands.length > 0}/></div>
 
@@ -55,7 +89,7 @@ function SideBar( {selected_filters_handlers, filter_tags_query} ){
             selected_tags={stores} 
             selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)}  
             handleClear={handleClear(FILTER_KEYS.STORES)}
-            maxHeight="150px"/>
+            maxHeight="125px"/>
         
         <div><ClearFiltersButton title="Stores" handleClear={handleClear(FILTER_KEYS.STORES)} show={stores.length > 0}/></div>
 

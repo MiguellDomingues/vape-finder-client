@@ -2,6 +2,7 @@
 import { useApolloClient, useLazyQuery, useQuery } from '@apollo/client' 
 import {useState, useRef, useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive';
+import  useFilterHistory  from './useFilterHistory';
 import { GET_SORTED_PRODUCTS,GET_SEARCH_TYPES  } from '../gql/queries.js'
 
 import { starting_query, starting_filters, TIMEOUT, buildAtlasGQLQuery } from '../utils.js'
@@ -9,9 +10,24 @@ import { starting_query, starting_filters, TIMEOUT, buildAtlasGQLQuery } from '.
 function useApp() {
 
      const client = useApolloClient()  
-     const [getProducts, { loading, error, data, fetchMore }] = useLazyQuery(GET_SORTED_PRODUCTS);
+     const [current_filter_name, filter_history,{ setHistory }] = useFilterHistory()
+     
+     const [selected_filters, setFilters] = useState(starting_filters);
+      
+     console.log("selected_filters, current_filter_name, filter_history APP ", selected_filters, current_filter_name, filter_history)
+
+    const timer = useRef(null)
+      // this is a requirement for animating the vertifyage popup using the "appear" prop
+      // otherwise tcsstransnition will invoke FindDOMNode which generates warnings in strictmode
+      //const nodeRef = useRef(null)
+      //const [getProducts, { loading, error, data, fetchMore }] = useLazyQuery(GET_SORTED_PRODUCTS, { onCompleted: result => setHistory(selected_filters)});
+    const c = useLazyQuery(GET_SORTED_PRODUCTS, { onCompleted: result => setHistory(selected_filters)});
      const filter_tags_query = useQuery(GET_SEARCH_TYPES,  { variables: { query: {} } } );
      const isMobile = useMediaQuery({ minWidth: 0, maxWidth: 481 });
+
+     const [getProducts, { loading, error, data, fetchMore }] = c
+
+    // console.log("------LOOKING AT QUERY OBJ--------------", c)
 
      //run once upon app load
      useEffect(() => {
@@ -20,27 +36,17 @@ function useApp() {
         notifyOnNetworkStatusChange: true, }, 
         {fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first', })
       },[] );
-    
+
       //const { SHOW_DOB_POPUP } = env_configs
       console.log("/////// APP RERENDER ///////")
     
       //const cardScroll = useRef(null); REFS ONLY WORK WITH CLASSES (BECAUSE THEY HAVE INSTANCES?) https://reactjs.org/docs/refs-and-the-dom.html
-    
-      const [selected_filters, setFilters] = useState(starting_filters);
-      //const [show_dob_popup, setShow] = useState( (!localStorage.getItem(STORAGE_KEY) && _show_dob_popup) )
-    
-      const timer = useRef(null)
-      // this is a requirement for animating the vertifyage popup using the "appear" prop
-      // otherwise tcsstransnition will invoke FindDOMNode which generates warnings in strictmode
-      //const nodeRef = useRef(null)
 
       const setAndRefetch = (selected_filters = starting_filters) => {
 
-        const isQueryResultCached = (selected_filters) =>{
-          return client.readQuery({ query: GET_SORTED_PRODUCTS, variables: {  ...buildAtlasGQLQuery(selected_filters) } }) !== null
+        const isQueryResultCached = (_selected_filters) =>{   
+          return client.readQuery({ query: GET_SORTED_PRODUCTS, variables: {  ...buildAtlasGQLQuery(_selected_filters) } }) !== null
         }
-
-        //console.log("----CACHED????---- ", isQueryResultCached(selected_filters))
 
         const timeout = isQueryResultCached(selected_filters) ? 0 : TIMEOUT
     
@@ -52,25 +58,31 @@ function useApp() {
     
           timer.current = {time: Date.now(), time_out: setTimeout(() =>{
           console.log("EXECUTING TIMEOUT SELECTED_FILTERS: ", selected_filters)  
+
+
         //https://reactpatterns.js.org/docs/accessing-a-child-component
         //call a method on child to invoke this method
           document?.getElementById('cardContainer')?.scroll({top:0});
-    
+
           getProducts({ 
             variables: {  ...buildAtlasGQLQuery(selected_filters) } , 
             notifyOnNetworkStatusChange: true, }, 
-            {fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first', })
+            {fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first',     
+          })
     
           timer.current = null
         }, timeout)}
     }
-     
+    
+    //const selected_filters_handlers = { selected_filters, setAndRefetch } 
+    const history = { current_filter_name, filter_history, }
     const selected_filters_handlers = { selected_filters, setAndRefetch } 
     const query = {fetchMore, loading, error, data, debounced_query_counting_down: !!timer.current}
     
     return [
         selected_filters_handlers,
         filter_tags_query, 
+        history,
         query,
         isMobile,
       ]

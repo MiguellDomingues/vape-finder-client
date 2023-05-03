@@ -17,6 +17,7 @@ function App( {SHOW_DOB_POPUP} ) {
   const [
     selected_filters_handlers, 
     filter_tags_query, 
+    history,
     query, 
     isMobile] = useApp()
 
@@ -30,6 +31,7 @@ function App( {SHOW_DOB_POPUP} ) {
               <Header
                 selected_filters_handlers={selected_filters_handlers} 
                 filter_tags_query={filter_tags_query}
+                history={history}
                 show_button={isMobile && location.pathname === PAGE_URIS.HOME}/>  
             </div>
  
@@ -39,6 +41,7 @@ function App( {SHOW_DOB_POPUP} ) {
                   <Home
                   selected_filters_handlers={selected_filters_handlers}
                   filter_tags_query={filter_tags_query}
+                  history={history}
                   query={query}
                   isMobile={isMobile}/>}/>
               <Route path={PAGE_URIS.ABOUT} element={<About/>}/>                    
