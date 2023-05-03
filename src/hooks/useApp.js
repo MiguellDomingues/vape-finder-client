@@ -10,18 +10,21 @@ import { starting_query, starting_filters, TIMEOUT, buildAtlasGQLQuery } from '.
 function useApp() {
 
      const client = useApolloClient()  
-     const [current_filter_name, filter_history,{ setHistory }] = useFilterHistory()
+     const [current_filter_name, filter_history,{ setHistory, restoreFiltersFromHistory, filterHistoryToCollapsibleMenu }] = useFilterHistory(setAndRefetch) //setAndRefetch redefined as a function below
+     //DIFF BETWEEN const f = () =>{..} and function f(){...}, FUNCTION can be passed as arguments before declaration
      
      const [selected_filters, setFilters] = useState(starting_filters);
       
      console.log("selected_filters, current_filter_name, filter_history APP ", selected_filters, current_filter_name, filter_history)
 
     const timer = useRef(null)
+
+   
       // this is a requirement for animating the vertifyage popup using the "appear" prop
       // otherwise tcsstransnition will invoke FindDOMNode which generates warnings in strictmode
       //const nodeRef = useRef(null)
       //const [getProducts, { loading, error, data, fetchMore }] = useLazyQuery(GET_SORTED_PRODUCTS, { onCompleted: result => setHistory(selected_filters)});
-    const c = useLazyQuery(GET_SORTED_PRODUCTS, { onCompleted: result => setHistory(selected_filters)});
+    const c = useLazyQuery(GET_SORTED_PRODUCTS, { onCompleted: result => console.log("ON COMPLETED ROOT")});
      const filter_tags_query = useQuery(GET_SEARCH_TYPES,  { variables: { query: {} } } );
      const isMobile = useMediaQuery({ minWidth: 0, maxWidth: 481 });
 
@@ -42,7 +45,8 @@ function useApp() {
     
       //const cardScroll = useRef(null); REFS ONLY WORK WITH CLASSES (BECAUSE THEY HAVE INSTANCES?) https://reactjs.org/docs/refs-and-the-dom.html
 
-      const setAndRefetch = (selected_filters = starting_filters) => {
+      function setAndRefetch (selected_filters = starting_filters){
+      //const setAndRefetch = (selected_filters = starting_filters) => {
 
         const isQueryResultCached = (_selected_filters) =>{   
           return client.readQuery({ query: GET_SORTED_PRODUCTS, variables: {  ...buildAtlasGQLQuery(_selected_filters) } }) !== null
@@ -65,9 +69,10 @@ function useApp() {
           document?.getElementById('cardContainer')?.scroll({top:0});
 
           getProducts({ 
-            variables: {  ...buildAtlasGQLQuery(selected_filters) } , 
-            notifyOnNetworkStatusChange: true, }, 
-            {fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first',     
+              variables: {  ...buildAtlasGQLQuery(selected_filters) } , 
+              notifyOnNetworkStatusChange: true, 
+              onCompleted: result => setHistory(selected_filters)}, 
+              {fetchPolicy: 'cache-first', nextFetchPolicy: 'cache-first',     
           })
     
           timer.current = null
@@ -75,9 +80,11 @@ function useApp() {
     }
     
     //const selected_filters_handlers = { selected_filters, setAndRefetch } 
-    const history = { current_filter_name, filter_history, }
+    const history = { current_filter_name, filter_history, restoreFiltersFromHistory, filterHistoryToCollapsibleMenu}
     const selected_filters_handlers = { selected_filters, setAndRefetch } 
     const query = {fetchMore, loading, error, data, debounced_query_counting_down: !!timer.current}
+
+    //console.log(" TESTING REFERENCE TO FUNC INSIDE", setAndRefetch)
     
     return [
         selected_filters_handlers,

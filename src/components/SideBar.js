@@ -25,20 +25,7 @@ function SideBar({
 
     const { category_tags, brands_tags, stores_tags } = filter_tags
     const { category, stores, brands, } = selected_filters
-    const { setAndRefetch } = selected_filters_handlers 
-    const {current_filter_name, filter_history} = history
-
- 
-    function handleSetHistory(query_name){
-        //check ORIGINAL prev queries list to link by query name
-        const entry = filter_history.find( (entry)=> entry.query_name === query_name )
-     
-        if(entry){      
-            setAndRefetch(entry.query)
-        }else{
-            console.log("error: no txt match ")
-        }
-    }
+    const {current_filter_name, restoreFiltersFromHistory, filterHistoryToCollapsibleMenu } = history
 
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
@@ -51,9 +38,9 @@ function SideBar({
 
         <CollapsibleMenu 
             title="History" 
-            tags={filter_history.map( (entry) => { return {tag_name: entry.query_name, product_count: ""}})} 
+            tags={filterHistoryToCollapsibleMenu()} 
             selected_tags={current_filter_name}
-            selectedHandler={handleSetHistory}  
+            selectedHandler={restoreFiltersFromHistory}  
             maxHeight="125px"/>
         
         

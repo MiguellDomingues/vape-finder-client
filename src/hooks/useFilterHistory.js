@@ -1,14 +1,28 @@
 import {useState} from 'react'
 import { starting_filters, } from '../utils.js'
 
-function useFilterHistory(){
+function useFilterHistory(setAndRefetch){
 
-    const [current_filter_name, setCurrentFilterName] = useState(["0"]);
-    const [filter_history, setFilterHistory] = useState([{query_name: "0", query: starting_filters}]);
+  //console.log(" TESTING REFERENCE TO FUNC ", setAndRefetch)
 
-    function setHistory(selected_filters){
+  const [current_filter_name, setCurrentFilterName] = useState(["0"]);
+  const [filter_history, setFilterHistory] = useState([{query_name: "0", query: starting_filters}]);
+
+  function filterHistoryToCollapsibleMenu(){
+    return filter_history.map( (entry) => { return {tag_name: entry.query_name, product_count: ""}})
+  }
+
+  function restoreFiltersFromHistory(query_name){
+    //check ORIGINAL prev queries list to link by query name
+    const entry = filter_history.find( (entry)=> entry.query_name === query_name )
+   
+    if(entry)  setAndRefetch(entry.query)
+    else       console.log("////////ERROR IN useFilterHistory/RESTOREFILTERSFROMHISTORY: no matching filter found /////////////")    
+  }
+
+  function setHistory(selected_filters){
        
-          const searchFilterHistory = (filters) =>{
+    const searchFilterHistory = (filters) =>{
             const toStringArr = (filters) => [...filters.category, ...filters.brands, ...filters.stores, filters.sort_by].sort()
 
             const compareFilters = (target) => 
@@ -24,20 +38,20 @@ function useFilterHistory(){
             }
 
             return filter_history.find(compareFilters(toStringArr(filters)))
-          }
-
-          const filter_history_entry = searchFilterHistory(selected_filters)
-
-          if(filter_history_entry){
-            setCurrentFilterName([filter_history_entry.query_name]) 
-          }else{
-            const query_name = (filter_history.length).toString()                                     //create the query name
-            setFilterHistory([...filter_history, {query_name: query_name, query: selected_filters}])  //shallow copy and update history list
-            setCurrentFilterName([query_name])                                                        //update current filter name
-         }
     }
 
-    return [current_filter_name, filter_history,{ setHistory }]
+    const filter_history_entry = searchFilterHistory(selected_filters)
+
+    if(filter_history_entry){
+      setCurrentFilterName([filter_history_entry.query_name])                                   //set current 
+    }else{
+      const query_name = (filter_history.length).toString()                                     //create the query name
+      setFilterHistory([...filter_history, {query_name: query_name, query: selected_filters}])  //shallow copy and update history list
+      setCurrentFilterName([query_name])                                                        //update current filter name
+    }
+  }
+
+  return [current_filter_name, filter_history,{ setHistory, restoreFiltersFromHistory, filterHistoryToCollapsibleMenu }]
 }
 
 export default useFilterHistory
