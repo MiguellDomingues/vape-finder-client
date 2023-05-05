@@ -413,8 +413,9 @@
   width: 100%;
   border-radius: 8px;
   font-family: system-ui;
-  border-color: none;
+  border: none;
   font-size: 16px;
+  padding: 5px;
   
 }
 

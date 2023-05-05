@@ -1,7 +1,7 @@
-import { useFilters } from '../hooks/useFilters.js'
+import  useFilters  from '../hooks/useFilters.js'
 import  usePillList  from '../hooks/usePillList.js'
 import useOnClickOutside from '../hooks/useOnClickOutside.js'
-import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton, ClearAllFiltersButton } from './widgets.js'
+import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton, ClearAllFiltersButton, TextSearch } from './widgets.js'
 import { FILTER_KEYS } from '../utils.js'
 import { RiCloseFill } from 'react-icons/ri';
 
@@ -9,7 +9,7 @@ import { useRef } from 'react'
 
 import '../styles/modal.css'
 
-const maxHeight = "150px" //max height of collapsible menu when its opened
+const maxHeight = "120px" //max height of collapsible menu when its opened
 
 function Modal({
   selected_filters_handlers, 
@@ -18,7 +18,7 @@ function Modal({
   toggleModal
 }){
 
-    const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers, filter_tags_query)
+    const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected, searchTags }] = useFilters(selected_filters_handlers, filter_tags_query)
     const [ areFiltersSelected,{ handleRemove, handleClear, clearAll }] = usePillList(selected_filters_handlers)
 
     const ref = useRef();
@@ -47,6 +47,10 @@ function Modal({
       </div>
 
       <div className="modal_layout_row">
+        <TextSearch searchTags={searchTags} selectedHandler={onFilterTagSelected} selected_tags={selected_filters}/>
+      </div>   
+
+      <div className="modal_layout_row">
         <CollapsibleMenu 
           title="History" 
           tags={filterHistoryToCollapsibleMenu()} 
@@ -54,7 +58,7 @@ function Modal({
           selectedHandler={restoreFiltersFromHistory}  
           maxHeight={maxHeight}/>
       </div>
-          
+
       <div className="modal_layout_row">
         <CollapsibleMenu 
         title="Categories" 
