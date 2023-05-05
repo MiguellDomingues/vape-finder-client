@@ -1,11 +1,12 @@
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {SORT_TYPE} from '../utils'
+import useOnClickOutside from '../hooks/useOnClickOutside.js'
 import '../styles/widgets.css' 
 
 import { RiCloseFill } from 'react-icons/ri';
 import { FaSearch } from 'react-icons/fa';
 
-import {useState} from 'react'
+import {useState, useRef, useEffect} from 'react'
 
 ////////////////////////////SORT BY DROPDOWN///////////////////////////////////
 
@@ -67,6 +68,21 @@ export function CollapsibleMenu( {
 
     const isTagSelected = (tag, arr) => arr.includes(tag) 
 
+    /*
+    const handleContextMenu = (e) => {e.preventDefault(); console.log("sdfdsfd")}
+
+    const ref = useRef(null)
+
+    useEffect(() => {
+        console.log("USE EFFECT CM")
+        ref.current.addEventListener("contextmenu", handleContextMenu);
+        const _ref = ref.current
+        return () => {
+
+          _ref.removeEventListener("contextmenu", handleContextMenu);
+        };
+      });
+*/
     //move the selected tags to the top of the dropdown list
     //const sortedtags = [ ...tags.filter( t=> selected_tags.includes(t.tag_name) )]
                       //  .concat([...tags.filter( t=> !selected_tags.includes(t.tag_name)) ])
@@ -175,6 +191,62 @@ export function AnimatedTabButton({
     </div>)
 }
 
+/* *************text search container************** */
+
+const input_placeholder_txt = 'What are you looking for?'
+
+export function TextSearch({
+    searchTags,
+    selectedHandler,
+    selected_tags: {category, stores, brands} //inline deconstruct selected_tags props
+}){
+    //copy category/stores/brands strings into a single arr
+    const selected_tags = [...category, ...stores, ...brands] 
+
+    const [text, setText] = useState("")
+    const [matches, setMatches] = useState([])
+    const [show_dropdown, setShowDropdown] = useState(false)
+
+    const dropdown_ref = useRef(null)
+
+    useOnClickOutside(dropdown_ref, () => {setShowDropdown(false)}); 
+
+    const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected text_search_content_row" : "text_search_content_row"
+
+    console.log("TRIE SEARCH matches ", matches)
+
+    const onChange = e => {
+        const search_result = searchTags(e.target.value)
+        console.log("TRIE SEARCH inside TEXTSEARCH ", search_result)
+        setMatches([...search_result])
+        setText(e.target.value)
+        setShowDropdown(e.target.value.length > 0)
+    }
+
+    return(<>
+        <div ref={dropdown_ref} className="text_search_container">
+            <input 
+                type="text"
+                autoComplete="off"
+                onFocus={e=> text.length > 0 && setShowDropdown(true)} //when the input is clicked on, show dropdown if theres at least 1 letter
+                onChange={onChange}
+                maxLength="8"
+                placeholder={input_placeholder_txt}
+                className="text_search_input"
+                value={text}/> 
+            {show_dropdown && 
+                <div className="text_search_content">
+                    { matches.length > 0 ? matches.map(tag=> //if theres at least a single word match, show dropdown
+                        <div key={tag.tag_name} 
+                            className={selectedTagsBGC(tag.tag_name, selected_tags)}
+                            onClick={e=>selectedHandler(tag.type)(tag.tag_name)}>{tag.tag_name}</div>
+                    ) : <div className="text_search_content_row">No Results found!</div>}
+                </div>}  
+        </div>
+
+    </>)
+}
+
 /* *************copy/pasted SVGs************** */
 
 export function CheerioJSIcon(){
@@ -203,7 +275,11 @@ export function EmailJSIcon(){
     </svg>)
 }
   
-/* *************ICON CARD************** */
+
+//////////////////////////CURRENTLY UNUSED//////////////////////////////////////
+/*
+
+ *************ICON CARD************** 
 
 export function IconCard({
     card_title = "",
@@ -212,9 +288,6 @@ export function IconCard({
 }){
     return(<></>)
 }
-
-//////////////////////////CURRENTLY UNUSED//////////////////////////////////////
-/*
 
 export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
 

@@ -291,6 +291,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   transition: background-color .25s ease-out, color .25s ease-out;
   cursor: pointer;
+  z-index: 0;
 }
 
 .clear_all_filters_btn:hover{
@@ -364,6 +365,57 @@
 .tab-button-animation-exit-active {
   opacity: 0;
   transition: opacity 500ms;
+}
+
+/* TextSearch */
+
+.text_search_container{
+  display: flex;
+  position: relative;
+  column-gap: 20px;
+  font-family: system-ui;
+  min-width: 100%;
+}
+
+.text_search_content {
+  top:100%;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: white;
+  min-width: 100%;
+  max-height: 125px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  overflow-y:auto;
+  z-index: 1;
+}
+
+.text_search_content::-webkit-scrollbar {
+  width: 8px;
+  background-color: #F5F5F5;
+}
+
+.text_search_content::-webkit-scrollbar-thumb {
+  background-color: #A9A9A9;
+  border-radius: 10px;
+}
+
+.text_search_content_row{
+  display: flex;
+  /*min-width: 90%;use this to place items on start/ends of container*/
+  padding: 5px;
+  border-radius: 10px;
+  /*margin-right: 3px;*/
+}
+
+.text_search_input{
+  width: 100%;
+  border-radius: 8px;
+  font-family: system-ui;
+  border-color: none;
+  font-size: 16px;
+  
 }
 
   /*

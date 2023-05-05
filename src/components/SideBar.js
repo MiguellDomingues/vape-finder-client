@@ -1,6 +1,6 @@
-import { useFilters } from '../hooks/useFilters.js'
+import  useFilters  from '../hooks/useFilters.js'
 import  usePillList  from '../hooks/usePillList.js'
-import { SortByDropDown, CollapsibleMenu, HorizontalLine, ClearFiltersButton } from './widgets.js'
+import { SortByDropDown, CollapsibleMenu, HorizontalLine, ClearFiltersButton, TextSearch } from './widgets.js'
 import { FILTER_KEYS, starting_filters } from '../utils.js'
 import { CgOptions } from 'react-icons/cg';
 
@@ -8,17 +8,13 @@ import {useState} from 'react'
 
 import '../styles/sidebar.css'
 
-
 function SideBar({
     selected_filters_handlers, 
     filter_tags_query,
     history
 } ){
 
-    //console.log("new data: ", current_filter_name, filter_history)
-    //console.log("filter_tags_query: ", filter_tags_query)
-
-    const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected }] = useFilters(selected_filters_handlers, filter_tags_query)
+    const [ filter_tags,selected_filters,loading,error,{ onFilterTagSelected, searchTags }] = useFilters(selected_filters_handlers, filter_tags_query)
     const [,{ handleClear, }] = usePillList(selected_filters_handlers)
 
    // const [show_options, setShowOptions] = useState(false)
@@ -36,6 +32,8 @@ function SideBar({
         <div className="options_icon" onClick={e=>setShowOptions(!show_options)}><CgOptions/></div>
         */}
 
+        <TextSearch searchTags={searchTags} selectedHandler={onFilterTagSelected} selected_tags={selected_filters}/>
+
         <CollapsibleMenu 
             title="History" 
             tags={filterHistoryToCollapsibleMenu()} 
@@ -48,7 +46,6 @@ function SideBar({
             tags={category_tags} 
             selected_tags={category} 
             selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)}  
-            handleClear={handleClear(FILTER_KEYS.CATEGORIES)}
             maxHeight="125px"/>
 
         <div><ClearFiltersButton title="Categories" handleClear={handleClear(FILTER_KEYS.CATEGORIES)} show={category.length > 0}/></div>
@@ -60,7 +57,6 @@ function SideBar({
             tags={brands_tags} 
             selected_tags={brands} 
             selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)}  
-            handleClear={handleClear(FILTER_KEYS.BRANDS)}
             maxHeight="125px"/>  
 
         <div><ClearFiltersButton title="Brands" handleClear={handleClear(FILTER_KEYS.BRANDS)} show={brands.length > 0}/></div>
@@ -72,7 +68,6 @@ function SideBar({
             tags={stores_tags} 
             selected_tags={stores} 
             selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)}  
-            handleClear={handleClear(FILTER_KEYS.STORES)}
             maxHeight="125px"/>
         
         <div><ClearFiltersButton title="Stores" handleClear={handleClear(FILTER_KEYS.STORES)} show={stores.length > 0}/></div>
@@ -80,6 +75,8 @@ function SideBar({
         <HorizontalLine/>
 
         <SortByDropDown selected_filters_handlers={selected_filters_handlers}/>
+
+        
 
         {/*show_options && <>
             <HorizontalLine/>

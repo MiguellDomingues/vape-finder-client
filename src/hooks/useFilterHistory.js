@@ -43,10 +43,10 @@ function useFilterHistory(setAndRefetch){
     const filter_history_entry = searchFilterHistory(selected_filters)
 
     if(filter_history_entry){
-      setCurrentFilterName([filter_history_entry.query_name])                                   //set current 
+      setCurrentFilterName([filter_history_entry.query_name])                                   //set current filter name
     }else{
       const query_name = (filter_history.length).toString()                                     //create the query name
-      setFilterHistory([...filter_history, {query_name: query_name, query: selected_filters}])  //shallow copy and update history list
+      setFilterHistory([{query_name: query_name, query: selected_filters}, ...filter_history])  //shallow copy and add new history to head of list
       setCurrentFilterName([query_name])                                                        //update current filter name
     }
   }

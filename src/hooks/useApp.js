@@ -15,7 +15,7 @@ function useApp() {
      
      const [selected_filters, setFilters] = useState(starting_filters);
       
-     console.log("selected_filters, current_filter_name, filter_history APP ", selected_filters, current_filter_name, filter_history)
+    // console.log("selected_filters, current_filter_name, filter_history APP ", selected_filters, current_filter_name, filter_history)
 
     const timer = useRef(null)
 
@@ -24,7 +24,8 @@ function useApp() {
       // otherwise tcsstransnition will invoke FindDOMNode which generates warnings in strictmode
       //const nodeRef = useRef(null)
       //const [getProducts, { loading, error, data, fetchMore }] = useLazyQuery(GET_SORTED_PRODUCTS, { onCompleted: result => setHistory(selected_filters)});
-    const c = useLazyQuery(GET_SORTED_PRODUCTS, { onCompleted: result => console.log("ON COMPLETED ROOT")});
+      // { onCompleted: result => console.log("ON COMPLETED ROOT")}
+    const c = useLazyQuery(GET_SORTED_PRODUCTS,{});
      const filter_tags_query = useQuery(GET_SEARCH_TYPES,  { variables: { query: {} } } );
      const isMobile = useMediaQuery({ minWidth: 0, maxWidth: 481 });
 
