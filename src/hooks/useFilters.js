@@ -4,7 +4,8 @@ import { useMemo } from 'react'
 const MIN_ITEM_COUNT = 5
 
 function useFilters( 
-    { selected_filters, setAndRefetch },{ data, loading, error } 
+    { selected_filters, setAndRefetch }, //inline destructuring
+    { data, loading, error } 
 ){
 
     const filter_tags = useMemo(() => {
