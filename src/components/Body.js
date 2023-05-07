@@ -25,12 +25,12 @@ function Body({
         
         <div className="pill_list">        
             <ClearAllFiltersButton title={"Clear All Filters"} clearAll={clearAll} show={!isMobile && areFiltersSelected}/>  
-            <PillList pills={category} filter_key={FILTER_KEYS.CATEGORIES} handleRemove={!isMobile ? handleRemove : null} />   
-            <PillList pills={brands} filter_key={FILTER_KEYS.BRANDS} handleRemove={!isMobile ? handleRemove : null} />
-            <PillList pills={stores} filter_key={FILTER_KEYS.STORES} handleRemove={!isMobile ? handleRemove : null} />
+            <PillList pills={category}  handleRemove={!isMobile ? handleRemove(FILTER_KEYS.CATEGORIES) : null} />   
+            <PillList pills={brands}  handleRemove={!isMobile ? handleRemove(FILTER_KEYS.BRANDS) : null} />
+            <PillList pills={stores}  handleRemove={!isMobile ? handleRemove(FILTER_KEYS.STORES) : null} />
         </div>
         
-            <CardList query={query} selected_filters_handlers={selected_filters_handlers}/>
+        <CardList query={query} selected_filters_handlers={selected_filters_handlers}/>
         
              
     </div>)

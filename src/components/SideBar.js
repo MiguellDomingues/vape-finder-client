@@ -29,10 +29,10 @@ function SideBar({
     return (<div className="sidebar_container">
 
         {/*
-        <div className="options_icon" onClick={e=>setShowOptions(!show_options)}><CgOptions/></div>
+        <div className="options_icon" onClick={e=>setShowOptions(!show_options)}><CgOptions/></div> selectedHandler={onFilterTagSelected}
         */}
 
-        <TextSearch searchTags={searchTags} selectedHandler={onFilterTagSelected} selected_tags={selected_filters}/>
+        <TextSearch searchTagsHandler={searchTags}  selectedHandler={onFilterTagSelected}  selected_tags={selected_filters} pill_view={true}/>
 
         <CollapsibleMenu 
             title="History" 
@@ -46,7 +46,6 @@ function SideBar({
             tags={category_tags} 
             selected_tags={category} 
             selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)}  
-            //clearBtn={<ClearFiltersButton title="Categories" handleClear={handleClear(FILTER_KEYS.CATEGORIES)} show={category.length > 0}/>}
             maxHeight="125px"/>
 
         {<div><ClearFiltersButton title="Categories" handleClear={handleClear(FILTER_KEYS.CATEGORIES)} show={category.length > 0}/></div>
@@ -59,7 +58,6 @@ function SideBar({
             tags={brands_tags} 
             selected_tags={brands} 
             selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)}  
-            //clearBtn={<ClearFiltersButton title="Brands" handleClear={handleClear(FILTER_KEYS.BRANDS)} show={brands.length > 0}/>}
             maxHeight="125px"/>  
 
         {<div><ClearFiltersButton title="Brands" handleClear={handleClear(FILTER_KEYS.BRANDS)} show={brands.length > 0}/></div>
@@ -72,7 +70,6 @@ function SideBar({
             tags={stores_tags} 
             selected_tags={stores} 
             selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)}
-            //clearBtn={<ClearFiltersButton title="Stores" handleClear={handleClear(FILTER_KEYS.STORES)} show={stores.length > 0}/>}  
             maxHeight="125px"/>
         
         {<div><ClearFiltersButton title="Stores" handleClear={handleClear(FILTER_KEYS.STORES)} show={stores.length > 0}/></div>

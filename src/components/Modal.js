@@ -47,7 +47,7 @@ function Modal({
       </div>
 
       <div className="modal_layout_row">
-        <TextSearch searchTags={searchTags} selectedHandler={onFilterTagSelected} selected_tags={selected_filters}/>
+        <TextSearch searchTagsHandler={searchTags} selectedHandler={onFilterTagSelected} selected_tags={selected_filters} pill_view={true}/>
       </div>   
 
       <div className="modal_layout_row">
@@ -70,7 +70,7 @@ function Modal({
 
       <div className="modal_pill_list">
         <ClearFiltersButton handleClear={handleClear(FILTER_KEYS.CATEGORIES)} show={category.length > 0}/>  
-        <PillList pills={category} filter_key={FILTER_KEYS.CATEGORIES} handleRemove={handleRemove} />
+        <PillList pills={category} handleRemove={handleRemove(FILTER_KEYS.CATEGORIES)} />
       </div>
 
       <HorizontalLine/>
@@ -86,7 +86,7 @@ function Modal({
       
       <div className="modal_pill_list">
         <ClearFiltersButton handleClear={handleClear(FILTER_KEYS.BRANDS)} show={brands.length > 0}/>
-        <PillList pills={brands} filter_key={FILTER_KEYS.BRANDS} handleRemove={handleRemove} />
+        <PillList pills={brands} handleRemove={handleRemove(FILTER_KEYS.BRANDS)} />
       </div>
 
       <HorizontalLine/>
@@ -102,7 +102,7 @@ function Modal({
 
       <div className="modal_pill_list">
         <ClearFiltersButton handleClear={handleClear(FILTER_KEYS.STORES)} show={stores.length > 0}/>
-        <PillList pills={stores} filter_key={FILTER_KEYS.STORES} handleRemove={handleRemove} />
+        <PillList pills={stores} handleRemove={handleRemove(FILTER_KEYS.STORES)} />
       </div>
 
       <HorizontalLine/>
