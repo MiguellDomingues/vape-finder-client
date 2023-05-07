@@ -20,6 +20,7 @@
     padding-left: 10px;
     padding-right: 5px;
     border-radius: 10px;
+   /* background-color: lightblue; */
     background-color: rgb(31, 188, 186);
   }
 
@@ -29,6 +30,18 @@
 
   .pill_str{
     color: white;
+    /*color: black;  */
+  }
+
+  .pill_container_selected{
+    /*background-color: rgb(31, 188, 186);*/
+    background-color: lightblue;
+
+  }
+
+  .pill_str_selected{
+    /*color: white;*/
+    color: black;
   }
 
   .pill_clear_tags_btn{
@@ -379,16 +392,28 @@
 
 .text_search_content {
   top:100%;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  background-color: white;
   min-width: 100%;
   max-height: 125px;
+  position: absolute;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  /*flex-flow: row wrap;*/
+  /*flex-flow: column nowrap;*/
+  
+  background-color: white;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   border-radius: 10px;
-  overflow-y:auto;
-  z-index: 1;
+  overflow-y:auto; 
+}
+
+.text_search_pill_layout{
+  flex-flow: row wrap;
+}
+
+.text_search_list_layout{
+  flex-flow: column nowrap;
 }
 
 .text_search_content::-webkit-scrollbar {
@@ -411,12 +436,15 @@
 
 .text_search_input{
   width: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
   font-family: system-ui;
   border: none;
   font-size: 16px;
   padding: 5px;
-  
+}
+
+.text_search_input_center{
+  text-align: center;
 }
 
   /*

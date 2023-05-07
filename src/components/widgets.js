@@ -1,12 +1,12 @@
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import {SORT_TYPE} from '../utils'
+import {SORT_TYPE, FILTER_KEYS} from '../utils'
 import useOnClickOutside from '../hooks/useOnClickOutside.js'
 import '../styles/widgets.css' 
 
 import { RiCloseFill } from 'react-icons/ri';
 import { FaSearch } from 'react-icons/fa';
 
-import {useState, useRef, useEffect} from 'react'
+import {useState, useRef, useEffect,  useMemo } from 'react'
 
 ////////////////////////////SORT BY DROPDOWN///////////////////////////////////
 
@@ -31,28 +31,93 @@ export function SortByDropDown({
         </select>
     </div>)
 }
-
+/*
+var props = {
+  value: 'foo',
+  ...(condition && { disabled: true })
+};
+*/
 export function PillList({
     pills, 
-    filter_key, 
     handleRemove, 
+    handleClick,
+    selected_pills,
 }){
+
+    function getPillCmp(handleRemove, handleSelect, selected_pills){
+
+        if(handleRemove){
+            return (str) => <RemoveablePill key={str} str={str} removePill={handleRemove}/>
+        }else if(handleSelect && selected_pills){
+            return (str) => <SelectablePill key={str} str={str} selectPill={handleSelect} is_selected={selected_pills.includes(str)}/>
+        }else{
+            return (str) => <PlainPill key={str} str={str} />
+        }
+    }
+
+    const pill_to_display = getPillCmp(handleRemove, handleClick, selected_pills)
+   // const pill_to_display = getPillCmp(filter_key, handleRemove, handleClick)
+
+    //console.log("DISPLAYING PILL:" , pill_to_display)
+
+    
     return(<>
         <TransitionGroup
             //wrapped jsx added to dom without any outer elements; adds outer div by default
             component={null}>
             {pills.map( (str)=> 
             <CSSTransition key={str} timeout={500} classNames="pill-animation">
-              <Pill key={str} str={str} removePill={handleRemove && handleRemove(filter_key)}/>
+              {pill_to_display(str)
+      /*
+    <Pill key={str} str={str} //if removePill and/or selectPill props are non-falsey, add them to Pill props
+              {...(handleRemove ? {removePill: handleRemove(filter_key)} : {})} 
+              {...(handleClick ? {selectPill: handleClick(filter_key)} : {})}/>
+    */
+              }
           </CSSTransition>)}
         </TransitionGroup>
     </>);
 }
+
+/*
+function Pill({
+    str, 
+    removePill,
+    selectPill
+}){ 
+    return (
+        <div className="pill pill_container_font" {...(selectPill ? {onClick: e=>selectPill(str)} : {})}> 
+            <span className="pill_str">{str}</span>&nbsp;
+            {removePill && <span className="pill_close_container" onClick={ e => removePill(str) }><RiCloseFill/></span>}
+        </div>); 
+}
+*/
+
+function PlainPill({str}){ 
+    return (<div className="pill pill_container_font"> <span className="pill_str">{str}</span>&nbsp;</div>); 
+}
   
-function Pill( {str, removePill} ) { 
-    return (<div className="pill pill_container_font"> <span className="pill_str">{str}</span>&nbsp;
-        {removePill && <span className="pill_close_container" onClick={ e => removePill(str) }><RiCloseFill/></span>}
-</div>); }
+function RemoveablePill({
+    str, 
+    removePill,
+}){ 
+    return (
+        <div className="pill pill_container_font pill_container_selected"> 
+            <span className="pill_str pill_str_selected">{str}</span>&nbsp;
+            <span className="pill_close_container" onClick={ e => removePill(str) }><RiCloseFill/></span>
+        </div>); 
+}
+
+function SelectablePill({
+    str, 
+    selectPill,
+    is_selected, //add css to select/deselect pill
+}){ 
+    return (
+        <div className={`pill pill_container_font ${is_selected ? `pill_container_selected` : ''}`} onClick={ e=>selectPill(str)}> 
+            <span className={`pill_str ${is_selected ? `pill_str_selected` : ''}`}>{str}</span>&nbsp;
+        </div>); 
+}
 
 //////////////////////////////////NEW DROPDOWN MENU//////////////////////////////////////////////
 
@@ -60,7 +125,8 @@ export function CollapsibleMenu( {
     title         = "", 
     tags          = [], 
     selected_tags = [], 
-    selectedHandler, 
+    selectedHandler,
+    clearBtn,
     maxHeight = "100px"
 } ){
 
@@ -91,11 +157,13 @@ export function CollapsibleMenu( {
         target.classList.toggle("active");
         let content = target.nextElementSibling;
         content.style.maxHeight = content.style.maxHeight ? null : maxHeight//"100px"
-    }
+    }//{!!clearBtn && <div className="content-row">{clearBtn}</div>}
 
     return(<>
     <button className="collapsible" onClick={e=>toggleMenu(e.target)}>{title}</button>
     <div className="content">
+        {//!!clearBtn && clearBtn
+        }
         {tags.map( (tag, idx)=>
                 <div className={selectedTagsBGC(tag.tag_name, selected_tags)}
                     key={idx} 
@@ -195,56 +263,103 @@ export function AnimatedTabButton({
 
 const input_placeholder_txt = 'What are you looking for?'
 
+//i feel like when user searches for tags using txt searching, the debounce time should be zero (instant query)
 export function TextSearch({
-    searchTags,
-    selectedHandler,
-    selected_tags: {category, stores, brands} //inline deconstruct selected_tags props
+    searchTagsHandler,
+    selectedHandler, //= ()=>{},
+    selected_tags,
+   // selected_tags: {category, stores, brands}, //inline deconstruct selected_tags props
+    pill_view,
+    //...(value && { disabled: true }),
 }){
-    //copy category/stores/brands strings into a single arr
-    const selected_tags = [...category, ...stores, ...brands] 
-
+   
     const [text, setText] = useState("")
     const [matches, setMatches] = useState([])
     const [show_dropdown, setShowDropdown] = useState(false)
 
     const dropdown_ref = useRef(null)
 
-    useOnClickOutside(dropdown_ref, () => {setShowDropdown(false)}); 
+    useOnClickOutside(dropdown_ref, () => {setShowDropdown(false)});
+    
+    const getDropDownViewCSS = (is_pill_view) => is_pill_view ? "text_search_pill_layout" : "text_search_list_layout"
 
-    const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected text_search_content_row" : "text_search_content_row"
-
-    console.log("TRIE SEARCH matches ", matches)
-
+    const getDropDownViewCmp = (is_pill_view, {...props}) => is_pill_view ? <PillDropDownView {...props} /> : <ListDropDownView {...props} />
+    
     const onChange = e => {
-        const search_result = searchTags(e.target.value)
-        console.log("TRIE SEARCH inside TEXTSEARCH ", search_result)
-        setMatches([...search_result])
+
         setText(e.target.value)
-        setShowDropdown(e.target.value.length > 0)
+
+        if(e.target.value.length > 0){
+            const search_result = searchTagsHandler(e.target.value)
+            console.log("TRIE SEARCH inside TEXTSEARCH ", search_result)
+            setMatches([...search_result])
+            setShowDropdown(true)
+        }else{
+            setShowDropdown(false)
+        }
+
+        //const search_result = searchTagsHandler(e.target.value)
+       // console.log("TRIE SEARCH inside TEXTSEARCH ", search_result)
+       // setMatches([...search_result])
+       // setText(e.target.value)
+       // setShowDropdown(e.target.value.length > 0)
     }
+
+
 
     return(<>
         <div ref={dropdown_ref} className="text_search_container">
             <input 
                 type="text"
-                autoComplete="off"
+                autoComplete="off" // add debouncing
                 onFocus={e=> text.length > 0 && setShowDropdown(true)} //when the input is clicked on, show dropdown if theres at least 1 letter
                 onChange={onChange}
                 maxLength="8"
                 placeholder={input_placeholder_txt}
-                className="text_search_input"
+                className={`text_search_input`} //${!show_dropdown ? ` text_search_input_center` : ``}
                 value={text}/> 
             {show_dropdown && 
-                <div className="text_search_content">
-                    { matches.length > 0 ? matches.map(tag=> //if theres at least a single word match, show dropdown
-                        <div key={tag.tag_name} 
-                            className={selectedTagsBGC(tag.tag_name, selected_tags)}
-                            onClick={e=>selectedHandler(tag.type)(tag.tag_name)}>{tag.tag_name}</div>
-                    ) : <div className="text_search_content_row">No Results found!</div>}
+                <div className={`text_search_content ${getDropDownViewCSS(pill_view)}`}>
+                    { matches.length > 0 ? getDropDownViewCmp(pill_view, {matches, selected_tags, selectedHandler})        
+                    : <div className="text_search_content_row">No Results found!</div>}
                 </div>}  
         </div>
 
     </>)
+}
+//////////////////////////////
+
+function PillDropDownView({
+    matches, 
+    selected_tags, 
+    selected_tags: {category, stores, brands},
+    selectedHandler
+}){
+    console.log("PILLDROPDOWN RERENDER: ", selected_tags)
+    const filterMatchesByKey = (key, matches) => matches.filter( tag => tag.type === key).map(tag=>tag.tag_name)
+
+    return(<>
+        <PillList pills={filterMatchesByKey(FILTER_KEYS.CATEGORIES, matches)} handleClick={selectedHandler(FILTER_KEYS.CATEGORIES)} selected_pills={category}/>   
+        <PillList pills={filterMatchesByKey(FILTER_KEYS.BRANDS, matches)} handleClick={selectedHandler(FILTER_KEYS.BRANDS)} selected_pills={brands}/>
+        <PillList pills={filterMatchesByKey( FILTER_KEYS.STORES, matches)} handleClick={selectedHandler(FILTER_KEYS.STORES)} selected_pills={stores}/>
+    </>)
+}
+
+/////////////////////////////////
+
+function ListDropDownView({
+    matches, 
+    //selected_tags, 
+    selected_tags: {category, stores, brands},
+    selectedHandler
+}){
+    const selected_tags = [...category, ...stores, ...brands] 
+    const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected text_search_content_row" : "text_search_content_row"
+
+    return (matches.map(tag=> //if theres at least a single word match, show dropdown
+    <div key={tag.tag_name} 
+        className={selectedTagsBGC(tag.tag_name, selected_tags)}
+        onClick={e=>selectedHandler(tag.type)(tag.tag_name)}>{tag.tag_name}</div>))
 }
 
 /* *************copy/pasted SVGs************** */
