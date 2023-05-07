@@ -1,6 +1,7 @@
 import  useFilters  from '../hooks/useFilters.js'
 import  usePillList  from '../hooks/usePillList.js'
-import { SortByDropDown, CollapsibleMenu, HorizontalLine, ClearFiltersButton, TextSearch } from './widgets.js'
+import TextSearch from './TextSearch.js'
+import { SortByDropDown, CollapsibleMenu, HorizontalLine, ClearFiltersButton, } from './widgets.js'
 import { FILTER_KEYS, starting_filters } from '../utils.js'
 import { CgOptions } from 'react-icons/cg';
 
@@ -32,7 +33,7 @@ function SideBar({
         <div className="options_icon" onClick={e=>setShowOptions(!show_options)}><CgOptions/></div> selectedHandler={onFilterTagSelected}
         */}
 
-        <TextSearch searchTagsHandler={searchTags}  selectedHandler={onFilterTagSelected}  selected_tags={selected_filters} pill_view={true}/>
+        <TextSearch searchTagsHandler={searchTags}  selectedHandler={onFilterTagSelected}  selected_tags={selected_filters} pill_view={false}/>
 
         <CollapsibleMenu 
             title="History" 

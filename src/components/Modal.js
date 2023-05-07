@@ -1,7 +1,8 @@
 import  useFilters  from '../hooks/useFilters.js'
 import  usePillList  from '../hooks/usePillList.js'
 import useOnClickOutside from '../hooks/useOnClickOutside.js'
-import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton, ClearAllFiltersButton, TextSearch } from './widgets.js'
+import TextSearch from './TextSearch.js'
+import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton, ClearAllFiltersButton } from './widgets.js'
 import { FILTER_KEYS } from '../utils.js'
 import { RiCloseFill } from 'react-icons/ri';
 
