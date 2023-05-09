@@ -83,7 +83,7 @@ to customize scrollbars in those enviroments, use SimpleScroll, an npm package
   }
  
 .spinner_middle{
-  position: absolute;
+  position: fixed;
   z-index: 1;
   transform: translate(-4%, 450%);
 }
