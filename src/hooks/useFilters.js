@@ -1,5 +1,6 @@
 import TrieSearch from 'trie-search';
 import { useMemo } from 'react'
+import { APOLLO_GQL_KEYS } from '../utils'
 
 const MIN_ITEM_COUNT = 5
 
@@ -9,7 +10,7 @@ function useFilters(
 ){
 
     const filter_tags = useMemo(() => {
-        return !loading && !error ? { ...parseFilterTags(data.tagmetadata) } : { category_tags: [], brands_tags: [], stores_tags:[] } 
+        return !loading && !error ? { ...parseFilterTags(data[APOLLO_GQL_KEYS.TAG_METADATA]) } : { category_tags: [], brands_tags: [], stores_tags:[] } 
     }, [loading ,error, data]);
 
     const trie = useMemo(() => {
@@ -17,17 +18,17 @@ function useFilters(
     }, [filter_tags]);
 
 
-
     function initTrieSearch(filter_tags){
 
         const trie  = new TrieSearch("tag_name");
-        //console.log("MY NEW TRIE ON A REF ", filter_tags)
 
+        //add an entry to the trie, splitting the type 
         const initTrieByTagType = (type) => (tag) => trie.add({tag_name: tag.tag_name, type: type.split("_")[0]})
 
-        //for each filter tag key, add the filter tags tag_names to trie by type (category_tags, brand_tags or store_tags)
-        //..then split the type into the selected_filters key (category_tags => category)
-        Object.keys(filter_tags).forEach( (key)=> filter_tags[key].forEach(initTrieByTagType(key)))
+        Object.keys(filter_tags).forEach( //for each filter tag key,
+            (key)=> filter_tags[key].forEach( //for each filter tag
+                initTrieByTagType(key)))      //invoke a closure with the key which adds filter tag to trie 
+
         return trie
     }
        
@@ -45,8 +46,7 @@ function useFilters(
         }
     }
 
-    //return a closure which references the selected_filters key (catories/stores/brands)
-    //add or remove a filter tag from the selected_filters[filter_key] list 
+    //add or remove a filter tag from filter_key: either category, brands, or stores
     const onFilterTagSelected = filter_key => 
         filter_tag => 
             setAndRefetch({ 

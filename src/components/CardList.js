@@ -1,50 +1,32 @@
 import useCardList from '../hooks/useCardList'
 import { SpinnerDotted } from 'spinners-react';
-import {useState, useRef} from 'react'
+import {useRef} from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import VertifyAge from './VertifyAge'
+import { APOLLO_GQL_KEYS } from '../utils'
 import '../styles/cardlist.css'
-
-import { STORAGE_KEY } from '../utils.js'
-
-const _show_dob_popup = true
 
 function CardList( { query, selected_filters_handlers, toggleBackToTop } ) {
 
-  const { loading, error, data, fetchMore, debounced_query_counting_down } = query
+  const { loading, error, data, fetchMore, debounced_query_counting_down,  } = query
 
-  const products = data ? data.getSortedProducts : []
+  const products = data ? data[APOLLO_GQL_KEYS.PRODUCTS] : []
 
   console.log("CARDLIST PRODUCTS: ", products)
 
   const { selected_filters } = selected_filters_handlers
 
   const [
-    { 
-      handleScroll, 
-    } ] = useCardList(products, selected_filters, fetchMore, debounced_query_counting_down )
+    show_dob_popup, 
+      {
+        handleScroll, 
+        handleProductLinkClick, 
+        closeDOBPopup,
+        openURL
+  }] = useCardList(products, selected_filters, fetchMore, debounced_query_counting_down, toggleBackToTop )
 
-    const [show_dob_popup, setShow] = useState( false ) //(!localStorage.getItem(STORAGE_KEY) && _show_dob_popup)
-    const product_url = useRef(null)
-    const nodeRef = useRef(null)
-
-    const closeDOBPopup = (save_validation, open_link) => {    
-      if(open_link){ // if user entered valid dob
-        save_validation && localStorage.setItem(STORAGE_KEY, true); // save validation in local storage
-      }else{  // if user opted to just close the pop up
-        product_url.current = null // unset the ref, preventing the link from opening
-      }
-      setShow(false) // close the window
-    }
-
-  function handleProductLinkClick(info_url){ //when a product link is clicked
-    product_url.current = info_url           // save the current product url in a ref
-    if(!localStorage.getItem(STORAGE_KEY) && _show_dob_popup){ // if user did not save dob previously
-      setShow(true)                                            // open the validate age pop up          
-    }else{
-      window.open(info_url, "_blank", "noopener,noreferrer")  // otherwise just open the product tab
-    }
-  }
+  
+  const nodeRef = useRef(null)
 
   if(error) return <>Error! {error.message}</>
 
@@ -61,7 +43,7 @@ function CardList( { query, selected_filters_handlers, toggleBackToTop } ) {
       //which is a useRef instance. the ref gets set by the CSSTransition wrapper
       //the alternative is to lift the wrapping div from the vertify age cmp and put it in here
       // when the exit animation for the popup finishes, the product tab will appear only if the ref has not been unset
-      onExited={()=>{product_url.current && window.open(product_url.current , "_blank", "noopener,noreferrer")}}
+      onExited={openURL}
       nodeRef={nodeRef}>
         <VertifyAge 
           ref={nodeRef} // pass the ref to vertifyage, which is wrapped in forwardRef
@@ -71,9 +53,7 @@ function CardList( { query, selected_filters_handlers, toggleBackToTop } ) {
     <div 
       className="card_container" 
       id="cardContainer" 
-      onScroll={e=>{
-          toggleBackToTop(e.target.scrollTop , e.target.clientHeight)
-          handleScroll(e)}}>   
+      onScroll={handleScroll}>   
          {loading && <div className={"spinner_middle"}><SpinnerDotted/></div>} 
          {//issue: because of the animations, this message appears weird on the card container
          products.length === 0 && !loading ? <div className="no_products">No products found!</div>: null}

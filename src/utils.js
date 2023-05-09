@@ -23,6 +23,11 @@ export const SORT_TYPE = {
     CONTACT: "/contact"
   }
 
+  export const APOLLO_GQL_KEYS = {
+    PRODUCTS: 'getSortedProducts',
+    TAG_METADATA: 'tagmetadata'
+  }
+
   export const PAGE_LIMIT = 11
   export const TIMEOUT = 3000
   

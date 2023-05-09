@@ -1,6 +1,34 @@
-import { PAGE_LIMIT, SORT_TYPE, buildAtlasGQLQuery } from '../utils'
+import { PAGE_LIMIT, SORT_TYPE, STORAGE_KEY, buildAtlasGQLQuery } from '../utils'
+import { useState, useRef } from 'react'
 
-function useCardList(products, selected_filters, fetchMore, debounced_query_counting_down) {
+const _show_dob_popup = true
+
+function useCardList(products, selected_filters, fetchMore, debounced_query_counting_down, toggleBackToTop) {
+
+  const [show_dob_popup, setShow] = useState( false ) //(!localStorage.getItem(STORAGE_KEY) && _show_dob_popup)
+  const product_url = useRef(null)
+ 
+  const closeDOBPopup = (save_validation, open_link) => {    
+    if(open_link){ // if user entered valid dob
+      save_validation && localStorage.setItem(STORAGE_KEY, true); // save validation in local storage
+    }else{  // if user opted to just close the pop up
+      product_url.current = null // unset the ref, preventing the link from opening
+    }
+    setShow(false) // close the window, activating the onExit callback
+  }
+
+  function handleProductLinkClick(info_url){ //when a product link is clicked
+    product_url.current = info_url           // save the current product url in a ref
+    if(!localStorage.getItem(STORAGE_KEY) && _show_dob_popup){ // if user did not save dob previously
+      setShow(true)                                            // open the validate age pop up          
+    }else{  // otherwise just open the product tab
+      openURL(info_url)
+    }
+  }
+
+  function openURL(url){
+    url && window.open(url, "_blank", "noopener,noreferrer")
+  }
 
   const handleBottom = () =>{
     const lpid = products[products.length-1]._id
@@ -22,7 +50,8 @@ function useCardList(products, selected_filters, fetchMore, debounced_query_coun
     }
   }
 
-  const handleScroll = (e) =>{ 
+  const handleScroll = (e) =>{
+    toggleBackToTop(e.target.scrollTop , e.target.clientHeight) //invoke the callback which hides/shows back-to-top scroll btn
     const hasProducts = p => p?.length > 0
     const isBottom = e => e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
     !debounced_query_counting_down && // if the user has not selected other filters
@@ -31,7 +60,13 @@ function useCardList(products, selected_filters, fetchMore, debounced_query_coun
           handleBottom()              // fetch the next page of items
   }
 
-  return [{handleScroll}]
+  return [
+    show_dob_popup, {
+      handleScroll, 
+      handleProductLinkClick, 
+      closeDOBPopup,
+      openURL: () => openURL(product_url.current) // return a closure which invokes openURL with last open link
+    }]
 }
 
 export default useCardList
