@@ -9,7 +9,7 @@ import { STORAGE_KEY } from '../utils.js'
 
 const _show_dob_popup = true
 
-function CardList( { query, selected_filters_handlers } ) {
+function CardList( { query, selected_filters_handlers, toggleBackToTop } ) {
 
   const { loading, error, data, fetchMore, debounced_query_counting_down } = query
 
@@ -68,7 +68,12 @@ function CardList( { query, selected_filters_handlers } ) {
           closeDOBPopup={closeDOBPopup}/>
     </CSSTransition>
 
-    <div className="card_container" id="cardContainer" onScroll={handleScroll}>
+    <div 
+      className="card_container" 
+      id="cardContainer" 
+      onScroll={e=>{
+          toggleBackToTop(e.target.scrollTop , e.target.clientHeight)
+          handleScroll(e)}}>   
          {loading && <div className={"spinner_middle"}><SpinnerDotted/></div>} 
          {//issue: because of the animations, this message appears weird on the card container
          products.length === 0 && !loading ? <div className="no_products">No products found!</div>: null}

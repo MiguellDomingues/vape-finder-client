@@ -67,7 +67,7 @@ function useApp() {
 
         //https://reactpatterns.js.org/docs/accessing-a-child-component
         //call a method on child to invoke this method
-          document?.getElementById('cardContainer')?.scroll({top:0});
+          document?.getElementById('cardContainer')?.scroll({top:0, behavior: 'smooth'});
 
           getProducts({ 
               variables: {  ...buildAtlasGQLQuery(selected_filters) } , 

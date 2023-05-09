@@ -1,16 +1,21 @@
 .body_layout_pill_list{
+    position: relative;
     background-color: lightgray;
     display: flex;
     flex-direction: column;
     padding-left: 1em;
     padding-right: 1em; 
-    padding-top: 1em;   
-    
+    padding-top: 1em;    
     width: 100%; 
 }
 
-.body_layout_card_container{ 
-    overflow-y: auto;
+.scroll_to_top_icon_container{
+  position: absolute;
+  top: 0;
+  right: 4px;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity .25s ease-out
 }
 
 .pill_list{

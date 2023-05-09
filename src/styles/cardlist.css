@@ -1,4 +1,5 @@
 .card_container{ 
+  position: relative;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -16,8 +17,6 @@ to customize scrollbars in those enviroments, use SimpleScroll, an npm package
   background-color: #A9A9A9;
   border-radius: 10px;
 }
-
-/* TESTING CSSTRANSITION */
 
 .item-enter {
   opacity: 0;
