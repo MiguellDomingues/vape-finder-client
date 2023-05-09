@@ -1,5 +1,5 @@
 .body_layout_pill_list{
-    position: relative;
+   /* position: relative;*/
     background-color: lightgray;
     display: flex;
     flex-direction: column;
@@ -9,6 +9,7 @@
     width: 100%; 
 }
 
+/*
 .scroll_to_top_icon_container{
   position: absolute;
   top: 0;
@@ -17,7 +18,7 @@
   opacity: 0;
   transition: opacity .25s ease-out
 }
-
+*/
 .pill_list{
     display: flex;
     flex-flow: row wrap;
@@ -44,8 +45,6 @@
     color: black;
   }
 
-  /* TESTING CSSTRANSITION CLEAR ALL FILTERS BTN*/
-
 .clear-filter-animation-enter {
     opacity: 0;
   }
@@ -64,4 +63,3 @@
     transition: opacity 500ms;
   }
   
-  /* ***************** */

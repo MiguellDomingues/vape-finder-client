@@ -7,6 +7,23 @@
   width: 100%;
 }
 
+.scroll_to_top_icon_container{
+  position: absolute;
+  top: 0;
+  right: -9px;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity .25s ease-out
+}
+
+.outer_container{
+  height: 100%;
+  width: 100%;
+  padding-right: 3px; /* right space for to-top icon, or it clips under parent*/
+  position: relative;
+  overflow: hidden;
+}
+
 /* 
 customizing the apperarnce of the scrollbars
 note that webkits only work on chrome and safari; not edge or firefox
