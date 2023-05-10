@@ -10,7 +10,7 @@
 .scroll_to_top_icon_container{
   position: absolute;
   top: 0;
-  right: -9px;
+  right: -13px;
   z-index: 1;
   opacity: 0;
   transition: opacity .25s ease-out

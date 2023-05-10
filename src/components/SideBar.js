@@ -33,7 +33,7 @@ function SideBar({
         <div className="options_icon" onClick={e=>setShowOptions(!show_options)}><CgOptions/></div> selectedHandler={onFilterTagSelected}
         */}
 
-        <TextSearch searchTagsHandler={searchTags}  selectedHandler={onFilterTagSelected}  selected_tags={selected_filters} pill_view={false}/>
+        <TextSearch searchTagsHandler={searchTags}  selectedHandler={onFilterTagSelected}  selected_tags={selected_filters} pill_view={true}/>
 
         <CollapsibleMenu 
             title="History" 

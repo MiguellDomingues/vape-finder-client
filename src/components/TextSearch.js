@@ -5,8 +5,6 @@ import {useState, useRef, } from 'react'
 
 import '../styles/textsearch.css' 
 
-/* *************text search container************** */
-
 const input_placeholder_txt = 'What are you looking for?'
 
 //i feel like when user searches for tags using txt searching, the debounce time should be zero (instant query)
@@ -68,12 +66,10 @@ export default TextSearch
 
 
 function PillDropDownView({
-    matches, 
-    selected_tags, 
+    matches,  
     selected_tags: {category, stores, brands},
     selectedHandler
 }){
-    console.log("PILLDROPDOWN RERENDER: ", selected_tags)
     const filterMatchesByKey = (key, matches) => matches.filter( tag => tag.type === key).map(tag=>tag.tag_name)
 
     return(<>
@@ -85,7 +81,6 @@ function PillDropDownView({
 
 function ListDropDownView({
     matches, 
-    //selected_tags, 
     selected_tags: {category, stores, brands},
     selectedHandler
 }){

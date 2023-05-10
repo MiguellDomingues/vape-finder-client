@@ -50,11 +50,11 @@ export function PillList({
         }else if(handleSelect && selected_pills){
             return (str) => <SelectablePill key={str} str={str} selectPill={handleSelect} is_selected={selected_pills.includes(str)}/>
         }else{
-            return (str) => <PlainPill key={str} str={str} />
+            return (str) => <Pill key={str} str={str} />
         }
     }
 
-    const pill_to_display = getPillCmp(handleRemove, handleClick, selected_pills)
+    const DisplayPill = getPillCmp(handleRemove, handleClick, selected_pills)
    
     return(<>
         <TransitionGroup
@@ -62,13 +62,13 @@ export function PillList({
             component={null}>
             {pills.map( (str)=> 
             <CSSTransition key={str} timeout={500} classNames="pill-animation">
-              {pill_to_display(str)}
+              {DisplayPill(str)}
           </CSSTransition>)}
         </TransitionGroup>
     </>);
 }
 
-function PlainPill({str}){ 
+function Pill({str}){ 
     return (
         <div className="pill pill_container_font"> 
             <span className="pill_str">{str}</span>&nbsp;
@@ -154,7 +154,7 @@ export function CollapsibleMenu( {
 }
 
 /**************wrapper for <hr/> tag that appears inside flex containers***************** */
-
+//BUG: LINES ARE DEEP BLACK ON FIREFOX
 export function HorizontalLine(){
     return (<div className="outer_line"><hr className="inner_line"/></div>)
 }
