@@ -1,69 +1,75 @@
 .text_search_container{
-    display: flex;
-    position: relative;
-    column-gap: 20px;
-    font-family: system-ui;
-    min-width: 100%;
-  }
-  
-  .text_search_content {
-    top:100%;
-    min-width: 100%;
-    max-height: 125px;
-    position: absolute;
-    z-index: 1;
-  
-    display: flex;
-    flex-direction: column;
-    /*flex-flow: row wrap;*/
-    /*flex-flow: column nowrap;*/
-    
-    background-color: white;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    border-radius: 10px;
-    overflow-y:auto; 
-  }
-  
-  .text_search_pill_layout{
-    flex-flow: row wrap;
-  }
-  
-  .text_search_list_layout{
-    flex-flow: column nowrap;
-  }
-  
-  .text_search_content::-webkit-scrollbar {
-    width: 8px;
-    background-color: #F5F5F5;
-  }
-  
-  .text_search_content::-webkit-scrollbar-thumb {
-    background-color: #A9A9A9;
-    border-radius: 10px;
-  }
-  
-  .text_search_content_row{
-    display: flex;
-    /*min-width: 90%;use this to place items on start/ends of container*/
-    padding: 5px;
-    border-radius: 10px;
-    /*margin-right: 3px;*/
-  }
-  
-  .text_search_input{
-    width: 100%;
-    border-radius: 4px;
-    font-family: system-ui;
-    border: none;
-    font-size: 16px;
-    padding: 5px;
-  }
-  
-  .text_search_input_center{
-    text-align: center;
-  }
+  display: flex;
+  position: relative;
+  column-gap: 20px;
+  font-family: system-ui;
+  min-width: 100%;
+}
 
-  .ts_filter_selected{
-    background-color: rgb(31, 188, 186);
-    color: white;
-  }
+.text_search_icon{
+  position: absolute;
+  right: 0px;
+  top: 10%;
+}
+  
+.text_search_content {
+  top:100%;
+  min-width: 100%;
+  max-height: 125px;
+  position: absolute;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  /*flex-flow: row wrap;*/
+  /*flex-flow: column nowrap;*/
+  
+  background-color: white;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  overflow-y:auto; 
+}
+
+.text_search_pill_layout{
+  flex-flow: row wrap;
+}
+
+.text_search_list_layout{
+  flex-flow: column nowrap;
+}
+
+.text_search_content::-webkit-scrollbar {
+  width: 8px;
+  background-color: #F5F5F5;
+}
+
+.text_search_content::-webkit-scrollbar-thumb {
+  background-color: #A9A9A9;
+  border-radius: 10px;
+}
+
+.text_search_content_row{
+  display: flex;
+  /*min-width: 90%;use this to place items on start/ends of container*/
+  padding: 5px;
+  border-radius: 10px;
+  /*margin-right: 3px;*/
+}
+
+.text_search_input{
+  width: 100%;
+  border-radius: 4px;
+  font-family: system-ui;
+  border: none;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.text_search_input_center{
+  text-align: center;
+}
+
+.ts_filter_selected{
+  background-color: rgb(31, 188, 186);
+  color: white;
+}

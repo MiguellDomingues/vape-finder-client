@@ -3,6 +3,8 @@ import {FILTER_KEYS} from '../utils'
 import useOnClickOutside from '../hooks/useOnClickOutside.js'
 import {useState, useRef, } from 'react'
 
+import { FcSearch } from 'react-icons/fc'
+
 import '../styles/textsearch.css' 
 
 const input_placeholder_txt = 'What are you looking for?'
@@ -43,6 +45,7 @@ function TextSearch({
 
     return(<>
         <div ref={dropdown_ref} className="text_search_container">
+            <div className="text_search_icon"><FcSearch size={'1.5em'}/></div>
             <input 
                 type="text"
                 autoComplete="off" // add debouncing
@@ -51,7 +54,7 @@ function TextSearch({
                 maxLength="8"
                 placeholder={input_placeholder_txt}
                 className={`text_search_input`} //${!show_dropdown ? ` text_search_input_center` : ``}
-                value={text}/> 
+                value={text}/>
             {show_dropdown && 
                 <div className={`text_search_content ${getDropDownViewCSS(pill_view)}`}>
                     { matches.length > 0 ? getDropDownViewCmp(pill_view, {matches, selected_tags, selectedHandler})        

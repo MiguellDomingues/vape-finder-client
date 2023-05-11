@@ -116,6 +116,7 @@ to customize scrollbars in those enviroments, use SimpleScroll, an npm package
   overflow-wrap: normal;
   text-align: center;
   position: relative;
+  height: fit-content;
 }
 
 .product_link{
