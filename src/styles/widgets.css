@@ -45,7 +45,7 @@
   }
 
   .pill_clear_tags_btn{
-    margin: 3px;
+    /*margin: 3px;*/
     padding-top: 1px;
     padding-bottom: 3px;
     padding-left: 5px;
@@ -116,15 +116,24 @@
   background-color: lightblue;
 }
 
-.collapsible:after {
-  content: '\002B';
-  color: black;
-  font-weight: bold;
-  margin-left: 5px;
+.collapsible_title{
+  display: flex;
+  position: relative;
+  place-content: end space-between;
 }
 
-.active:after {
-  content: "\2212";
+.collapsible_title_clear_wrapper{
+  position: absolute;
+  right: 20%;
+}
+
+.collapsible_title_right{
+  color: black;
+  font-weight: bold;
+}
+
+.collapsible_open{
+  padding-right: 3px;
 }
 
 .content {
@@ -173,13 +182,13 @@
 
 @media only screen and (min-width: 481px) {   
   .collapsible{
-    text-align: left;
+    /*text-align: left;*/
     font-size: 20px;
   }
-
+/*
   .collapsible:after { 
     float: right;
-  }
+  }*/
 }
 
 @media only screen and (max-width: 481px) {   

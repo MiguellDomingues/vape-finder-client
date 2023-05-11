@@ -104,42 +104,46 @@ export function CollapsibleMenu( {
     tags          = [], 
     selected_tags = [], 
     selectedHandler,
-    clearBtn,
+    clearBtnCmp = null,
     maxHeight = "100px"
 } ){
+
+    const [toggle, setToggle] = useState(false)
+
+    const content_ref = useRef(null)
 
     const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected content-row" : "content-row"
 
     const isTagSelected = (tag, arr) => arr.includes(tag) 
 
-    /*
-    const handleContextMenu = (e) => {e.preventDefault(); console.log("sdfdsfd")}
-
-    const ref = useRef(null)
-
-    useEffect(() => {
-        console.log("USE EFFECT CM")
-        ref.current.addEventListener("contextmenu", handleContextMenu);
-        const _ref = ref.current
-        return () => {
-
-          _ref.removeEventListener("contextmenu", handleContextMenu);
-        };
-      });
-*/
     //move the selected tags to the top of the dropdown list
     //const sortedtags = [ ...tags.filter( t=> selected_tags.includes(t.tag_name) )]
                       //  .concat([...tags.filter( t=> !selected_tags.includes(t.tag_name)) ])
 
-    function toggleMenu(target){
-        target.classList.toggle("active");
-        let content = target.nextElementSibling;
-        content.style.maxHeight = content.style.maxHeight ? null : maxHeight//"100px"
-    }//{!!clearBtn && <div className="content-row">{clearBtn}</div>}
+    function toggleMenu(){
+        //target.classList.toggle("active");
+        let content = content_ref.current//target.nextElementSibling;
+
+        if(!content.style.maxHeight){
+            content.style.maxHeight = maxHeight
+            setToggle(true)
+        }else{
+            content.style.maxHeight = null
+            setToggle(false)
+        }
+
+       // content.style.maxHeight = content.style.maxHeight ? null : maxHeight//"100px"
+    }
 
     return(<>
-    <button className="collapsible" onClick={e=>toggleMenu(e.target)}>{title}</button>
-    <div className="content">
+    <button className="collapsible" onClick={e=>toggleMenu()}>
+        <div className="collapsible_title">    
+            {!!clearBtnCmp &&<div className="collapsible_title_clear_wrapper">{clearBtnCmp}</div>}
+            <div className="collapsible_title_left_txt">{title}</div>        
+            <div className={`collapsible_title_right ${toggle && `collapsible_open`}`}>{toggle?"-":"+"}</div>                    
+        </div>
+    </button>
+    <div ref={content_ref} className="content">
         {//!!clearBtn && clearBtn
         }
         {tags.map( (tag, idx)=>
@@ -308,5 +312,21 @@ export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
         </div>
     </div>)
 }
+*/
+
+  /*
+    const handleContextMenu = (e) => {e.preventDefault(); console.log("sdfdsfd")}
+
+    const ref = useRef(null)
+
+    useEffect(() => {
+        console.log("USE EFFECT CM")
+        ref.current.addEventListener("contextmenu", handleContextMenu);
+        const _ref = ref.current
+        return () => {
+
+          _ref.removeEventListener("contextmenu", handleContextMenu);
+        };
+      });
 */
 ////////////////////////////////////////////////////////////////////////////////////////////////////
