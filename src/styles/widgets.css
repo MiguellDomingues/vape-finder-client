@@ -44,6 +44,10 @@
     color: black;
   }
 
+  .selectable_pill{
+    cursor: pointer;
+  }
+
   .pill_clear_tags_btn{
     /*margin: 3px;*/
     padding-top: 1px;
@@ -227,7 +231,7 @@
 @media only screen and (max-width: 481px) {   
 
   .sortby_dropdown_container{    
-    align-self: center;
+   /* align-self: center; */
     font-size: 25px;    
   }
 

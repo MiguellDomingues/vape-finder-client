@@ -10,17 +10,15 @@ import {useState, useRef, useEffect,  useMemo } from 'react'
 ////////////////////////////SORT BY DROPDOWN///////////////////////////////////
 
 export function SortByDropDown({
-    selected_filters_handlers 
+    selected_filters_handlers: {setAndRefetch, selected_filters} 
 }){
-  
-    const {setAndRefetch, selected_filters} = selected_filters_handlers
-      
-        const sortSelected = (e) => { 
-          console.log(e.target.value)
-          selected_filters.sort_by = e.target.value
-          setAndRefetch({...selected_filters})
-        }
-      
+   
+    const sortSelected = (e) => { 
+        console.log(e.target.value)
+        selected_filters.sort_by = e.target.value
+        setAndRefetch({...selected_filters})
+    }
+        
     return(<div className="sortby_dropdown_container">
         Sort By
         <select className='dropdown' onChange={sortSelected} value={selected_filters.sort_by} >
@@ -92,7 +90,7 @@ function SelectablePill({
     is_selected,
 }){ 
     return (
-        <div className={`pill pill_container_font ${!is_selected && `pill_container_selected` }`} onClick={ e=>selectPill(str)}> 
+        <div className={`pill pill_container_font selectable_pill ${!is_selected && `pill_container_selected` }`} onClick={ e=>selectPill(str)}> 
             <span className={`pill_str ${!is_selected && `pill_str_selected`}`}>{str}</span>&nbsp;
         </div>); 
 }
@@ -121,8 +119,7 @@ export function CollapsibleMenu( {
                       //  .concat([...tags.filter( t=> !selected_tags.includes(t.tag_name)) ])
 
     function toggleMenu(){
-        //target.classList.toggle("active");
-        let content = content_ref.current//target.nextElementSibling;
+        let content = content_ref.current
 
         if(!content.style.maxHeight){
             content.style.maxHeight = maxHeight
@@ -131,8 +128,6 @@ export function CollapsibleMenu( {
             content.style.maxHeight = null
             setToggle(false)
         }
-
-       // content.style.maxHeight = content.style.maxHeight ? null : maxHeight//"100px"
     }
 
     return(<>
@@ -144,8 +139,6 @@ export function CollapsibleMenu( {
         </div>
     </button>
     <div ref={content_ref} className="content">
-        {//!!clearBtn && clearBtn
-        }
         {tags.map( (tag, idx)=>
                 <div className={selectedTagsBGC(tag.tag_name, selected_tags)}
                     key={idx} 
