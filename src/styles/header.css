@@ -25,7 +25,24 @@
   left: 5%;
 }
 
-/* TESTING CSSTRANSITION OPEN/CLOSE MODAL*/
+.header_links_section{
+  position: absolute;
+  display: flex;
+}
+
+.header_links_row{
+  display: flex;
+}
+
+.header_current_link{
+  color: blue;
+}
+
+.header_noncurrent_link{
+  color: black;
+}
+
+/* OPEN/CLOSE MODAL ANIMATION */
 
 .toggle-mobile-modal-animation-enter {
   opacity: 0;
@@ -45,12 +62,26 @@
   transition: opacity 500ms;
 }
     
-/* ***************** */
-
+/* *****mobile view header***** */
 @media only screen and (max-width: 481px) {  
   .header_title{ 
     font-size: 34px;
   }   
+  .header_links_section{
+    bottom: 5px;
+    min-width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+}
+
+/* *****desktop view header***** */
+@media only screen and (min-width: 481px) {  
+  .header_links_section{
+    top: 25%;
+    right: 2.5%;
+    flex-direction: column;
+  }
 }
 
 
