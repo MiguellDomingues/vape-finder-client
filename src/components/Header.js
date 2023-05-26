@@ -1,5 +1,6 @@
 import Modal from './Modal'
-import { RxHamburgerMenu } from 'react-icons/rx';
+import { RxHamburgerMenu, RxHome } from 'react-icons/rx';
+import { IoMdHelp } from 'react-icons/io';
 import { CSSTransition } from 'react-transition-group';
 import { Link, useLocation } from "react-router-dom";
 import { PAGE_URIS } from "../utils.js";
@@ -22,12 +23,20 @@ function Header({
     const isHomePage = () => location.pathname === PAGE_URIS.HOME 
     const isAboutPage = () => location.pathname === PAGE_URIS.ABOUT
 
-    function styleRoute(txt, path, is_current_page){
-      if(!is_current_page){
-        return <Link to={path}><span className="header_current_link">{txt}</span></Link>
-      }else{
-         return <span className="header_noncurrent_link">{txt}</span>
+    function displayRouteIcon(){
+
+      let route_icon = null
+      let next_loc = null
+
+      if(isHomePage()){
+        route_icon = <IoMdHelp size={'2em'}/>
+        next_loc = PAGE_URIS.ABOUT
+      }else if(isAboutPage()){
+        route_icon = <RxHome size={'2em'}/>
+        next_loc = PAGE_URIS.HOME
       }
+
+      return <Link to={next_loc}><span className="header_current_link">{route_icon}</span></Link>    
     }
 
     return (<>   
@@ -44,10 +53,7 @@ function Header({
         <span className="header_title">BC VAPE FINDER</span>
         <div className="header_links_section">
           <div className="header_links_row">
-            {styleRoute("Home", PAGE_URIS.HOME, isHomePage())}
-          </div>
-          <div className="header_links_row">
-            {styleRoute("About", PAGE_URIS.ABOUT, isAboutPage())}
+            {displayRouteIcon(location.pathname)}
           </div>
         </div>        
       </div></>);

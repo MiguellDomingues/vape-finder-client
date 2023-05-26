@@ -68,17 +68,22 @@
     font-size: 34px;
   }   
   .header_links_section{
+    top: 27.5%;
+    right: 2.5%;
+    flex-direction: column;
+    /*
     bottom: 5px;
     min-width: 100%;
     flex-direction: row;
     justify-content: space-evenly;
+    */
   }
 }
 
 /* *****desktop view header***** */
 @media only screen and (min-width: 481px) {  
   .header_links_section{
-    top: 25%;
+    top: 27.5%;
     right: 2.5%;
     flex-direction: column;
   }
