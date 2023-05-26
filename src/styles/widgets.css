@@ -208,12 +208,18 @@
 
 .outer_line{
   width: 80%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 1px ridge grey;
+  border-radius: 1px;
 }
 
+/*
 .inner_line{
   margin-top: 5px;
   margin-bottom: 5px;
 }
+*/
 
 /********************SORTBY DROPDOWN**********************************/
 

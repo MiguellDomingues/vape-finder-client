@@ -153,7 +153,7 @@ export function CollapsibleMenu( {
 /**************wrapper for <hr/> tag that appears inside flex containers***************** */
 //BUG: LINES ARE DEEP BLACK ON FIREFOX
 export function HorizontalLine(){
-    return (<div className="outer_line"><hr className="inner_line"/></div>)
+    return (<div className="outer_line"></div>)
 }
 
 /**************button to clear a single filter***************** */
