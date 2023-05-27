@@ -5,6 +5,8 @@ const _show_dob_popup = true
 
 function useCardList(products, selected_filters, fetchMore, debounced_query_counting_down, toggleBackToTop) {
 
+  const [temp, setTemp] = useState("")
+
   const [show_dob_popup, setShow] = useState( false ) //(!localStorage.getItem(STORAGE_KEY) && _show_dob_popup)
   const product_url = useRef(null)
  
@@ -53,7 +55,8 @@ function useCardList(products, selected_filters, fetchMore, debounced_query_coun
   const handleScroll = (e) =>{
     toggleBackToTop(e.target.scrollTop , e.target.clientHeight) //invoke the callback which hides/shows back-to-top scroll btn
     const hasProducts = p => p?.length > 0
-    const isBottom = e => e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    const isBottom = e => e.target.scrollHeight - Math.ceil(e.target.scrollTop) === e.target.clientHeight;
+    setTemp(`DEBUG: scrollHeight: ${e.target.scrollHeight} scrollTop: ${Math.floor(e.target.scrollTop)} clientHeight: ${e.target.clientHeight} is bottom? ${isBottom(e)}`)
     !debounced_query_counting_down && // if the user has not selected other filters
       isBottom(e) &&                  // and the user has scrolled to the bottom 
         hasProducts(products) &&      // and there are items from the last query
@@ -61,7 +64,8 @@ function useCardList(products, selected_filters, fetchMore, debounced_query_coun
   }
 
   return [
-    show_dob_popup, {
+    show_dob_popup, 
+    temp, {
       handleScroll, 
       handleProductLinkClick, 
       closeDOBPopup,
