@@ -55,8 +55,25 @@ function useCardList(products, selected_filters, fetchMore, debounced_query_coun
   const handleScroll = (e) =>{
     toggleBackToTop(e.target.scrollTop , e.target.clientHeight) //invoke the callback which hides/shows back-to-top scroll btn
     const hasProducts = p => p?.length > 0
-    const isBottom = e => e.target.scrollHeight - Math.ceil(e.target.scrollTop) === e.target.clientHeight;
-    setTemp(`DEBUG: scrollHeight: ${e.target.scrollHeight} scrollTop: ${Math.floor(e.target.scrollTop)} clientHeight: ${e.target.clientHeight} is bottom? ${isBottom(e)}`)
+    //const isBottom = e => e.target.scrollHeight - Math.ceil(e.target.scrollTop) === e.target.clientHeight;
+
+    //when the bottom of the scrollbar is 95%~ scrolled to the bottom
+    const isBottom = e => Math.ceil(e.target.scrollTop) + e.target.clientHeight >= Math.floor(e.target.scrollHeight)*.95
+
+    function testBottom(e){
+      const res = Math.ceil(e.target.scrollTop) + e.target.clientHeight 
+      const targ = Math.floor(e.target.scrollHeight)*.95
+
+      console.log("total dist from top: " ,res, " target to load more: ", targ)
+      
+      if(res >= targ){
+        console.log("we should load more!")
+      }
+    }
+
+    //testBottom(e)
+
+    //setTemp(`DEBUG: scrollHeight: ${e.target.scrollHeight} scrollTop: ${Math.floor(e.target.scrollTop)} clientHeight: ${e.target.clientHeight} is bottom? ${isBottom(e)} scrollHeight-scrollTop: ${e.target.scrollHeight - Math.ceil(e.target.scrollTop)}  `)
     !debounced_query_counting_down && // if the user has not selected other filters
       isBottom(e) &&                  // and the user has scrolled to the bottom 
         hasProducts(products) &&      // and there are items from the last query
