@@ -1,19 +1,26 @@
 
+.page{
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+
+}
+
 .app_flex_parent {
-  height: 100vh;
+  /*height: 100dvh;*/
+  height: 100%;
+  
+  max-height: -webkit-fill-available;
   display: flex;
   flex-direction: column;
   width: 1350px;
 }
 
-.page{
-  display: flex;
-  align-items: center;
-  justify-content: center;  
-}
-
 .header_flex_child{
-    height: 10vh;
+    min-height: 10%;
+    max-height: 10%;
     background-color: lightblue;
      
 }
@@ -21,8 +28,9 @@
 .body_flex_parent{
   display: flex;
   flex-direction: row;
-  height: 90vh;
-  width: 100%;
+  min-height: 90%;
+  max-height: 90%;
+  min-width: 100%;
 }
 
 /*

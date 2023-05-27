@@ -120,7 +120,7 @@ to customize scrollbars in those enviroments, use SimpleScroll, an npm package
 }
 
 .product_link{
-  color: -webkit-link;
+  color: blue; /*-webkit-link;*/
   cursor: pointer;
   text-decoration: underline;
 }
