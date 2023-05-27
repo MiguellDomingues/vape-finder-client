@@ -28,7 +28,7 @@ export const SORT_TYPE = {
     TAG_METADATA: 'tagmetadata'
   }
 
-  export const PAGE_LIMIT = 11
+  export const PAGE_LIMIT = 13
   export const TIMEOUT = 3000
   
   export const starting_filters = { category: [], brands: [], stores: [], sort_by : "NONE" }

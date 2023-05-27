@@ -32,7 +32,7 @@ to customize scrollbars in those enviroments, use SimpleScroll, an npm package
 
 .card_container::-webkit-scrollbar-thumb {
   background-color: #A9A9A9;
-  border-radius: 10px;
+  /*border-radius: 10px;*/
 }
 
 .item-enter {
