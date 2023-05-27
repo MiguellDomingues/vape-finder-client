@@ -22,7 +22,7 @@ function CardList({
   const { selected_filters } = selected_filters_handlers
 
   const [
-    show_dob_popup, temp,
+    show_dob_popup, //temp,
       {
         handleScroll, 
         handleProductLinkClick, 
@@ -43,7 +43,7 @@ function CardList({
 
   if(error) return <>Error! {error.message}</>
 
-  console.log("temp: ",temp)
+  //console.log("temp: ",temp)
 
   return (<>
   
@@ -80,8 +80,8 @@ function CardList({
           {//issue: because of the animations, this message appears weird on the card container
           products.length === 0 && !loading ? <div className="no_products">No products found!</div>: null}
 
-          <div className="test-a">{temp}</div>
-          
+          {/*<div className="test-a">{temp}</div>*/}
+
           <TransitionGroup
             //the transition group creates a div; can manually assign css/listeners to that div
             //className="card_container" 
