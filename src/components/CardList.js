@@ -35,8 +35,6 @@ function CardList({
   const icon_ref = useRef(null)
   const nodeRef = useRef(null)
 
-  
-
   function toggleBackToTop(pixelsFromTop, scrollbarHeight){
     if(pixelsFromTop < scrollbarHeight && icon_ref.current?.style.opacity !== 0){
         icon_ref.current.style.opacity = 0
@@ -58,6 +56,8 @@ function CardList({
       <div ref={icon_ref} className="scroll_to_top_icon_container" onClick={e=>{document?.getElementById('cardContainer')?.scroll({top:0, behavior: 'smooth'});}}>
         <MdOutlineKeyboardDoubleArrowUp size={'2.5em'}/>
       </div>
+
+      <div className="test-a">{products.length}</div>
 
       <CSSTransition 
         timeout={1000} 
