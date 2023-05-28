@@ -24,7 +24,7 @@ function CardList({
   const { selected_filters } = selected_filters_handlers
 
   const [
-    show_dob_popup, //temp,
+    show_dob_popup, 
       {
         handleScroll, 
         handleProductLinkClick, 
@@ -45,8 +45,6 @@ function CardList({
 
   if(error) return <>Error! {error.message}</>
 
-  //console.log("temp: ",temp)
-
   return (<>
   
   {/*WRAPPER CONTAINER allows the scroll-to-top icon to hover over scrollbar while auto-positioning itself relative to the filter pills container in parent
@@ -57,7 +55,7 @@ function CardList({
         <MdOutlineKeyboardDoubleArrowUp size={'2.5em'}/>
       </div>
 
-      <div className="test-a">{products.length}</div>
+      {/*<div className="test-a">{products.length}</div>*/}
 
       <CSSTransition 
         timeout={1000} 

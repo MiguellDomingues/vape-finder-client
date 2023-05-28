@@ -54,8 +54,8 @@ function useCardList(products, selected_filters, fetchMore, debounced_query_coun
     toggleBackToTop(e.target.scrollTop , e.target.clientHeight) //invoke the callback which hides/shows back-to-top scroll btn
     const hasProducts = p => p?.length > 0
     //const isBottom = e => e.target.scrollHeight - Math.ceil(e.target.scrollTop) === e.target.clientHeight;
-    //when the user has scrolled to the last ~5% of the product list,  
-    const isBottom = e => Math.ceil(e.target.scrollTop) + e.target.clientHeight >= Math.floor(e.target.scrollHeight*.95)
+    //the bottom is considered scrolling past the last ~5% of the product list
+    const isBottom = e => (Math.ceil(e.target.scrollTop) + e.target.clientHeight) >= Math.floor(e.target.scrollHeight*.95)
 
     //setTemp(`DEBUG: scrollHeight: ${e.target.scrollHeight} scrollTop: ${Math.floor(e.target.scrollTop)} clientHeight: ${e.target.clientHeight} is bottom? ${isBottom(e)} scrollHeight-scrollTop: ${e.target.scrollHeight - Math.ceil(e.target.scrollTop)}  `)
     !loading &&                         // if there isnt a current fetchMore() call
@@ -67,7 +67,6 @@ function useCardList(products, selected_filters, fetchMore, debounced_query_coun
 
   return [
     show_dob_popup, 
-    //temp, 
     {
       handleScroll, 
       handleProductLinkClick, 
