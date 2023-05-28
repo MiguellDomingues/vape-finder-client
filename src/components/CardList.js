@@ -18,6 +18,8 @@ function CardList({
   const products = data ? data[APOLLO_GQL_KEYS.PRODUCTS] : []
 
   console.log("CARDLIST PRODUCTS: ", products)
+  console.log("products length: " , products.length)
+  console.log("loading? " , loading)
 
   const { selected_filters } = selected_filters_handlers
 
@@ -28,10 +30,12 @@ function CardList({
         handleProductLinkClick, 
         closeDOBPopup,
         openURL
-  }] = useCardList(products, selected_filters, fetchMore, debounced_query_counting_down, toggleBackToTop )
+  }] = useCardList(products, selected_filters, fetchMore, debounced_query_counting_down, toggleBackToTop, loading)
 
   const icon_ref = useRef(null)
   const nodeRef = useRef(null)
+
+  
 
   function toggleBackToTop(pixelsFromTop, scrollbarHeight){
     if(pixelsFromTop < scrollbarHeight && icon_ref.current?.style.opacity !== 0){

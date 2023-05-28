@@ -3,9 +3,7 @@ import { useState, useRef } from 'react'
 
 const _show_dob_popup = true
 
-function useCardList(products, selected_filters, fetchMore, debounced_query_counting_down, toggleBackToTop) {
-
-  //const [temp, setTemp] = useState("")
+function useCardList(products, selected_filters, fetchMore, debounced_query_counting_down, toggleBackToTop, loading) {
 
   const [show_dob_popup, setShow] = useState( false ) //(!localStorage.getItem(STORAGE_KEY) && _show_dob_popup)
   const product_url = useRef(null)
@@ -60,10 +58,11 @@ function useCardList(products, selected_filters, fetchMore, debounced_query_coun
     const isBottom = e => Math.ceil(e.target.scrollTop) + e.target.clientHeight >= Math.floor(e.target.scrollHeight*.95)
 
     //setTemp(`DEBUG: scrollHeight: ${e.target.scrollHeight} scrollTop: ${Math.floor(e.target.scrollTop)} clientHeight: ${e.target.clientHeight} is bottom? ${isBottom(e)} scrollHeight-scrollTop: ${e.target.scrollHeight - Math.ceil(e.target.scrollTop)}  `)
-    !debounced_query_counting_down && // if the user has not selected other filters
-      isBottom(e) &&                  // and the user has scrolled to the bottom 
-        hasProducts(products) &&      // and there are items from the last query
-          handleBottom()              // fetch the next page of items
+    !loading &&                         // if there isnt a current fetchMore() call
+      !debounced_query_counting_down && // ...and the user has not selected other filters
+        isBottom(e) &&                  // ...and the user has scrolled to the bottom 
+          hasProducts(products) &&      // ..and there are items from the last query
+            handleBottom()              // fetch the next page of items
   }
 
   return [
