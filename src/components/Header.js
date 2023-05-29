@@ -40,7 +40,11 @@ function Header({
     }
 
     return (<>   
-      <CSSTransition timeout={500} unmountOnExit classNames="toggle-mobile-modal-animation" in={is_open}>
+      <CSSTransition 
+        timeout={500} 
+        unmountOnExit 
+        in={!filter_tags_query.loading && is_open} //only allow modal to open when filters are loaded, otherwise app crashes
+        classNames="toggle-mobile-modal-animation">
         <Modal 
           selected_filters_handlers={selected_filters_handlers}
           filter_tags_query={filter_tags_query}
@@ -49,7 +53,10 @@ function Header({
       </CSSTransition>
       
       <div className="container_header">
-        { (isMobile && isHomePage()) && <div className="open_modal_btn"><RxHamburgerMenu size={'2em'} onClick={ e=> toggleModal()}/></div>}
+        { (isMobile && isHomePage()) && //show modal btn on mobile homepage only
+          <div className="open_modal_btn">
+            <RxHamburgerMenu size={'2em'} onClick={ e=> toggleModal()}/>
+          </div>}
         <span className="header_title">BC VAPE FINDER</span>
         <div className="header_links_section">
           <div className="header_links_row">
@@ -60,21 +67,6 @@ function Header({
   }
 
   export default Header
-
-    //const show_button = isMobile && isHomePage()
-  //console.log("is home?", isHomePage())
-  //console.log("is about?", isAboutPage())
-    //className={stylePageLink(PAGE_URIS.HOME)}
-    //const stylePageLink = ((curr_loc) => (link_uri) => link_uri === curr_loc ? "current_page_link" : "")(current_location);
-
-    /*
-    <div className="header_links_row">
-            <Link to={PAGE_URIS.HOME}><span className={isHomePage() ? "header_current_link" : "header_noncurrent_link"}>Home</span></Link> 
-          </div>
-          <div className="header_links_row">
-            <Link to={PAGE_URIS.ABOUT}><span className={isAboutPage() ? "header_current_link" : "header_noncurrent_link"}>About</span></Link> 
-          </div>
-    */
 
 /*
 <ContextMenu menu={ () => <CustomMenu/> } />  

@@ -28,7 +28,9 @@ function Modal({
     //inside useffect, the ref is available because useffect runs after the component is mounted
     useOnClickOutside(overlay_ref, () => toggleModal()); 
 
-    if (loading) return 'Loading...';
+    //this crashes app if the user opens the menu while loading results (CSSTransition expects a cmp)
+    //user cant open modal in parent cmp when filters are loading, but nicer to replace with modal showing loading spinner
+    if (loading) return 'Loading...'; 
     if (error) return `Error! ${error.message}`;
 
    const { category_tags, brands_tags, stores_tags } = filter_tags
