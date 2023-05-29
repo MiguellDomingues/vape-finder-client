@@ -24,7 +24,7 @@ function Body({
 
     const { category, stores, brands, } = selected_filters
 
-    const pill_list_ref = useRef(null)
+    ///const pill_list_ref = useRef(null)
     //const icon_ref = useRef(null)
 
     /*
@@ -49,11 +49,8 @@ function Body({
     return (<div className="body_layout_pill_list">
 
         {!isMobile && <AnimatedTabButton toggleSidebar={toggleSidebar} sidebar_open={sidebar_open}/>}
-
-        {///// btn originally was here
-        }
-        
-        <div ref={pill_list_ref} className="pill_list">        
+   
+        <div className="pill_list">        
             <ClearAllFiltersButton title={"Clear All Filters"} clearAll={clearAll} show={!isMobile && areFiltersSelected}/>  
             <PillList pills={category}  handleRemove={!isMobile ? handleRemove(FILTER_KEYS.CATEGORIES) : null} />   
             <PillList pills={brands}  handleRemove={!isMobile ? handleRemove(FILTER_KEYS.BRANDS) : null} />

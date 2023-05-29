@@ -22,7 +22,7 @@ function SideBar({
 
     const { category_tags, brands_tags, stores_tags } = filter_tags
     const { category, stores, brands, } = selected_filters
-    const {current_filter_name, restoreFiltersFromHistory, filterHistoryToCollapsibleMenu } = history
+    //const {current_filter_name, restoreFiltersFromHistory, filterHistoryToCollapsibleMenu } = history
 
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
@@ -35,20 +35,24 @@ function SideBar({
 
         <TextSearch searchTagsHandler={searchTags}  selectedHandler={onFilterTagSelected}  selected_tags={selected_filters} pill_view={true}/>
 
-        <CollapsibleMenu 
+        
+        {// since adding pills to CollapsibleMenu, this breaks with histories. fix later
+        /*<CollapsibleMenu 
             title="History" 
             tags={filterHistoryToCollapsibleMenu()} 
             selected_tags={current_filter_name}
             selectedHandler={restoreFiltersFromHistory}  
-            maxHeight="125px"/>
+            maxHeight="125px"*/}
         
         <CollapsibleMenu 
             title="Categories" 
             tags={category_tags} 
             selected_tags={category} 
-            selectedHandler={onFilterTagSelected(FILTER_KEYS.CATEGORIES)}  
+            selectedHandler={onFilterTagSelected} 
+            filter_key = {FILTER_KEYS.CATEGORIES}
             clearBtnCmp={<ClearFiltersButton title="" handleClear={handleClear(FILTER_KEYS.CATEGORIES)} show={category.length > 0}/>}
-            maxHeight="125px"/>
+            maxHeight="125px"
+            pill_view = {false}/>
 
         {//<div><ClearFiltersButton title="Categories" handleClear={handleClear(FILTER_KEYS.CATEGORIES)} show={category.length > 0}/></div>
         }
@@ -58,10 +62,12 @@ function SideBar({
         <CollapsibleMenu 
             title="Brands" 
             tags={brands_tags} 
-            selected_tags={brands} 
-            selectedHandler={onFilterTagSelected(FILTER_KEYS.BRANDS)}  
+            selected_tags={brands}  
+            selectedHandler={onFilterTagSelected} 
+            filter_key = {FILTER_KEYS.BRANDS}
             clearBtnCmp={<ClearFiltersButton title="" handleClear={handleClear(FILTER_KEYS.BRANDS)} show={brands.length > 0}/>}
-            maxHeight="125px"/>  
+            maxHeight="125px"
+            pill_view = {false}/>  
 
         {//<div><ClearFiltersButton title="Brands" handleClear={handleClear(FILTER_KEYS.BRANDS)} show={brands.length > 0}/></div>
         }
@@ -72,9 +78,12 @@ function SideBar({
             title="Stores" 
             tags={stores_tags} 
             selected_tags={stores} 
-            selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)}
+            //selectedHandler={onFilterTagSelected(FILTER_KEYS.STORES)}
+            selectedHandler={onFilterTagSelected} 
+            filter_key = {FILTER_KEYS.STORES}
             clearBtnCmp={<ClearFiltersButton title="" handleClear={handleClear(FILTER_KEYS.STORES)} show={stores.length > 0}/>}
-            maxHeight="125px"/>
+            maxHeight="125px"
+            pill_view = {false}/>
         
         {//<div><ClearFiltersButton title="Stores" handleClear={handleClear(FILTER_KEYS.STORES)} show={stores.length > 0}/></div>
         }
@@ -82,8 +91,6 @@ function SideBar({
         <HorizontalLine/>
 
         <SortByDropDown selected_filters_handlers={selected_filters_handlers}/>
-
-        
 
         {/*show_options && <>
             <HorizontalLine/>

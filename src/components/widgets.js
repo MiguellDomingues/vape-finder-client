@@ -98,19 +98,21 @@ function SelectablePill({
 //////////////////////////////////NEW DROPDOWN MENU//////////////////////////////////////////////
 
 export function CollapsibleMenu( {
-    title         = "", 
-    tags          = [], 
-    selected_tags = [], 
-    selectedHandler,
-    clearBtnCmp = null,
-    maxHeight = "100px"
+    title         = "", //the text on the button
+    tags          = [], //arr of strings to be displayed when the menu is open
+    selected_tags = [], //arr of displayed strings to be highlighted when the menu is open
+    selectedHandler,    //event handler to select/deselect tags
+    clearBtnCmp = null, //optional event handler which removes 
+    maxHeight = "100px",
+    filter_key = null,
+    pill_view = false,
 } ){
 
     const [toggle, setToggle] = useState(false)
 
     const content_ref = useRef(null)
 
-    const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected content-row" : "content-row"
+    //const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected content-row" : "content-row"
 
     const isTagSelected = (tag, arr) => arr.includes(tag) 
 
@@ -130,25 +132,73 @@ export function CollapsibleMenu( {
         }
     }
 
+    function transformProps(filter_key, tags, selected_tags, selectedHandler){
+
+        const _tags = tags.map( t => { return { tag_name: t.tag_name, type: filter_key}})
+        const _selected_tags = {}
+        _selected_tags[FILTER_KEYS.CATEGORIES] = selected_tags
+        _selected_tags[FILTER_KEYS.BRANDS] = selected_tags
+        _selected_tags[FILTER_KEYS.STORES] = selected_tags
+
+         return {
+            matches:        _tags,
+            selected_tags : _selected_tags,
+            selectedHandler: selectedHandler
+        }
+    }
+
+
     return(<>
     <button className="collapsible" onClick={e=>toggleMenu()}>
         <div className="collapsible_title">    
             {!!clearBtnCmp &&<div className="collapsible_title_clear_wrapper">{clearBtnCmp}</div>}
             <div className="collapsible_title_left_txt">{title}</div>        
-            <div className={`collapsible_title_right ${toggle && `collapsible_open`}`}>{toggle?"-":"+"}</div>                    
+            <div className={`collapsible_title_right ${toggle && `collapsible_title_right_open`}`}>{toggle?"-":"+"}</div>                    
         </div>
     </button>
-    <div ref={content_ref} className="content">
-        {tags.map( (tag, idx)=>
-                <div className={selectedTagsBGC(tag.tag_name, selected_tags)}
-                    key={idx} 
-                    onClick={ ()=> selectedHandler(tag.tag_name)}>
-                    <div className="content-row-left">{tag.tag_name}</div> 
-                    <div className="content-row-right">{tag.product_count}</div>       
-                </div>
-            )}                  
-    </div></>)
+
+    { !pill_view ? //the dropdown which toggles when user clicks the button
+            <div ref={content_ref} className={"collapsible_open collapsible_open_list"}>
+                <ListDropDownView {...transformProps(filter_key, tags, selected_tags, selectedHandler)}/>       
+            </div> 
+        : 
+        <div ref={content_ref} className={"collapsible_open collapsible_open_pills"}>
+            <PillDropDownView  {...transformProps(filter_key, tags, selected_tags, selectedHandler)}/>
+        </div> }                   
+    </>)
 }
+
+////////TEMP
+
+export function PillDropDownView({
+    matches,  
+    selected_tags: {category, stores, brands},
+    selectedHandler
+}){
+    const filterMatchesByKey = (key, matches) => matches.filter( tag => tag.type === key).map(tag=>tag.tag_name)
+
+    return(<>
+        <PillList pills={filterMatchesByKey(FILTER_KEYS.CATEGORIES, matches)} handleClick={selectedHandler(FILTER_KEYS.CATEGORIES)} selected_pills={category}/>   
+        <PillList pills={filterMatchesByKey(FILTER_KEYS.BRANDS, matches)} handleClick={selectedHandler(FILTER_KEYS.BRANDS)} selected_pills={brands}/>
+        <PillList pills={filterMatchesByKey( FILTER_KEYS.STORES, matches)} handleClick={selectedHandler(FILTER_KEYS.STORES)} selected_pills={stores}/>
+    </>)
+}
+
+export function ListDropDownView({
+    matches, 
+    selected_tags: {category, stores, brands},
+    selectedHandler
+}){
+    const selected_tags = [...category, ...stores, ...brands] //" filter_selected content-row" : "content-row"
+    const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected content-row" : "content-row"
+
+    return (matches.map(tag=> //if theres at least a single word match, show dropdown
+    <div key={tag.tag_name} 
+         className={selectedTagsBGC(tag.tag_name, selected_tags)}
+         onClick={e=>selectedHandler(tag.type)(tag.tag_name)}>{tag.tag_name}</div>))
+}
+
+////////////
 
 /**************wrapper for <hr/> tag that appears inside flex containers***************** */
 //BUG: LINES ARE DEEP BLACK ON FIREFOX

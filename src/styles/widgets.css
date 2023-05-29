@@ -136,13 +136,12 @@
   font-weight: bold;
 }
 
-.collapsible_open{
+.collapsible_title_right_open{
   padding-right: 3px;
 }
 
-.content {
+.collapsible_open {
   display: flex;
-  flex-direction: column;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
@@ -150,6 +149,14 @@
   overflow-y:auto;
   border-radius: 10px;
   width: 100%;
+}
+
+.collapsible_open_pills{
+  flex-flow: row wrap;
+}
+
+.collapsible_open_list{
+  flex-flow: column nowrap;
 }
 
 .content::-webkit-scrollbar {

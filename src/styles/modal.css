@@ -39,7 +39,7 @@
     align-self: flex-start;
     margin-top: 5px;
     flex-flow: row wrap;
-    justify-content: center;
+    /*justify-content: center;*/
   }
   
   .close:hover,
