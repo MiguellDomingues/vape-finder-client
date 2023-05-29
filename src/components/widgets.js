@@ -132,9 +132,10 @@ export function CollapsibleMenu( {
         }
     }
 
+    //create copies
     function transformProps(filter_key, tags, selected_tags, selectedHandler){
 
-        const _tags = tags.map( t => { return { tag_name: t.tag_name, type: filter_key}})
+        const _tags = tags.map( t => { return { tag_name: t.tag_name, type: filter_key, product_count: t.product_count}})
         const _selected_tags = {}
         _selected_tags[FILTER_KEYS.CATEGORIES] = selected_tags
         _selected_tags[FILTER_KEYS.BRANDS] = selected_tags
@@ -168,7 +169,6 @@ export function CollapsibleMenu( {
     </>)
 }
 
-////////TEMP
 
 export function PillDropDownView({
     matches,  
@@ -193,9 +193,12 @@ export function ListDropDownView({
     const selectedTagsBGC = (str, arr) => arr.includes(str) ? " filter_selected content-row" : "content-row"
 
     return (matches.map(tag=> //if theres at least a single word match, show dropdown
-    <div key={tag.tag_name} 
-         className={selectedTagsBGC(tag.tag_name, selected_tags)}
-         onClick={e=>selectedHandler(tag.type)(tag.tag_name)}>{tag.tag_name}</div>))
+        <div key={tag.tag_name} 
+            className={selectedTagsBGC(tag.tag_name, selected_tags)}
+            onClick={e=>selectedHandler(tag.type)(tag.tag_name)}>
+                <div>{tag.tag_name}</div>
+                <div>{tag.product_count}</div>
+        </div>))
 }
 
 ////////////

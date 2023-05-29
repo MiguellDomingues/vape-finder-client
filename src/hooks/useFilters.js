@@ -20,14 +20,16 @@ function useFilters(
 
     function initTrieSearch(filter_tags){
 
+        //console.log("FILTER TAGS",filter_tags)
+
         const trie  = new TrieSearch("tag_name");
 
-        //add an entry to the trie, splitting the type 
-        const initTrieByTagType = (type) => (tag) => trie.add({tag_name: tag.tag_name, type: type.split("_")[0]})
+        //add an entry to the trie by tag_name, linking it with the tag_name, type, and product count
+        const initTrieByTagType = (type) => (tag) => trie.add({tag_name: tag.tag_name, type: type.split("_")[0], product_count: tag.product_count})
 
-        Object.keys(filter_tags).forEach( //for each filter tag key,
+        Object.keys(filter_tags).forEach( //for each filter tag type, (category/brands/stores_tags)
             (key)=> filter_tags[key].forEach( //for each filter tag
-                initTrieByTagType(key)))      //invoke a closure with the key which adds filter tag to trie 
+                initTrieByTagType(key)))        //add the filter tag to the trie
 
         return trie
     }
@@ -39,7 +41,7 @@ function useFilters(
         const filterTagsByMinProductCount = (tags, min_product_count = 0) => tags.filter((tag) => tag.product_count >= min_product_count)
         const findTagsByTagType = (tagmetadata, type_name) => tagmetadata.find( t => t.type_name === type_name).tags
         //console.log("----RUNNING PARSE FILTER TAGS---")
-        return { //unpack each search type by respective tag_name, filter for tags over a certain #, and sort the results from most linked products to least
+        return { //unpack each search type by respective tag_name, filter for tags over a certain # of products, and sort the results from most linked products to least
             category_tags: orderTagsByProductCount( filterTagsByMinProductCount ( findTagsByTagType(tagmetadata, "CATEGORIES"))),
             brands_tags:   orderTagsByProductCount( filterTagsByMinProductCount ( findTagsByTagType(tagmetadata, "BRANDS"), MIN_ITEM_COUNT)),
             stores_tags:   orderTagsByProductCount( filterTagsByMinProductCount ( findTagsByTagType(tagmetadata, "STORES"))) 
