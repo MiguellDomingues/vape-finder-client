@@ -2,7 +2,7 @@ import  useFilters  from '../hooks/useFilters.js'
 import  usePillList  from '../hooks/usePillList.js'
 import useOnClickOutside from '../hooks/useOnClickOutside.js'
 import TextSearch from './TextSearch.js'
-import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton, ClearAllFiltersButton } from './widgets.js'
+import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton, ClearAllFiltersButton, TestingMenu } from './widgets.js'
 import { FILTER_KEYS } from '../utils.js'
 import { RiCloseFill } from 'react-icons/ri';
 
@@ -29,13 +29,18 @@ function Modal({
     useOnClickOutside(overlay_ref, () => toggleModal()); 
 
     //this crashes app if the user opens the menu while loading results (CSSTransition expects a cmp)
-    //user cant open modal in parent cmp when filters are loading, but nicer to replace with modal showing loading spinner
+    //user prevented from opening modal in parent cmp when filters are loading, but nicer to replace with modal showing loading spinner
     if (loading) return 'Loading...'; 
     if (error) return `Error! ${error.message}`;
 
    const { category_tags, brands_tags, stores_tags } = filter_tags
    const { category, stores, brands, } = selected_filters
    //const {current_filter_name, restoreFiltersFromHistory, filterHistoryToCollapsibleMenu } = history
+
+console.log(" category, stores, brands, ", selected_filters, " category_tags, brands_tags, stores_tags: ", filter_tags)
+ 
+
+   //console.log("MODAL: TEST DATA ", my_data)
 
     return(<>
     <div  className="modal modal_no_select">
@@ -52,6 +57,10 @@ function Modal({
       <div className="modal_layout_row">
         <TextSearch searchTagsHandler={searchTags} selectedHandler={onFilterTagSelected} selected_tags={selected_filters} pill_view={true}/>
       </div>   
+
+      <div className="modal_layout_row">
+        <SortByDropDown selected_filters_handlers={selected_filters_handlers}/>
+      </div>
 
       {/*<div className="modal_layout_row">
         <CollapsibleMenu 
@@ -76,9 +85,11 @@ function Modal({
       {/*<div className="modal_pill_list">
         <ClearFiltersButton handleClear={handleClear(FILTER_KEYS.CATEGORIES)} show={category.length > 0}/>  
         <PillList pills={category} handleRemove={handleRemove(FILTER_KEYS.CATEGORIES)} />
-    </div>*/}
+    </div>
+    <HorizontalLine/>   
+    */}
 
-      <HorizontalLine/>
+      
 
       <div className="modal_layout_row">
         <CollapsibleMenu 
@@ -94,9 +105,11 @@ function Modal({
       {/*<div className="modal_pill_list">
         <ClearFiltersButton handleClear={handleClear(FILTER_KEYS.BRANDS)} show={brands.length > 0}/>
         <PillList pills={brands} handleRemove={handleRemove(FILTER_KEYS.BRANDS)} />
-  </div>*/}
+  </div>
+  <HorizontalLine/>
+  */}
 
-      <HorizontalLine/>
+      
       
     <div className="modal_layout_row">
         <CollapsibleMenu 
@@ -112,13 +125,25 @@ function Modal({
       {/*<div className="modal_pill_list">
         <ClearFiltersButton handleClear={handleClear(FILTER_KEYS.STORES)} show={stores.length > 0}/>
         <PillList pills={stores} handleRemove={handleRemove(FILTER_KEYS.STORES)} />
-    </div>*/}
+    </div>
+    
+     <HorizontalLine/>
+*/}
 
-      <HorizontalLine/>
 
-      <div className="modal_layout_row">
-        <SortByDropDown selected_filters_handlers={selected_filters_handlers}/>
-      </div>
+
+<div className="modal_layout_row">
+  <TestingMenu 
+  filter_tags={filter_tags} 
+  selected_filters={selected_filters}
+  selectedHandler={onFilterTagSelected}
+  //maxHeight={maxHeight} 
+  pill_view={true}/>
+</div>
+
+     
+
+      
 
       <div className="modal_pill_list">
         <PillList pills={category}  handleRemove={handleRemove(FILTER_KEYS.CATEGORIES)} />   

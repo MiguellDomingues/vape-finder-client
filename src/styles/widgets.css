@@ -406,6 +406,24 @@
   transition: opacity 500ms;
 }
 
+/* TESTING COLLAPSIBLEMENUGROUP*/
+
+.testing{
+  display: flex;
+  flex-direction: row nowrap;
+}
+
+.collapsible_open_test {
+  display: flex;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .15s ease-out;
+  background-color: #f1f1f1;
+  overflow-y:auto;
+  border-radius: 10px;
+  width: 100%;
+}
+
 /*
 
   border-right-style: double;

@@ -132,7 +132,7 @@ export function CollapsibleMenu( {
         }
     }
 
-    //create copies
+    //create copies of filter tags and transform 
     function transformProps(filter_key, tags, selected_tags, selectedHandler){
 
         const _tags = tags.map( t => { return { tag_name: t.tag_name, type: filter_key, product_count: t.product_count}})
@@ -147,7 +147,6 @@ export function CollapsibleMenu( {
             selectedHandler: selectedHandler
         }
     }
-
 
     return(<>
     <button className="collapsible" onClick={e=>toggleMenu()}>
@@ -315,6 +314,192 @@ export function EmailJSIcon(){
     </svg>)
 }
   
+export function TestingMenu({
+    filter_tags: { category_tags, brands_tags, stores_tags },
+   selected_filters: { category, stores, brands, } ,
+    //menus = [],
+    selectedHandler,
+    pill_view = false,
+    max_height = "200px"
+  }){
+
+  
+//{ category, stores, brands, } = selected_filters
+    const menus = [
+        {
+          title: "Categories",
+          tags: category_tags,
+          selected_tags: category,
+          filter_key: FILTER_KEYS.CATEGORIES,
+          pill_view: false 
+        },
+        {
+          title: "Brands",
+          tags: brands_tags,
+          selected_tags: brands,
+          filter_key: FILTER_KEYS.BRANDS,
+          pill_view: false 
+        },
+        {
+          title: "Stores",
+          tags: stores_tags,
+          selected_tags: stores,
+          filter_key: FILTER_KEYS.STORES,
+          pill_view: false 
+        }
+       ]
+
+
+
+    const content_ref = useRef(null)
+    //THE SELECTED PILLS ARE NOT UPDATING UNLESS I OPEM/CLOSE THE SAME MENU
+    //BECAUSE THIS CMP IS NOT GETTING RERENDERED WHEN USER SELECTS FILTERS
+    //another issue: make font smaller, center the headings in the row
+    const [current_menu, setSelectedMenu]= useState(null)
+    const is_menu_animating = useRef(false)
+
+    console.log("RERENDER TESTINGMENU", menus)
+    console.log("initial render state: ", content_ref.current, current_menu, is_menu_animating )
+  
+    function transformProps(current_menu, selectedHandler){
+
+        console.log("transform prop curent_menu: ", current_menu)
+
+       const { filter_key, tags, selected_tags } = current_menu
+
+        const _tags = tags.map( t => { return { tag_name: t.tag_name, type: filter_key, product_count: t.product_count}})
+        const _selected_tags = {}
+        _selected_tags[FILTER_KEYS.CATEGORIES] = selected_tags
+        _selected_tags[FILTER_KEYS.BRANDS] = selected_tags
+        _selected_tags[FILTER_KEYS.STORES] = selected_tags
+
+        console.log("transform props _selected_tags: ", _selected_tags)
+
+         return {
+            matches:        _tags,
+            selected_tags : _selected_tags,
+            selectedHandler: selectedHandler
+        }
+    }
+
+    /*
+    title: "Categories",
+      tags: category_tags,
+      selected_tags: [...category],
+      filter_key: FILTER_KEYS.CATEGORIES,
+      pill_view: false 
+    */
+
+    function openMenu(selected_menu){
+        let content = content_ref.current
+        content.style.maxHeight = max_height
+            //selected_menu_ref.current = selected_menu
+            setSelectedMenu({...selected_menu, tags: [...selected_menu.tags], selected_tags: [...selected_menu.selected_tags] })
+            //setToggle(true)
+    }
+
+    function closeMenu(selected_menu){
+        let content = content_ref.current
+
+        content.style.maxHeight = null //close the menu
+       // selected_menu_ref.current = null //reset the ref
+        is_menu_animating.current = true //prevent clicks on the menu while its animating
+        setTimeout(() =>{
+            //setToggle(false)
+            is_menu_animating.current = false
+        }, 200)
+        
+    }
+  
+    function toggleMenu(menu){
+
+        console.log("MENU: ", menu)
+
+        let content = content_ref.current
+
+        if(!isMenuOpen()){ //if all menus are closed
+          openMenu(menu)
+        }else{ //a menu is open
+            if(isSelectedMenu(menu)){ //if the open menu is the selected menu
+                content.style.maxHeight = null //close the menu        
+                is_menu_animating.current = true //prevent clicks on the menu while its animating
+                setTimeout(() =>{
+                    setSelectedMenu(null) //reset the ref
+                    is_menu_animating.current = false
+                }, 200)
+            }else{ // if the open menu is not the selected menu
+                //close the current menu
+                content.style.maxHeight = null //close the menu            
+                is_menu_animating.current = true //prevent clicks on the menu while its animating
+                setTimeout(() =>{
+                    setSelectedMenu(null)
+                    setTimeout(() =>{
+                        openMenu(menu)
+                        is_menu_animating.current = false
+                        // and open the new menu
+                    }, 150)
+                    // and open the new menu
+                }, 150)
+
+                // and open the new menu
+            }
+        }
+  }
+
+  const isSelectedMenu = (menu) => current_menu && (menu.title === current_menu.title )
+  const isMenuOpen = () => !!current_menu 
+  
+    return(<>
+
+    <div className="testing">
+
+        {menus.map( menu=> <button className="collapsible" onClick={e=>!is_menu_animating.current && toggleMenu(menu)}>
+          <div className="collapsible_title">    
+              <div className="collapsible_title_left_txt">{menu.title}</div>        
+              <div className={`collapsible_title_right ${isSelectedMenu(menu) && //when the menu is open, add some extra padding for the '-' char
+                `collapsible_title_right_open`}`}>{isSelectedMenu(menu)?"-":"+"}</div>                    
+          </div>
+      </button>)}
+
+      </div>
+        
+       
+      { !pill_view ? //the dropdown which toggles when user clicks the button
+            <div ref={content_ref} className={"collapsible_open_test collapsible_open_list"}>
+                
+               { current_menu !== null && <ListDropDownView {...transformProps(
+                current_menu,
+               // filter_key, tags, selected_tags, 
+                selectedHandler)}/> }   
+            </div> 
+        : 
+        <div ref={content_ref} className={"collapsible_open_test collapsible_open_pills"}>
+            { current_menu !== null && <PillDropDownView  {...transformProps(
+                current_menu,
+                //filter_key, tags, selected_tags, 
+                selectedHandler)}/> }
+        </div> }       
+        
+            
+    
+
+   
+  
+      
+    
+    
+    </>)
+  }
+
+ // const [selected_menu, setSelectedMenu]= useState(null)
+  
+//pill pill_container_font selectable_pill pill_container_selected
+//pill_str pill_str_selected
+
+//class="collapsible_open_test collapsible_open_pills"
+//pill pill_container_font selectable_pill pill_container_selected
+//pill_str pill_str_selected
+
 
 //////////////////////////CURRENTLY UNUSED//////////////////////////////////////
 /*
@@ -376,3 +561,154 @@ export function DropDownMenu( {title, tags, selected_tags, selectedHandler} ){
       });
 */
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+export function TestingMenu({
+    menus = [],
+    selectedHandler,
+    pill_view = false,
+    max_height = "200px"
+  }){
+console.log("RERENDER TESTINGMENU", menus)
+    const content_ref = useRef(null)
+    const selected_menu_ref = useRef(null)
+    const is_menu_animating = useRef(false)
+  
+    const [is_open, setToggle] = useState(false)
+//filter_key, tags, selected_tags
+    function transformProps(current_menu, selectedHandler){
+
+       const { filter_key, tags, selected_tags } = current_menu
+
+        const _tags = tags.map( t => { return { tag_name: t.tag_name, type: filter_key, product_count: t.product_count}})
+        const _selected_tags = {}
+        _selected_tags[FILTER_KEYS.CATEGORIES] = selected_tags
+        _selected_tags[FILTER_KEYS.BRANDS] = selected_tags
+        _selected_tags[FILTER_KEYS.STORES] = selected_tags
+
+        console.log("transform props: ", _selected_tags)
+
+         return {
+            matches:        _tags,
+            selected_tags : _selected_tags,
+            selectedHandler: selectedHandler
+        }
+    }
+
+    function openMenu(selected_menu){
+        let content = content_ref.current
+        content.style.maxHeight = max_height
+            selected_menu_ref.current = selected_menu
+            setToggle(true)
+    }
+
+    function closeMenu(selected_menu){
+        let content = content_ref.current
+
+        content.style.maxHeight = null //close the menu
+        selected_menu_ref.current = null //reset the ref
+        is_menu_animating.current = true //prevent clicks on the menu while its animating
+        setTimeout(() =>{
+            setToggle(false)
+            is_menu_animating.current = false
+        }, 200)
+        
+    }
+  
+    function toggleMenu(menu, is_open){
+
+        console.log("MENU: ", menu)
+
+        let content = content_ref.current
+
+        if(!is_open){ //if all menus are closed
+           // content.style.maxHeight = max_height
+           // selected_menu_ref.current = menu
+          //  setToggle(true)
+          openMenu(menu)
+        }else{ //a menu is open
+            if(menu.title === selected_menu_ref.current.title ){ //if the open menu is the selected menu
+                content.style.maxHeight = null //close the menu
+                selected_menu_ref.current = null //reset the ref
+                is_menu_animating.current = true //prevent clicks on the menu while its animating
+                setTimeout(() =>{
+                    setToggle(false)
+                    is_menu_animating.current = false
+                }, 200)
+            }else{ // if the open menu is not the selected menu
+                //close the current menu
+                content.style.maxHeight = null //close the menu
+                selected_menu_ref.current = null //reset the ref
+                is_menu_animating.current = true //prevent clicks on the menu while its animating
+
+                setTimeout(() =>{
+                    setToggle(false) //close menu and open a new menu after animation
+                    setTimeout(() =>{
+                        openMenu(menu)
+                        is_menu_animating.current = false
+                        // and open the new menu
+                    }, 150)
+                    // and open the new menu
+                }, 150)
+
+                // and open the new menu
+
+
+            }
+        }
+
+     //// let content = content_ref.current
+  
+     // if(!content.style.maxHeight){
+       //   content.style.maxHeight = maxHeight
+       //   setToggle(true)
+     // }else{
+      //    content.style.maxHeight = null
+       //   setToggle(false)
+     // }
+  }
+
+  const isSelectedMenu = (current_menu) => current_menu.title === selected_menu_ref.current?.title
+  
+    return(<>
+
+    <div className="testing">
+
+        {menus.map( menu=> <button className="collapsible" onClick={e=>!is_menu_animating.current && toggleMenu(menu, is_open)}>
+          <div className="collapsible_title">    
+              <div className="collapsible_title_left_txt">{menu.title}</div>        
+              <div className={`collapsible_title_right ${isSelectedMenu(menu) && //when the menu is open, add some extra padding for the '-' char
+                `collapsible_title_right_open`}`}>{isSelectedMenu(menu)?"-":"+"}</div>                    
+          </div>
+      </button>)}
+
+      </div>
+        
+       
+      { !pill_view ? //the dropdown which toggles when user clicks the button
+            <div ref={content_ref} className={"collapsible_open_test collapsible_open_list"}>
+                
+               { selected_menu_ref.current && <ListDropDownView {...transformProps(
+                selected_menu_ref.current,
+               // filter_key, tags, selected_tags, 
+                selectedHandler)}/> }   
+            </div> 
+        : 
+        <div ref={content_ref} className={"collapsible_open_test collapsible_open_pills"}>
+            { selected_menu_ref.current && <PillDropDownView  {...transformProps(
+                selected_menu_ref.current,
+                //filter_key, tags, selected_tags, 
+                selectedHandler)}/> }
+        </div> }       
+        
+            
+    
+
+   
+  
+      
+    
+    
+    </>)
+  }
+*/
