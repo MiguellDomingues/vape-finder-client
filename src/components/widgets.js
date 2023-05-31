@@ -314,56 +314,53 @@ export function EmailJSIcon(){
     </svg>)
 }
   
-export function TestingMenu({
+export function CollapsibleMenuGroup({
     filter_tags: { category_tags, brands_tags, stores_tags },
-   selected_filters: { category, stores, brands, } ,
-    //menus = [],
+    selected_filters,
     selectedHandler,
-    pill_view = false,
     max_height = "200px"
-  }){
+}){
 
+    const content_ref = useRef(null)
+    //another issue: make font smaller, center the headings in the row
+    const [current_menu, setCurrentMenu]= useState(null) //issue was the selected filters were not updating in the current_menu obj
+    const is_menu_animating = useRef(false) // //prevent clicks on the menu while its animating as this causes things to crash
+
+    const { category, stores, brands }  = selected_filters
   
-//{ category, stores, brands, } = selected_filters
     const menus = [
         {
           title: "Categories",
           tags: category_tags,
           selected_tags: category,
           filter_key: FILTER_KEYS.CATEGORIES,
-          pill_view: false 
+          pill_view: true 
         },
         {
           title: "Brands",
           tags: brands_tags,
           selected_tags: brands,
           filter_key: FILTER_KEYS.BRANDS,
-          pill_view: false 
+          pill_view: true
         },
         {
           title: "Stores",
           tags: stores_tags,
           selected_tags: stores,
           filter_key: FILTER_KEYS.STORES,
-          pill_view: false 
+          pill_view: true
         }
-       ]
+    ]
+
+    useEffect( () => {
+        if(current_menu){
+            setCurrentMenu({  
+                ...current_menu, 
+                selected_tags: selected_filters[current_menu.filter_key]})}              
+    },[selected_filters]);
 
 
-
-    const content_ref = useRef(null)
-    //THE SELECTED PILLS ARE NOT UPDATING UNLESS I OPEM/CLOSE THE SAME MENU
-    //BECAUSE THIS CMP IS NOT GETTING RERENDERED WHEN USER SELECTS FILTERS
-    //another issue: make font smaller, center the headings in the row
-    const [current_menu, setSelectedMenu]= useState(null)
-    const is_menu_animating = useRef(false)
-
-    console.log("RERENDER TESTINGMENU", menus)
-    console.log("initial render state: ", content_ref.current, current_menu, is_menu_animating )
-  
     function transformProps(current_menu, selectedHandler){
-
-        console.log("transform prop curent_menu: ", current_menu)
 
        const { filter_key, tags, selected_tags } = current_menu
 
@@ -373,8 +370,6 @@ export function TestingMenu({
         _selected_tags[FILTER_KEYS.BRANDS] = selected_tags
         _selected_tags[FILTER_KEYS.STORES] = selected_tags
 
-        console.log("transform props _selected_tags: ", _selected_tags)
-
          return {
             matches:        _tags,
             selected_tags : _selected_tags,
@@ -382,124 +377,65 @@ export function TestingMenu({
         }
     }
 
-    /*
-    title: "Categories",
-      tags: category_tags,
-      selected_tags: [...category],
-      filter_key: FILTER_KEYS.CATEGORIES,
-      pill_view: false 
-    */
-
-    function openMenu(selected_menu){
-        let content = content_ref.current
+    function openMenu(selected_menu,content){
         content.style.maxHeight = max_height
-            //selected_menu_ref.current = selected_menu
-            setSelectedMenu({...selected_menu, tags: [...selected_menu.tags], selected_tags: [...selected_menu.selected_tags] })
-            //setToggle(true)
+        setCurrentMenu({...selected_menu, tags: [...selected_menu.tags], selected_tags: [...selected_menu.selected_tags] })
     }
 
-    function closeMenu(selected_menu){
-        let content = content_ref.current
-
-        content.style.maxHeight = null //close the menu
-       // selected_menu_ref.current = null //reset the ref
-        is_menu_animating.current = true //prevent clicks on the menu while its animating
-        setTimeout(() =>{
-            //setToggle(false)
-            is_menu_animating.current = false
-        }, 200)
-        
-    }
-  
     function toggleMenu(menu){
 
-        console.log("MENU: ", menu)
-
         let content = content_ref.current
 
+        if(!content) return
+
         if(!isMenuOpen()){ //if all menus are closed
-          openMenu(menu)
+          openMenu(menu, content )
         }else{ //a menu is open
             if(isSelectedMenu(menu)){ //if the open menu is the selected menu
-                content.style.maxHeight = null //close the menu        
-                is_menu_animating.current = true //prevent clicks on the menu while its animating
-                setTimeout(() =>{
-                    setSelectedMenu(null) //reset the ref
+                content.style.maxHeight = null //close the menu, starting the animation        
+                is_menu_animating.current = true
+                setTimeout(() =>{ //set a timer that fires near the same time as the css animation time
+                    setCurrentMenu(null) //reset the ref
                     is_menu_animating.current = false
-                }, 200)
-            }else{ // if the open menu is not the selected menu
-                //close the current menu
-                content.style.maxHeight = null //close the menu            
-                is_menu_animating.current = true //prevent clicks on the menu while its animating
-                setTimeout(() =>{
-                    setSelectedMenu(null)
-                    setTimeout(() =>{
-                        openMenu(menu)
-                        is_menu_animating.current = false
-                        // and open the new menu
-                    }, 150)
-                    // and open the new menu
                 }, 150)
-
-                // and open the new menu
+            }else{ // if the open menu is not the selected menu
+                content.style.maxHeight = null           
+                is_menu_animating.current = true
+                setTimeout(() =>{ //set a timer that fires when the menu is done animating
+                    setCurrentMenu(null)
+                    setTimeout(() =>{ //.. and that timer will fire another timer that opens the new menu
+                        openMenu(menu,content)
+                        is_menu_animating.current = false //reenable the buttons when the animation sequence is complete
+                    }, 150)
+                }, 150)
             }
         }
   }
 
-  const isSelectedMenu = (menu) => current_menu && (menu.title === current_menu.title )
+  const isSelectedMenu = (menu) => content_ref.current && current_menu && (menu.title === current_menu.title )
   const isMenuOpen = () => !!current_menu 
+  const getViewCSS = () => isMenuOpen() ? (current_menu.pill_view ? "collapsible_open_pills" : "collapsible_open_list")  : ""
   
     return(<>
-
-    <div className="testing">
-
-        {menus.map( menu=> <button className="collapsible" onClick={e=>!is_menu_animating.current && toggleMenu(menu)}>
-          <div className="collapsible_title">    
-              <div className="collapsible_title_left_txt">{menu.title}</div>        
-              <div className={`collapsible_title_right ${isSelectedMenu(menu) && //when the menu is open, add some extra padding for the '-' char
-                `collapsible_title_right_open`}`}>{isSelectedMenu(menu)?"-":"+"}</div>                    
-          </div>
-      </button>)}
-
+        <div className="collapsible_menu_group_buttons">
+            {menus.map( menu => 
+                <button key={menu.title} className="collapsible" onClick={e=>!is_menu_animating.current && toggleMenu(menu)}>
+                    <div className="collapsible_title">    
+                        <div className="collapsible_title_left_txt">{menu.title}</div>        
+                        <div className={`collapsible_title_right ${isSelectedMenu(menu) && //when the menu is open, add some extra padding for the '-' char
+                            `collapsible_title_right_open`}`}>{isSelectedMenu(menu)?"-":"+"}</div>                    
+                    </div>
+                </button>)}
       </div>
-        
-       
-      { !pill_view ? //the dropdown which toggles when user clicks the button
-            <div ref={content_ref} className={"collapsible_open_test collapsible_open_list"}>
-                
-               { current_menu !== null && <ListDropDownView {...transformProps(
-                current_menu,
-               // filter_key, tags, selected_tags, 
-                selectedHandler)}/> }   
-            </div> 
-        : 
-        <div ref={content_ref} className={"collapsible_open_test collapsible_open_pills"}>
-            { current_menu !== null && <PillDropDownView  {...transformProps(
-                current_menu,
-                //filter_key, tags, selected_tags, 
-                selectedHandler)}/> }
-        </div> }       
-        
-            
-    
 
-   
-  
-      
-    
-    
+      <div ref={content_ref} className={`collapsible_menu_group_open_menu ${getViewCSS()}`}>        
+        {isMenuOpen() && (!current_menu.pill_view ? //if a menu is open, check which type to display    
+                <ListDropDownView {...transformProps(current_menu, selectedHandler)}/>    
+            : 
+                <PillDropDownView  {...transformProps(current_menu, selectedHandler)}/>)}    
+        </div>    
     </>)
-  }
-
- // const [selected_menu, setSelectedMenu]= useState(null)
-  
-//pill pill_container_font selectable_pill pill_container_selected
-//pill_str pill_str_selected
-
-//class="collapsible_open_test collapsible_open_pills"
-//pill pill_container_font selectable_pill pill_container_selected
-//pill_str pill_str_selected
-
+}
 
 //////////////////////////CURRENTLY UNUSED//////////////////////////////////////
 /*

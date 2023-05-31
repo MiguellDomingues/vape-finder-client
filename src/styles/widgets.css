@@ -408,12 +408,12 @@
 
 /* TESTING COLLAPSIBLEMENUGROUP*/
 
-.testing{
+.collapsible_menu_group_buttons{
   display: flex;
   flex-direction: row nowrap;
 }
 
-.collapsible_open_test {
+.collapsible_menu_group_open_menu {
   display: flex;
   max-height: 0;
   overflow: hidden;

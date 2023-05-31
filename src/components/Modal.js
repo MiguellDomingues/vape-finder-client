@@ -2,15 +2,15 @@ import  useFilters  from '../hooks/useFilters.js'
 import  usePillList  from '../hooks/usePillList.js'
 import useOnClickOutside from '../hooks/useOnClickOutside.js'
 import TextSearch from './TextSearch.js'
-import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenu, ClearFiltersButton, ClearAllFiltersButton, TestingMenu } from './widgets.js'
+import { SortByDropDown, PillList, HorizontalLine, CollapsibleMenuGroup, ClearFiltersButton, ClearAllFiltersButton } from './widgets.js'
 import { FILTER_KEYS } from '../utils.js'
 import { RiCloseFill } from 'react-icons/ri';
 
-import { useRef } from 'react'
+import { useRef,} from 'react'
 
 import '../styles/modal.css'
 
-const maxHeight = "120px" //max height of collapsible menu when its opened
+const maxHeight = "220px" //max height of collapsible menu when its opened
 
 function Modal({
   selected_filters_handlers, 
@@ -37,11 +37,6 @@ function Modal({
    const { category, stores, brands, } = selected_filters
    //const {current_filter_name, restoreFiltersFromHistory, filterHistoryToCollapsibleMenu } = history
 
-console.log(" category, stores, brands, ", selected_filters, " category_tags, brands_tags, stores_tags: ", filter_tags)
- 
-
-   //console.log("MODAL: TEST DATA ", my_data)
-
     return(<>
     <div  className="modal modal_no_select">
       <div ref={overlay_ref} className="modal-content">
@@ -62,16 +57,40 @@ console.log(" category, stores, brands, ", selected_filters, " category_tags, br
         <SortByDropDown selected_filters_handlers={selected_filters_handlers}/>
       </div>
 
-      {/*<div className="modal_layout_row">
+      <div className="modal_layout_row">
+        <CollapsibleMenuGroup 
+        filter_tags={filter_tags} 
+        selected_filters={selected_filters}
+        selectedHandler={onFilterTagSelected}
+        maxHeight={maxHeight} 
+        pill_view={true}/>
+      </div>
+
+      <div className="modal_pill_list">
+        <PillList pills={category}  handleRemove={handleRemove(FILTER_KEYS.CATEGORIES)} />   
+        <PillList pills={brands}  handleRemove={handleRemove(FILTER_KEYS.BRANDS)} />
+        <PillList pills={stores}  handleRemove={handleRemove(FILTER_KEYS.STORES)} />
+      </div>
+      
+      </div>
+  </div>
+  </>)
+}
+
+export default Modal
+
+/*
+ /*<div className="modal_layout_row">
         <CollapsibleMenu 
           title="History" 
           tags={filterHistoryToCollapsibleMenu()} 
           selected_tags={current_filter_name}
           selectedHandler={restoreFiltersFromHistory}  
           maxHeight={maxHeight}/>
-    </div>*/}
-
-      <div className="modal_layout_row">
+    </div>
+    
+    
+    <div className="modal_layout_row">
         <CollapsibleMenu 
         title="Categories" 
         tags={category_tags} 
@@ -81,17 +100,18 @@ console.log(" category, stores, brands, ", selected_filters, " category_tags, br
         filter_key = {FILTER_KEYS.CATEGORIES}
         pill_view = {true}/>  
       </div>
+    
+    */
 
-      {/*<div className="modal_pill_list">
+      
+
+      /*<div className="modal_pill_list">
         <ClearFiltersButton handleClear={handleClear(FILTER_KEYS.CATEGORIES)} show={category.length > 0}/>  
         <PillList pills={category} handleRemove={handleRemove(FILTER_KEYS.CATEGORIES)} />
     </div>
     <HorizontalLine/>   
-    */}
 
-      
-
-      <div className="modal_layout_row">
+     <div className="modal_layout_row">
         <CollapsibleMenu 
         title="Brands" 
         tags={brands_tags} 
@@ -101,17 +121,21 @@ console.log(" category, stores, brands, ", selected_filters, " category_tags, br
         filter_key = {FILTER_KEYS.BRANDS}
         pill_view = {true}/>  
       </div>
+
+    */
+
       
-      {/*<div className="modal_pill_list">
+
+     
+      
+      /*<div className="modal_pill_list">
         <ClearFiltersButton handleClear={handleClear(FILTER_KEYS.BRANDS)} show={brands.length > 0}/>
         <PillList pills={brands} handleRemove={handleRemove(FILTER_KEYS.BRANDS)} />
   </div>
   <HorizontalLine/>
-  */}
 
-      
-      
-    <div className="modal_layout_row">
+
+     <div className="modal_layout_row">
         <CollapsibleMenu 
         title="Stores" 
         tags={stores_tags} 
@@ -122,39 +146,16 @@ console.log(" category, stores, brands, ", selected_filters, " category_tags, br
         pill_view = {true}/>  
       </div>
 
-      {/*<div className="modal_pill_list">
+
+
+  */
+
+  /*<div className="modal_pill_list">
         <ClearFiltersButton handleClear={handleClear(FILTER_KEYS.STORES)} show={stores.length > 0}/>
         <PillList pills={stores} handleRemove={handleRemove(FILTER_KEYS.STORES)} />
     </div>
     
      <HorizontalLine/>
-*/}
+*/
 
-
-
-<div className="modal_layout_row">
-  <TestingMenu 
-  filter_tags={filter_tags} 
-  selected_filters={selected_filters}
-  selectedHandler={onFilterTagSelected}
-  //maxHeight={maxHeight} 
-  pill_view={true}/>
-</div>
-
-     
-
-      
-
-      <div className="modal_pill_list">
-        <PillList pills={category}  handleRemove={handleRemove(FILTER_KEYS.CATEGORIES)} />   
-        <PillList pills={brands}  handleRemove={handleRemove(FILTER_KEYS.BRANDS)} />
-        <PillList pills={stores}  handleRemove={handleRemove(FILTER_KEYS.STORES)} />
-      </div>
-      
-    </div>
-</div>
-  </>)
-}
-
-export default Modal
 
