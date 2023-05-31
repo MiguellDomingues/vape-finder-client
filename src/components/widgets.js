@@ -177,9 +177,9 @@ export function PillDropDownView({
     const filterMatchesByKey = (key, matches) => matches.filter( tag => tag.type === key).map(tag=>tag.tag_name)
 
     return(<>
-        <PillList pills={filterMatchesByKey(FILTER_KEYS.CATEGORIES, matches)} handleClick={selectedHandler(FILTER_KEYS.CATEGORIES)} selected_pills={category}/>   
+        <PillList pills={filterMatchesByKey(FILTER_KEYS.CATEGORIES, matches)} handleClick={selectedHandler(FILTER_KEYS.CATEGORIES)} selected_pills={category}/>       
         <PillList pills={filterMatchesByKey(FILTER_KEYS.BRANDS, matches)} handleClick={selectedHandler(FILTER_KEYS.BRANDS)} selected_pills={brands}/>
-        <PillList pills={filterMatchesByKey( FILTER_KEYS.STORES, matches)} handleClick={selectedHandler(FILTER_KEYS.STORES)} selected_pills={stores}/>
+        <PillList pills={filterMatchesByKey( FILTER_KEYS.STORES, matches)} handleClick={selectedHandler(FILTER_KEYS.STORES)} selected_pills={stores}/> 
     </>)
 }
 
@@ -318,13 +318,16 @@ export function CollapsibleMenuGroup({
     filter_tags: { category_tags, brands_tags, stores_tags },
     selected_filters,
     selectedHandler,
-    max_height = "200px"
+    handleClear = null, //handler for clearing all selections from one of the menus
+    max_height = "200px",
 }){
+
+    const ANIMATION_TIME = 150 // the time in ms for the menu to open or close. note that this should equal 'transition:' time in the css
 
     const content_ref = useRef(null)
     //another issue: make font smaller, center the headings in the row
-    const [current_menu, setCurrentMenu]= useState(null) //issue was the selected filters were not updating in the current_menu obj
-    const is_menu_animating = useRef(false) // //prevent clicks on the menu while its animating as this causes things to crash
+    const [current_menu, setCurrentMenu]= useState(null) 
+    const is_menu_animating = useRef(false) // //prevent clicks on the menu while its animating or things crash and break
 
     const { category, stores, brands }  = selected_filters
   
@@ -352,6 +355,8 @@ export function CollapsibleMenuGroup({
         }
     ]
 
+    //initial issue: when one of the selected_filters arrays were updated, the displayed menu (current_menu obj) selected_tags arr was not updating
+    //solution: if a menu is open, manually update the selected_tags when selected_filters is changed
     useEffect( () => {
         if(current_menu){
             setCurrentMenu({  
@@ -384,31 +389,28 @@ export function CollapsibleMenuGroup({
 
     function toggleMenu(menu){
 
-        let content = content_ref.current
+        const content = content_ref.current
 
         if(!content) return
 
         if(!isMenuOpen()){ //if all menus are closed
           openMenu(menu, content )
-        }else{ //a menu is open
-            if(isSelectedMenu(menu)){ //if the open menu is the selected menu
-                content.style.maxHeight = null //close the menu, starting the animation        
-                is_menu_animating.current = true
-                setTimeout(() =>{ //set a timer that fires near the same time as the css animation time
-                    setCurrentMenu(null) //reset the ref
+        }else{ //a menu is open...
+            content.style.maxHeight = null //close the menu, starting the animation        
+            is_menu_animating.current = true //toggle the animation
+
+            setTimeout(() =>{ //set a timer that fires near the same time as the css animation time
+                setCurrentMenu(null) //when the animation is complete closing the menu, clear the current_menu 
+
+                if(isSelectedMenu(menu)){ //check if we need to open another menu
                     is_menu_animating.current = false
-                }, 150)
-            }else{ // if the open menu is not the selected menu
-                content.style.maxHeight = null           
-                is_menu_animating.current = true
-                setTimeout(() =>{ //set a timer that fires when the menu is done animating
-                    setCurrentMenu(null)
+                }else{ //otherwise we need to open 
                     setTimeout(() =>{ //.. and that timer will fire another timer that opens the new menu
                         openMenu(menu,content)
                         is_menu_animating.current = false //reenable the buttons when the animation sequence is complete
-                    }, 150)
-                }, 150)
-            }
+                    }, ANIMATION_TIME)
+                }
+            }, ANIMATION_TIME)
         }
   }
 
@@ -432,7 +434,10 @@ export function CollapsibleMenuGroup({
         {isMenuOpen() && (!current_menu.pill_view ? //if a menu is open, check which type to display    
                 <ListDropDownView {...transformProps(current_menu, selectedHandler)}/>    
             : 
-                <PillDropDownView  {...transformProps(current_menu, selectedHandler)}/>)}    
+                <>  
+                    {handleClear && <ClearFiltersButton title={current_menu.title} handleClear={handleClear(current_menu.filter_key)} show={current_menu.selected_tags.length > 0}/>}
+                    <PillDropDownView  {...transformProps(current_menu, selectedHandler)}/>
+                </>)}    
         </div>    
     </>)
 }

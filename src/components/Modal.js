@@ -42,9 +42,9 @@ function Modal({
       <div ref={overlay_ref} className="modal-content">
       
       <div className="modal-top">
-        <div className="modal_clear_all_filters_section">
+        {/*<div className="modal_clear_all_filters_section">
           <ClearAllFiltersButton title={"Clear All Filters"} clearAll={clearAll} show={areFiltersSelected}/>
-        </div>
+        </div>*/}
 
         <div className="close" onClick={e=> toggleModal()}><span><RiCloseFill/></span></div>
       </div>
@@ -59,14 +59,15 @@ function Modal({
 
       <div className="modal_layout_row">
         <CollapsibleMenuGroup 
-        filter_tags={filter_tags} 
-        selected_filters={selected_filters}
-        selectedHandler={onFilterTagSelected}
-        maxHeight={maxHeight} 
-        pill_view={true}/>
+          filter_tags={filter_tags} 
+          selected_filters={selected_filters}
+          selectedHandler={onFilterTagSelected}
+          handleClear={handleClear}
+          maxHeight={maxHeight}/>
       </div>
 
       <div className="modal_pill_list">
+        <ClearAllFiltersButton title={"Clear All Filters"} clearAll={clearAll} show={areFiltersSelected}/>
         <PillList pills={category}  handleRemove={handleRemove(FILTER_KEYS.CATEGORIES)} />   
         <PillList pills={brands}  handleRemove={handleRemove(FILTER_KEYS.BRANDS)} />
         <PillList pills={stores}  handleRemove={handleRemove(FILTER_KEYS.STORES)} />
