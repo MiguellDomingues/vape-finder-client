@@ -90,7 +90,7 @@
 
 @media only screen and (max-width: 481px) {    
   .pill_str{
-    font-size: large;
+    font-size: medium;
   }
 }
 
@@ -245,7 +245,7 @@
 
   .sortby_dropdown_container{    
    /* align-self: center; */
-    font-size: 25px;    
+    font-size: 22.5px;    
   }
 
 }
@@ -406,11 +406,13 @@
   transition: opacity 500ms;
 }
 
-/* TESTING COLLAPSIBLEMENUGROUP*/
+/* ------COLLAPSIBLEMENUGROUP ----------------- */
 
-.collapsible_menu_group_buttons{
+.collapsible_menu_group_container{
   display: flex;
-  flex-direction: row nowrap;
+  flex-flow: row nowrap;
+  align-content: space-evenly;
+  column-gap: 10px;
 }
 
 .collapsible_menu_group_open_menu {
@@ -424,8 +426,35 @@
   width: 100%;
 }
 
-/*
+.collapsible_menu_group_button_selected{
+  background-color: rgb(31, 188, 186);
+  border-color: rgb(31, 188, 186) !important;
+}
 
+.collapsible_menu_group_button_deselected{
+  background-color: lightgrey;
+  border-color: lightgray !important;
+}
+
+.collapsible_menu_group_button {
+  /*background-color: lightgrey;*/
+  color: black;
+  cursor: pointer;
+  width: 100%;
+  font-family: system-ui;
+  outline: none;
+  font-size: 22.5px;
+  max-width: fit-content;
+  transition: background-color .5s ease-out;
+
+  border-radius: 15px 15px 0px 0px;
+  /*important can override default values in html control elements*/
+  /* padding: 0px !important; */
+  /*border-color: lightgray !important;*/
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+/*
   border-right-style: double;
     border-top-style: double;
     border-bottom-style: double;

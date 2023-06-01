@@ -62,16 +62,16 @@ function Modal({
           filter_tags={filter_tags} 
           selected_filters={selected_filters}
           selectedHandler={onFilterTagSelected}
-          handleClear={handleClear}
+          //handleClear={handleClear}
           maxHeight={maxHeight}/>
       </div>
 
-      <div className="modal_pill_list">
-        <ClearAllFiltersButton title={"Clear All Filters"} clearAll={clearAll} show={areFiltersSelected}/>
-        <PillList pills={category}  handleRemove={handleRemove(FILTER_KEYS.CATEGORIES)} />   
-        <PillList pills={brands}  handleRemove={handleRemove(FILTER_KEYS.BRANDS)} />
-        <PillList pills={stores}  handleRemove={handleRemove(FILTER_KEYS.STORES)} />
-      </div>
+        <div className={`modal_pill_list ${areFiltersSelected ? "modal_pill_list_filters_selected": "" }`}>
+          <ClearAllFiltersButton title={"Clear All Filters"} clearAll={clearAll} show={areFiltersSelected}/>
+          <PillList pills={category}  handleRemove={handleRemove(FILTER_KEYS.CATEGORIES)} />   
+          <PillList pills={brands}  handleRemove={handleRemove(FILTER_KEYS.BRANDS)} />
+          <PillList pills={stores}  handleRemove={handleRemove(FILTER_KEYS.STORES)} />
+        </div>
       
       </div>
   </div>

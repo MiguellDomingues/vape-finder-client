@@ -401,10 +401,9 @@ export function CollapsibleMenuGroup({
 
             setTimeout(() =>{ //set a timer that fires near the same time as the css animation time
                 setCurrentMenu(null) //when the animation is complete closing the menu, clear the current_menu 
-
-                if(isSelectedMenu(menu)){ //check if we need to open another menu
-                    is_menu_animating.current = false
-                }else{ //otherwise we need to open 
+                if(isSelectedMenu(menu)){ //the closed menu was the current menu? 
+                    is_menu_animating.current = false 
+                }else{ //otherwise set another timer 
                     setTimeout(() =>{ //.. and that timer will fire another timer that opens the new menu
                         openMenu(menu,content)
                         is_menu_animating.current = false //reenable the buttons when the animation sequence is complete
@@ -416,21 +415,26 @@ export function CollapsibleMenuGroup({
 
   const isSelectedMenu = (menu) => content_ref.current && current_menu && (menu.title === current_menu.title )
   const isMenuOpen = () => !!current_menu 
-  const getViewCSS = () => isMenuOpen() ? (current_menu.pill_view ? "collapsible_open_pills" : "collapsible_open_list")  : ""
+  const getDropDownViewCSS = () => isMenuOpen() ? (current_menu.pill_view ? "collapsible_open_pills" : "collapsible_open_list")  : ""
+  const getButtonBGC = (menu) => isSelectedMenu(menu) ? "collapsible_menu_group_button_selected" : "collapsible_menu_group_button_deselected"
+
   
     return(<>
-        <div className="collapsible_menu_group_buttons">
+        <div className="collapsible_menu_group_container">
             {menus.map( menu => 
-                <button key={menu.title} className="collapsible" onClick={e=>!is_menu_animating.current && toggleMenu(menu)}>
+                <button 
+                    key={menu.title} 
+                    className={`collapsible_menu_group_button ${getButtonBGC(menu)}` }
+                    onClick={e=>!is_menu_animating.current && toggleMenu(menu)}>
                     <div className="collapsible_title">    
                         <div className="collapsible_title_left_txt">{menu.title}</div>        
-                        <div className={`collapsible_title_right ${isSelectedMenu(menu) && //when the menu is open, add some extra padding for the '-' char
-                            `collapsible_title_right_open`}`}>{isSelectedMenu(menu)?"-":"+"}</div>                    
+                        {/*<div className={`collapsible_title_right ${isSelectedMenu(menu) ? //when the menu is open, add some extra padding for the '-' char
+                            `collapsible_title_right_open` : ``}`}>{isSelectedMenu(menu)?"-":"+"}</div>*/ }                   
                     </div>
                 </button>)}
-      </div>
+        </div>
 
-      <div ref={content_ref} className={`collapsible_menu_group_open_menu ${getViewCSS()}`}>        
+      <div ref={content_ref} className={`collapsible_menu_group_open_menu ${getDropDownViewCSS()}`}>        
         {isMenuOpen() && (!current_menu.pill_view ? //if a menu is open, check which type to display    
                 <ListDropDownView {...transformProps(current_menu, selectedHandler)}/>    
             : 
