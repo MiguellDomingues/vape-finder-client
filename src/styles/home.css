@@ -1,0 +1,32 @@
+.sidebar_flex_child{
+    background-color: lightgray;  
+    display: flex;      
+    overflow: hidden;      
+    border-radius: 0px 10px 10px 0px;    
+    max-width: 17%;
+    padding-right: 3em;  
+    margin-right:  5px;
+}
+
+.show-filters-animation-enter {
+    max-width: 0%;
+    padding-right: 0em;
+  }
+      
+  .show-filters-animation-enter-active { 
+    display: flex;
+    max-width: 17%;
+    padding-right: 3em;
+    transition: max-width 1000ms;
+  }
+      
+  .show-filters-animation-exit {
+    max-width: 17%;
+    padding-right: 3em;
+  }
+      
+  .show-filters-animation-exit-active {
+    max-width: 0%;
+    padding-right: 0em;
+    transition: max-width 1000ms;
+  }

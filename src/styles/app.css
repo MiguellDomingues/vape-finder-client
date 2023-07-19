@@ -1,0 +1,57 @@
+
+.page{
+  height: 100dvh;
+  /*width: 100dvw;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+
+}
+
+.app_flex_parent {
+  /*height: 100dvh;*/
+  height: 100%;
+  
+  /*max-height: -webkit-fill-available;*/
+  display: flex;
+  flex-direction: column;
+  width: 1350px;
+}
+
+.header_flex_child{
+    min-height: 10%;
+    max-height: 10%;
+    background-color: lightblue;
+     
+}
+
+.body_flex_parent{
+  display: flex;
+  flex-direction: row;
+  min-height: 90%;
+  max-height: 90%;
+  min-width: 100%;
+}
+
+/*
+.footer_flex_parent{
+  height: 5vh;
+  background-color: lightblue;
+  font-size: 15px; 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center; 
+}
+*/
+
+
+
+
+
+
+
+
+
+  
+  

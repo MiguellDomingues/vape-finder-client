@@ -1,0 +1,148 @@
+/****OVERLAY**********************/
+
+.age_vertification_overlay{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;  
+}
+
+.show_overlay{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* these classes remove the flicker effect when clicking anywhere outside the popup box */
+.no_select {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.no_select:focus {
+  outline: none !important;
+}
+
+/*-----------VERTIFY AGE POPUP----------------*/
+  
+.date_input_container{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    height: fit-content; 
+    z-index: 3;
+    background-color: lightblue;
+    border-radius: 10px;
+}
+
+.date_input_container_layout{
+  width: 50%;
+}
+
+.bottom{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+}
+
+.date_input_heading{
+  display: flex;
+  text-align: center;
+  font-weight: bold;
+}
+
+.date_input_heading_txt{
+  font-size: xxx-large;
+}
+
+.date_input_txt_1{
+  font-size: 20px;
+  display: flex;
+  text-align: center;
+}
+
+.date_input_txt_2{
+  font-style: italic;
+  font-size: 15px;
+  display: flex;
+  text-align: center;
+}
+
+.date_input_txt_blue{
+  color: blue;
+  font-style: none;
+}
+
+.date_input_dmy{
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+}
+
+.date_input_dmy_field{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.date_input_error_style{
+  font-size: medium;
+  font-style: italic;
+  color: red;
+}
+
+.date_input_btns{
+  display: flex;
+  gap: 10px;
+}
+
+.submit_btn{
+  width: 50px;
+}
+
+.date_input_save_choice{
+  font-size: medium;
+}
+
+@media only screen and (max-width: 481px) {
+  
+  .date_input_container_layout{
+    width: 75%;
+  }
+  .date_input_heading_txt{
+    font-size: x-large;
+  }
+  .bottom{
+    row-gap: 20px;
+  }
+}
+
+.warning_img{
+  width: 100%;
+  height: auto
+}
+
+
+/*
+.top{   
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 60%;  
+}
+*/
+  

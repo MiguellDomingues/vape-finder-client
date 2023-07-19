@@ -1,0 +1,176 @@
+.card_container{ 
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  width: 100%;
+}
+
+/*
+.test-a{
+  position: fixed;
+  top: 0%;
+  left: 0%;
+}
+*/
+
+.scroll_to_top_icon_container{
+  position: absolute;
+  top: 0;
+  right: -13px;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity .25s ease-out
+}
+
+.outer_container{
+  height: 100%;
+  width: 100%;
+  padding-right: 3px; /* right space for to-top icon, or it clips under parent*/
+  position: relative;
+  overflow: hidden;
+}
+
+/* 
+customizing the apperarnce of the scrollbars
+note that webkits only work on chrome and safari; not edge or firefox
+to customize scrollbars in those enviroments, use SimpleScroll, an npm package
+*/
+
+.card_container::-webkit-scrollbar-thumb {
+  background-color: #A9A9A9;
+  /*border-radius: 10px;*/
+}
+
+.item-enter {
+  opacity: 0;
+}
+
+.item-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.item-exit {
+  opacity: 1;
+}
+
+.item-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.toggle-vertifyage-popup-animation-enter {
+  opacity: 0;
+}
+    
+.toggle-vertifyage-popup-animation-enter-active {
+  opacity: 1;
+  transition: opacity 1000ms;
+}
+    
+.toggle-vertifyage-popup-animation-exit {
+  opacity: 1;
+}
+    
+.toggle-vertifyage-popup-animation-exit-active {
+  opacity: 0;
+  transition: opacity 1000ms;
+}
+
+/* ***************** */
+
+
+@media only screen and (max-width: 481px) {
+    .card_container {
+        justify-content: space-around;
+        align-items: space-between;    
+      }
+
+      .card_container::-webkit-scrollbar {
+        width: 4px;
+        background-color: #F5F5F5;
+      }
+      
+  }
+  @media only screen and (min-width: 481px) { 
+    .card_container{   
+        justify-content: space-evenly;
+        align-items: flex-start;
+      }
+
+      .card_container::-webkit-scrollbar {
+        width: 8px;
+        background-color: #F5F5F5;
+      }
+      
+  }
+ 
+.spinner_middle{
+  position: fixed;
+  z-index: 1;
+  transform: translate(-4%, 450%);
+}
+
+/****************card****************************/
+
+.card {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: white;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 1em;
+  overflow-wrap: normal;
+  text-align: center;
+  position: relative;
+  height: fit-content;
+}
+
+.product_link{
+  color: blue; /*-webkit-link;*/
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* width *; height auto;  will preserve the aspect ratio of image*/
+.product_img{
+  width: 50%;
+  height: auto
+}
+
+.title{
+  font-weight: bold;
+}
+
+.card_footer{
+  position: absolute;
+  bottom: 0px;
+  font-style: italic; 
+  font-size: 10px;
+}
+
+
+@media only screen and (min-width: 481px) {
+ 
+  .card {
+    min-width: 225px;
+    min-height: 225px;
+    max-width: 225px;
+    max-height: 225px;
+    font-size: medium;
+  }
+}
+
+@media only screen and (max-width: 481px) {
+ 
+  .card {
+    font-size: large;
+  }
+}
+
+
+
+
+
+

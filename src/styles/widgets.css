@@ -1,0 +1,598 @@
+/************************PILLS***************************/
+
+.pill_close_container{
+    cursor: pointer;
+    float: right;
+    background-color:#fff;
+    border:1px;  
+    position: relative;
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    text-align: center;
+    font-size: medium;
+  }
+  
+  .pill{
+    margin: 3px;
+    padding-top: 1px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 5px;
+    border-radius: 10px;
+   /* background-color: lightblue; */
+    background-color: rgb(31, 188, 186);
+  }
+
+  .pill_container_font{
+    font-size: small;
+  }
+
+  .pill_str{
+    color: white;
+    /*color: black;  */
+  }
+
+  .pill_container_selected{
+    /*background-color: rgb(31, 188, 186);*/
+    background-color: lightblue;
+
+  }
+
+  .pill_str_selected{
+    /*color: white;*/
+    color: black;
+  }
+
+  .selectable_pill{
+    cursor: pointer;
+  }
+
+  .pill_clear_tags_btn{
+    /*margin: 3px;*/
+    padding-top: 1px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 10px;
+    background-color: rgb(31, 188, 186);
+    font-size: 20px;
+    font-family: system-ui;
+    color: black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    transition: background-color .25s ease-out, color .25s ease-out;
+    cursor: pointer;
+  }
+
+.pill-animation-enter {
+  opacity: 0;
+}
+
+.pill-animation-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+
+.pill-animation-exit {
+  opacity: 1;
+}
+
+.pill-animation-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+
+  .pill_clear_tags_btn:hover{
+    background-color: lightblue;
+    color: black;
+  }
+
+@media only screen and (max-width: 481px) {    
+  .pill_str{
+    font-size: medium;
+  }
+}
+
+@media only screen and (min-width: 481px) {    
+  .pill_str{
+    font-size: medium;
+  }
+}
+
+/*------COLLAPSIBLE MENU-------------------*/
+
+.collapsible {
+  background-color: lightgrey;
+  color: black;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  font-family: system-ui;
+  outline: none;
+  font-size: 30px;
+  border-radius: 10px;
+  /*important can override default values in html control elements*/
+  padding: 0px !important;
+}
+
+.active, .collapsible:hover {
+  background-color: lightblue;
+}
+
+.collapsible_title{
+  display: flex;
+  position: relative;
+  place-content: end space-between;
+}
+
+.collapsible_title_clear_wrapper{
+  position: absolute;
+  right: 20%;
+}
+
+.collapsible_title_right{
+  color: black;
+  font-weight: bold;
+}
+
+.collapsible_title_right_open{
+  padding-right: 3px;
+}
+
+.collapsible_open {
+  display: flex;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+  overflow-y:auto;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.collapsible_open_pills{
+  flex-flow: row wrap;
+}
+
+.collapsible_open_list{
+  flex-flow: column nowrap;
+}
+
+.content::-webkit-scrollbar {
+  width: 8px;
+  background-color: #F5F5F5;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: #A9A9A9;
+  border-radius: 10px;
+}
+
+.content-row{
+  display: flex;
+  /*use this to place items on start/ends of container*/
+  place-content: end space-between;
+  padding: 5px;
+  border-radius: 10px;
+  margin-right: 3px;
+}
+
+.filter_selected{
+  background-color: rgb(31, 188, 186);
+  color: white;
+}
+
+.content-row-left{
+  
+}
+
+.content-row-right{
+  
+}
+
+@media only screen and (min-width: 481px) {   
+  .collapsible{
+    /*text-align: left;*/
+    font-size: 20px;
+  }
+/*
+  .collapsible:after { 
+    float: right;
+  }*/
+}
+
+@media only screen and (max-width: 481px) {   
+  .content{
+    font-size: 16px;
+  }
+  .collapsible { 
+    font-size: 25px;
+  }
+}
+
+/************************HORIZONTAL LINE***************************/
+
+.outer_line{
+  width: 80%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 1px ridge grey;
+  border-radius: 1px;
+}
+
+/*
+.inner_line{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+*/
+
+/********************SORTBY DROPDOWN**********************************/
+
+.sortby_dropdown_container{
+  display: flex;
+  column-gap: 20px;
+  font-family: system-ui;
+  
+}
+
+.dropdown{
+  text-align: center;
+}
+
+@media only screen and (max-width: 481px) {   
+
+  .sortby_dropdown_container{    
+   /* align-self: center; */
+    font-size: 22.5px;    
+  }
+
+}
+
+@media only screen and (min-width: 481px) {   
+
+  .sortby_dropdown_container{
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 20px;
+  }
+
+}
+
+/* CLEAR FILTERS BTN */
+
+.clear_filters_btn{
+  padding-top: 1px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 10px;
+  background-color: rgb(31, 188, 186);
+  font-family: system-ui;
+  color: black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  transition: background-color .25s ease-out, color .25s ease-out;
+  cursor: pointer;
+}
+
+.clear_filters_btn:hover{
+  background-color: lightblue;
+  color: black;
+}
+
+.clear-pills-btn-animation-enter {
+  opacity: 0;
+}
+    
+.clear-pills-btn-animation-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+    
+.clear-pills-btn-animation-exit {
+  opacity: 1;
+}
+    
+.clear-pills-btn-animation-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+@media only screen and (max-width: 481px) {   
+
+  .clear_filters_btn{    
+    margin: 3px;
+    font-size: 20px;    
+  }
+}
+
+@media only screen and (min-width: 481px) {   
+
+  .clear_filters_btn{
+    font-size: 18px;
+  }
+
+}
+    
+/* ***************** */
+
+/* CLEAR ALL FILTERS BTN */
+
+.clear_all_filters_btn{
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 10px;
+  background-color: rgb(31, 188, 186);
+  font-size: 20px;
+  font-family: system-ui;
+  color: black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  transition: background-color .25s ease-out, color .25s ease-out;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.clear_all_filters_btn:hover{
+  background-color: lightblue;
+  color: black;
+}
+
+@media only screen and (max-width: 481px) {   
+
+  .clear_all_filters_btn{    
+    font-size: 20px;    
+  }
+}
+
+@media only screen and (min-width: 481px) {   
+
+  .clear_all_filters_btn{
+    margin: 3px;
+    font-size: 18px;
+    padding-top: 1px;
+    padding-bottom: 3px;
+  }
+}
+
+/***********tab button *************/
+
+.tab_button_layout{
+  height: 0%;
+  width: 0%;
+  position: relative;
+  left: -16px;
+  top: 10%;
+}
+
+.tab_button_content{
+    font-size: 15px;   
+    
+    font-weight: 900;
+    
+}
+
+.tab_button_wrapper{
+    display: inline-flex;
+    cursor: pointer;
+    border-radius: 0px 15px 15px 0px ;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    padding-right: 2px;   
+    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.5);
+    background:  rgb(31, 188, 186);
+    color: black;
+}
+
+.tab_button_wrapper:hover{
+  background: lightblue;
+}
+
+.tab-button-animation-enter {
+  opacity: 0;
+}
+    
+.tab-button-animation-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+    
+.tab-button-animation-exit {
+  opacity: 1;
+}
+    
+.tab-button-animation-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+/* ------COLLAPSIBLEMENUGROUP ----------------- */
+
+.collapsible_menu_group_container{
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: space-evenly;
+  column-gap: 10px;
+}
+
+.collapsible_menu_group_open_menu {
+  display: flex;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .15s ease-out;
+  background-color: #f1f1f1;
+  overflow-y:auto;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.collapsible_menu_group_button_selected{
+  background-color: rgb(31, 188, 186);
+  border-color: rgb(31, 188, 186) !important;
+}
+
+.collapsible_menu_group_button_deselected{
+  background-color: lightgrey;
+  border-color: lightgray !important;
+}
+
+.collapsible_menu_group_button {
+  /*background-color: lightgrey;*/
+  color: black;
+  cursor: pointer;
+  width: 100%;
+  font-family: system-ui;
+  outline: none;
+  font-size: 22.5px;
+  max-width: fit-content;
+  transition: background-color .5s ease-out;
+
+  border-radius: 15px 15px 0px 0px;
+  /*important can override default values in html control elements*/
+  /* padding: 0px !important; */
+  /*border-color: lightgray !important;*/
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+/*
+  border-right-style: double;
+    border-top-style: double;
+    border-bottom-style: double;
+
+  writing-mode: vertical-rl;
+    text-orientation: mixed; 
+  */
+
+  /* OLD DROPDOWN MENU CSS
+.dropdown_container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px; 
+    margin-bottom: 5px;
+    
+     this is used to remove the flickering effect from clicking the drop-down 
+    NOTICED AN rare ISSUE WHERE THE DROPDOWNS BECAME UNSELECTABLE 
+    keep an eye on it
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.dropdown_container:focus{
+  outline: none !important;  this is used to remove the flickering effect from clicking the drop-down 
+}
+
+
+.dropdown_title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.search_bar_product_count{
+    font-style: italic;
+    font-size: 10px;
+}
+
+.dropdown-arrow{
+    height: 0;
+    width: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #333;
+    position: relative;   
+    top: 5px;
+    float: right;
+}
+
+
+.dropdown_item{
+  display: flex;
+  place-content: end space-between;
+  font-size: large;
+  color: black;
+  padding: 5px; 
+  border-radius: 10px;  
+}
+
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+  max-height:0px;
+  background-color: lightblue;
+  
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  
+  transition: max-height 0.2s ease-out;
+  overflow-y:auto;
+}
+
+
+.dropdown-content {
+    
+    display: none;
+    background-color: lightblue;
+    min-width: fit-content;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    max-height:0px;
+    
+    overflow-y:auto;
+}
+
+
+.dropdown_container:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+  max-height:200px;
+}
+
+
+
+.dropdown-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+  background-color: #A9A9A9;
+  border-radius: 10px;
+}
+
+.dropdown_container:hover .dropdown-content {
+  display: flex;
+  flex-direction: column;
+  max-height:200px;
+}
+
+.cursor_hand{
+    cursor: pointer;
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
