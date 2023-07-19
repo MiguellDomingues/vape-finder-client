@@ -17,9 +17,9 @@ function CardList({
 
   const products = data ? data[APOLLO_GQL_KEYS.PRODUCTS] : []
 
-  console.log("CARDLIST PRODUCTS: ", products)
-  console.log("products length: " , products.length)
-  console.log("loading? " , loading)
+  //console.log("CARDLIST PRODUCTS: ", products)
+  //console.log("products length: " , products.length)
+  //console.log("loading? " , loading)
 
   const { selected_filters } = selected_filters_handlers
 
@@ -115,7 +115,8 @@ export default CardList
 //can also link images using import or require() 
 //import demoImage from './demo.webp'; 
 
-const img_src = '../../../demo.webp';
+const img_src_sample = '../../../demo.webp';
+const use_sample_img = false
 
 function Card({
   product,
@@ -123,7 +124,8 @@ function Card({
 }) {
   //const {id, name, brand, category, img, price, last_updated, source} = product
 
-  const {id, last_updated, source_id, source_url, brand, category, name, price, info_url,} = product
+  const {id, last_updated, source_id, source_url, brand, category, name, price, info_url, img_src} = product
+
   //const{  } = product_info
 
   const vendor = source_url.split("//")[1].split(".")[0] //remove the domain name from the product source
@@ -145,7 +147,7 @@ function Card({
       <span>${format_price}<br/></span>
 
       <img className="product_img"
-        src={img_src}
+        src={ use_sample_img ? img_src_sample  : img_src}
         alt="Product">
       </img>
 
