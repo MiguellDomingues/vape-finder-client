@@ -4,13 +4,15 @@
 
 # BC Vape Finder
 
-http://bc-vape-finder.herokuapp.com/
+A search portal for vaping-related products that are sourced from e-vendors across the lower mainland
 
-(Due to service plan limitations, the site may take up to ~5 seconds to appear if not accessed recently)
+http://bc-vape-finder.herokuapp.com/ (due to service plan limitations, the page may take up to 5 seconds to appear if not accessed recently)
 
 ## Purpose
 
-I developed this project to showcase my full-stack web development skills by integrating React with the Apollo and Realm APIs to fetch content from a serverless datasource (Atlas) using GraphQL
+I developed this project to demonstrate my full-stack web development skills. It combines a modern UI framework with the Apollo and Realm JavaScript APIs to fetch content from a cloud-hosted data source using GraphQL.
+
+The fetched content is generated from a separate project I also implemented, which scrapes products from e-commerce websites. You can find the project and its details [include the link here].
 
 ## Features
 
@@ -45,9 +47,25 @@ _Desktop_           |  _Mobile_
 
 ## Tech Stack
 
-React
-Apollo
-Realm
+### frameworks
+
+- apollo-client
+- graphql
+- realm-web
+- react-router
+- emailjs
+
+### UI 
+
+- react
+- react-icons
+- react-responsive
+- react-transition-group
+
+## Potential Improvements
+
+- use a CSS preprocessor such as SaSS to reduce duplicate CSS
+- change hosting provider from Heroku to Netlify                                                                                                                                                                 
 
 
 
