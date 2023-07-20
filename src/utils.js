@@ -5,12 +5,17 @@ export const SORT_TYPE = {
     DESC: "DESC"
   }
 
-  export const EMAILJS_INFO = {
-    SERVICE_ID: "service_26wow18",
-    TEMPLATE_ID: "template_ae7w1sz",
-    PUBLIC_KEY: "u9Zhvtr96iH2sakM" //"u9Zhvtr96iH2sakMP"
+  export const ATLAS_INFO = {
+    URI:  process.env.REACT_APP_URI  || "", 
+    APP_ID: process.env.REACT_APP_APP_ID || "",
   }
-  
+
+  export const EMAILJS_INFO = {
+    SERVICE_ID:  process.env.REACT_APP_SERVICE_ID  || "", 
+    TEMPLATE_ID: process.env.REACT_APP_TEMPLATE_ID || "",
+    PUBLIC_KEY:  process.env.REACT_APP_PUBLIC_KEY  || "" 
+  }
+
   export const FILTER_KEYS = {
     CATEGORIES: "category",
     BRANDS: "brands",
