@@ -11,7 +11,7 @@ import { PAGE_URIS } from "./utils.js";
 
 import './styles/app.css'
 
-function App( {SHOW_DOB_POPUP} ) {
+function App() {
 
   const [
     selected_filters_handlers, 

@@ -3,7 +3,7 @@ import { SpinnerDotted } from 'spinners-react';
 import {useRef} from 'react'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import VertifyAge from './VertifyAge'
-import { APOLLO_GQL_KEYS } from '../utils'
+import { APOLLO_GQL_KEYS, PRODUCT_IMG_CONFIG } from '../utils'
 import { MdOutlineKeyboardDoubleArrowUp } from 'react-icons/md';
 import '../styles/cardlist.css'
 
@@ -54,8 +54,6 @@ function CardList({
       <div ref={icon_ref} className="scroll_to_top_icon_container" onClick={e=>{document?.getElementById('cardContainer')?.scroll({top:0, behavior: 'smooth'});}}>
         <MdOutlineKeyboardDoubleArrowUp size={'2.5em'}/>
       </div>
-
-      {/*<div className="test-a">{products.length}</div>*/}
 
       <CSSTransition 
         timeout={1000} 
@@ -112,12 +110,6 @@ function CardList({
 
 export default CardList
 
-//can also link images using import or require() 
-//import demoImage from './demo.webp'; 
-
-const img_src_sample = '../../../demo.webp';
-const use_sample_img = false
-
 function Card({
   product,
   productLinkClick,
@@ -125,9 +117,7 @@ function Card({
   //const {id, name, brand, category, img, price, last_updated, source} = product
 
   const {id, last_updated, source_id, source_url, brand, category, name, price, info_url, img_src} = product
-
-  //const{  } = product_info
-
+  
   const vendor = source_url.split("//")[1].split(".")[0] //remove the domain name from the product source
   const format_price = price.toFixed(2); //limit the cents in the price to 2 decimal places (dollar).(cents)
 
@@ -136,8 +126,6 @@ function Card({
 
   //if(format_name.includes(' - ')) format_name = format_name.replace(' - ', ' ').trim()
   
-  //rel="noopener noreferrer" is to prevent 'tabnabbing', a kind of phishing attack
-  //<a href={info_url} target="_blank" rel="noopener noreferrer">{vendor}<br/></a>
   return (
     <div className="card">
 
@@ -147,7 +135,7 @@ function Card({
       <span>${format_price}<br/></span>
 
       <img className="product_img"
-        src={ use_sample_img ? img_src_sample  : img_src}
+        src={ PRODUCT_IMG_CONFIG.USE_PLACEHOLDER ? PRODUCT_IMG_CONFIG.PLACEHOLDER_PATH  : img_src}
         alt="Product">
       </img>
 
