@@ -4,21 +4,27 @@
 
 # BC Vape Finder
 
-A search portal for vaping-related products that are sourced from e-vendors across the lower mainland
+http://bc-vape-finder.herokuapp.com/
 
-http://bc-vape-finder.herokuapp.com/ (due to service plan limitations, the page may take up to 5 seconds to appear if not accessed recently)
+## Description
+
+BC Vape Finder is a search portal for vaping-related products that are sourced from e-vendors across the lower mainland
+
+(the page may take up to 10~ seconds to load if not accessed recently)
 
 ## Purpose
 
-I developed this project to demonstrate my full-stack web development skills. It combines a modern UI framework with the Apollo and Realm JavaScript APIs to fetch content from a cloud-hosted data source using GraphQL.
+I developed this project to demonstrate my full-stack web development skills. Tasks include:
 
-The fetched content is generated from a separate project I also implemented, which scrapes products from e-commerce websites. You can find the project and its details [include the link here].
+- combining a modern UI framework with the Apollo and Realm APIs to fetch content from a cloud-hosted datasource using GraphQL
+- generating content by scraping e-commerce websites, cleaning and loading the data into a consolidated datasource [include the link here]
+- performing compatibility testing using BrowserStack,LambdaTest to ensure proper functioning on all modern browsers for mobile/desktop
 
 ## Features
 
 ### Product Search 
 
-- Filter and browse products by catagory, brand, and/or store
+- Filter and browse products by catagories, brands, and/or e-storefronts
 - Sort by highest or lowest price
 
 _Desktop_           |  _Mobile_
@@ -64,18 +70,5 @@ _Desktop_           |  _Mobile_
 
 ## Potential Improvements
 
-- use a CSS preprocessor such as SaSS to reduce duplicate CSS
+- integrate a CSS preprocessor such as SaSS, use styled-components
 - change hosting provider from Heroku to Netlify                                                                                                                                                                 
-
-
-
-
-
-
-
-
-
-
-
-
-
