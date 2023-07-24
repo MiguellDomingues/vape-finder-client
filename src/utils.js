@@ -42,7 +42,8 @@
   //configs for product images (enable to avoid fetching original images from source vendor CDNs)
   export const PRODUCT_IMG_CONFIG = {
     USE_PLACEHOLDER: false,
-    PLACEHOLDER_PATH: '/demo.webp'
+    PLACEHOLDER_PATH: '/demo.webp',
+    DEFAULT_IMG_PATH: '/no_image.webp'
   }
 
   //number of results returned per query (max 100)

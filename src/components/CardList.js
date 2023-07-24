@@ -136,6 +136,7 @@ function Card({
 
       <img className="product_img"
         src={ PRODUCT_IMG_CONFIG.USE_PLACEHOLDER ? PRODUCT_IMG_CONFIG.PLACEHOLDER_PATH  : img_src}
+        onError={ e => { e.target.src = PRODUCT_IMG_CONFIG.DEFAULT_IMG_PATH /* if the image link is broken, use a default image*/} }
         alt="Product">
       </img>
 
