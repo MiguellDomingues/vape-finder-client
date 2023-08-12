@@ -17,7 +17,7 @@ BC Vape Finder is a search portal for vaping-related products that are sourced f
 I developed this project to demonstrate my full-stack web development skills. Tasks include:
 
 - combining a modern UI framework with the Apollo and Realm APIs to fetch content from a cloud-hosted datastore using GraphQL
-- discovering content by [scraping e-commerce websites](https://github.com/MiguellDomingues/vape-finder-scraper), cleaning and loading the data into MongoDB
+- discovering content by [scraping e-commerce websites](https://github.com/MiguellDomingues/vape-finder-scraper), cleaning and loading the data into Atlas
 - performing compatibility testing using BrowserStack,LambdaTest to ensure proper functioning on all modern browsers for mobile/desktop
 
 ## Features
