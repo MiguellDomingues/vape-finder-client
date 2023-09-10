@@ -135,7 +135,11 @@ function Card({
       <span>${format_price}<br/></span>
 
       <img className="product_img"
-        src={ PRODUCT_IMG_CONFIG.USE_PLACEHOLDER ? PRODUCT_IMG_CONFIG.PLACEHOLDER_PATH  : img_src}
+        src={ PRODUCT_IMG_CONFIG.USE_PLACEHOLDER ?                         // if we've selected to use placeholder images..
+                PRODUCT_IMG_CONFIG.PLACEHOLDER_PATH  :                     // src = place holder image 
+                  img_src ?                                                // else, check if the product object contains an img_src key..
+                    img_src :                                              // if it does, src = src_img
+                      PRODUCT_IMG_CONFIG.DEFAULT_IMG_PATH}                 // else, just use the default image
         onError={ e => { e.target.src = PRODUCT_IMG_CONFIG.DEFAULT_IMG_PATH /* if the image link is broken, use a default image*/} }
         alt="Product">
       </img>
