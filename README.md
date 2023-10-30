@@ -24,8 +24,10 @@ I developed this project to demonstrate my full-stack web development skills. Ta
 
 ### Product Search 
 
-- Filter and browse products by catagories, brands, and/or e-storefronts
+- Filter products by categories, brands, and/or e-store tags using the respective dropdown menus
+  - or alternatively, type a tag name into the input box  
 - Sort by highest or lowest price
+- Search results from previous queries are cached   
 
 _Desktop_           |  _Mobile_
 :-------------------------:|:-------------------------:
@@ -38,6 +40,8 @@ _Desktop_           |  _Mobile_
 <img src="https://i.imgur.com/i98csaOl.png" style="max-width: 100%;"> | <img src="https://i.imgur.com/55taJjJm.png" style="max-width: 100%; height:auto;">
 
 ### Dynamic Pagination
+
+- Load the next page of results when the end of the current page is reached
 
 _Desktop_           |  _Mobile_
 :-------------------------:|:-------------------------:
